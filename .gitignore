@@ -14,3 +14,6 @@ secrets*
 tmp
 terraform.tfstate.d
 yarn.lock
+.idea
+.DS_Store
+*.pyc
