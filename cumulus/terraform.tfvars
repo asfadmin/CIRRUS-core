@@ -1,12 +1,13 @@
-region             = ""
-cmr_environment    = ""
 cmr_provider       = ""
-cmr_username       = ""
 cmr_oauth_provider = ""
-urs_client_id      = ""
-urs_url            = ""
 oauth_provider     = ""
-api_users          = []
-archive_api_port   = 8000
+oauth_user_group   = ""
+
+launchpad_api      = ""
+
+api_users = []
+
+archive_api_port            = 8000
 private_archive_api_gateway = true
+
 deploy_distribution_s3_credentials_endpoint = false

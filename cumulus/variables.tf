@@ -1,4 +1,12 @@
 # Required
+variable "DEPLOY_NAME" {
+  type = string
+}
+
+variable "MATURITY" {
+  type = string
+  default = "dev"
+}
 
 variable "cmr_environment" {
   type = string

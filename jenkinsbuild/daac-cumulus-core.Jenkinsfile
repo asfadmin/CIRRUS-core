@@ -3,7 +3,7 @@ pipeline {
   // Environment Setup
   environment {
     AWS_PROFILENAME="jenkins"
-    REGISTRY="docker-registry.asf.alaska.edu:5000"
+    REGISTRY="CHANGEME"
     MATURITY="dev"
 
   } // env
@@ -47,42 +47,4 @@ pipeline {
       }// steps
     }// stage
   } // stages
-  // Send build status to Mattermost, Update build badge
-  post {
-    always {
-      sh 'echo "done"'
-    }
-    success {
-      mattermostSend channel: "${CHAT_ROOM}", color: '#CEEBD3', endpoint: "${env.CHATHOST}", message: "Build Successful: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-    }
-    failure {
-      sh "env"
-      sh "echo ${WORKSPACE}"
-      sh "cd \"${WORKSPACE}\""
-      sh "tree"
-
-      mattermostSend channel: "${CHAT_ROOM}", color: '#FFBDBD', endpoint: "${env.CHATHOST}", message: "Build Failed:  🤬${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)🤬"
-
-    }
-  }
-
 } // pipeline
-
-
-
-
-
-//AWS_PROFILENAME=default
-//AWS_ACCESS_KEY_ID=`aws configure get aws_access_key_id --profile ${AWS_PROFILENAME}`
-//AWS_SECRET_ACCESS_KEY=`aws configure get aws_secret_access_key --profile ${AWS_PROFILENAME}`
-//AWS_REGION=`aws configure get region --profile ${AWS_PROFILENAME}`
-//WORKSPACE=~/Documents/projects
-
-//docker run --rm -it \
-//           --env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
-//           --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
-//           --env AWS_REGION=${AWS_REGION} \
-//           --env DEPLOYMENTNAME=asf-cumulus-core-bbarton5 \
-//           -v ${WORKSPACE}:/workspace \
-//           cumulusbuilder:latest \
-//           bash /workspace/asf-cumulus-core/build/cumulusbuilder.sh

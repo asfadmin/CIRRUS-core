@@ -3,7 +3,7 @@
 #  AWS_ACCESS_KEY_ID:     Set for the account to which you are deploying
 #  AWS_SECRET_ACCESS_KEY: Set for the account to which you are deploying
 #  AWS_REGION:            The region to which you are deploying
-#  DEPLOY_NAME:           Either your userid for devs, or 'asf' for standard deployments
+#  DEPLOY_NAME:           A unique name to distinguish this Cumulus instance from others
 #  MATURITY:              One of: DEV, INT, TEST, PROD
 #
 
@@ -12,12 +12,9 @@ export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
 export TF_VAR_AWS_REGION=${AWS_REGION}
 
-# TODO: Move this to a config file--so the version of the CMA is a config parameter
-cma="https://github.com/nasa/cumulus-message-adapter/releases/download/v1.1.3/cumulus-message-adapter.zip"
-
 SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
-.PHONY: clean tf asf data-persistence cumulus destroy-cumulus all
+.PHONY: clean tf daac data-persistence cumulus destroy-cumulus all
 
 clean:
 	rm -rf tmp
@@ -32,12 +29,11 @@ tf:
 	terraform refresh -input=false -state=terraform.tfstate.d/${MATURITY}/terraform.tfstate
 	terraform apply -input=false -auto-approve
 
-tmp/cumulus-message-adapter.zip:
+tmp:
 	mkdir -p tmp
-	wget $(cma) -O tmp/cumulus-message-adapter.zip
 
 .ONESHELL:
-asf data-persistence cumulus: tmp/cumulus-message-adapter.zip
+daac data-persistence cumulus: tmp
 	cd $@
 	rm -f .terraform/environment
 	terraform init -reconfigure -input=false \
@@ -48,7 +44,25 @@ asf data-persistence cumulus: tmp/cumulus-message-adapter.zip
 	terraform workspace new ${DEPLOY_NAME} || terraform workspace select ${DEPLOY_NAME}
 	cp $(SELF_DIR)/patch/fetch_or_create_rsa_keys.sh \
 		$(SELF_DIR)/cumulus/.terraform/modules/cumulus/tf-modules/archive/
-	terraform apply -input=false -auto-approve
+	if [ -f "variables/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export VARIABLES_OPT="-var-file=variables/${MATURITY}.tfvars"
+		echo "Found maturity-specific variables: $$VARIABLES_OPT"
+		echo "***************************************************************"
+	fi
+	if [ -f "secrets/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export SECRETS_OPT="-var-file=secrets/${MATURITY}.tfvars"
+		echo "Found maturity-specific secrets: $$SECRETS_OPT"
+		echo "***************************************************************"
+	fi
+	terraform apply \
+		$$VARIABLES_OPT \
+		$$SECRETS_OPT \
+		-input=false \
+		-auto-approve
 	if [ $$? -ne 0 ] # Workaround random Cumulus deploy fails
 	then
 		terraform apply -input=false -auto-approve
@@ -67,6 +81,6 @@ destroy-cumulus:
 
 all: \
 	tf \
-	asf \
+	daac \
 	data-persistence \
 	cumulus

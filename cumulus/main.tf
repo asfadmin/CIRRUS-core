@@ -1,7 +1,6 @@
 module "cumulus" {
   source = "https://github.com/nasa/cumulus/releases/download/v1.17.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
-
-  cumulus_message_adapter_lambda_layer_arn = data.terraform_remote_state.asf.outputs.cma_layer_arn
+  cumulus_message_adapter_lambda_layer_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
   prefix = local.prefix
 
@@ -14,46 +13,45 @@ module "cumulus" {
   ecs_cluster_max_size            = 2
   key_name                        = var.key_name
 
-  urs_url             = var.urs_url                     # LOOKUP: MATURITY
-  urs_client_id       = var.urs_client_id               # LOOKUP: AWS Secrets Svc
-  urs_client_password = var.urs_client_password         # LOOKUP: AWS Secrets Svc
+  urs_url             = var.urs_url
+  urs_client_id       = var.urs_client_id
+  urs_client_password = var.urs_client_password
 
-  ems_host              = var.ems_host                  # LOOKUP: MATURITY
-  ems_port              = var.ems_port                  # LOOKUP: MATURITY
-  ems_path              = var.ems_path                  # LOOKUP: MATURITY
-  ems_datasource        = var.ems_datasource            # LOOKUP: MATURITY
-  ems_private_key       = var.ems_private_key           # LOOKUP: AWS Secrets Svc
-  ems_provider          = var.ems_provider              # LOOKUP: MATURITY
-  ems_retention_in_days = var.ems_retention_in_days     # LOOKUP: MATURITY
-  ems_submit_report     = var.ems_submit_report         # LOOKUP: MATURITY
-  ems_username          = var.ems_username              # LOOKUP: AWS Secrets Svc
+  ems_host              = var.ems_host
+  ems_port              = var.ems_port
+  ems_path              = var.ems_path
+  ems_datasource        = var.ems_datasource
+  ems_private_key       = var.ems_private_key
+  ems_provider          = var.ems_provider
+  ems_retention_in_days = var.ems_retention_in_days
+  ems_submit_report     = var.ems_submit_report
+  ems_username          = var.ems_username
 
-  metrics_es_host = var.metrics_es_host                 # LOOKUP: MATURITY
-  metrics_es_password = var.metrics_es_password         # LOOKUP: AWS Secrets Svc
-  metrics_es_username = var.metrics_es_username         # LOOKUP: AWS Secrets Svc
+  metrics_es_host = var.metrics_es_host
+  metrics_es_username = var.metrics_es_username
+  metrics_es_password = var.metrics_es_password
 
-  cmr_client_id   = local.cmr_client_id                 # LOOKUP: MATURITY
-  cmr_environment = "UAT"                               # LOOKUP: MATURITY
-  cmr_username    = var.cmr_username                    # LOOKUP: AWS Secrets Svc
-  cmr_password    = var.cmr_password                    # LOOKUP: AWS Secrets Svc
+  cmr_client_id   = local.cmr_client_id
+  cmr_environment = var.cmr_environment
+  cmr_username    = var.cmr_username
+  cmr_password    = var.cmr_password
   cmr_provider    = var.cmr_provider
 
-  cmr_oauth_provider = var.cmr_oauth_provider           # LOOKUP: MATURITY
+  cmr_oauth_provider = var.cmr_oauth_provider
 
-  launchpad_api         = var.launchpad_api             # LOOKUP: MATURITY
-  launchpad_certificate = var.launchpad_certificate     # LOOKUP: AWS Secrets Svc
-  launchpad_passphrase  = var.launchpad_passphrase      # LOOKUP: AWS Secrets Svc
+  launchpad_api         = var.launchpad_api
+  launchpad_certificate = var.launchpad_certificate
+  launchpad_passphrase  = var.launchpad_passphrase
 
-  oauth_provider   = var.oauth_provider                 # LOOKUP: MATURITY
-  oauth_user_group = var.oauth_user_group               # LOOKUP: MATURITY
+  oauth_provider   = var.oauth_provider
+  oauth_user_group = var.oauth_user_group
 
   saml_entity_id                  = var.saml_entity_id
   saml_assertion_consumer_service = var.saml_assertion_consumer_service
   saml_idp_login                  = var.saml_idp_login
   saml_launchpad_metadata_path    = var.saml_launchpad_metadata_path
 
-  token_secret = var.token_secret                       # LOOKUP: AWS Secrets Svc
-  # ^^^^^^^^^ LOOKUP BASED ON MATURITY ^^^^^^^^^
+  token_secret = var.token_secret
 
   permissions_boundary_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/NGAPShRoleBoundary"
 
@@ -82,22 +80,12 @@ module "cumulus" {
   deploy_distribution_s3_credentials_endpoint = var.deploy_distribution_s3_credentials_endpoint
 }
 
-variable "DEPLOY_NAME" {
-  type = string
-  default = "asf"
-}
-
-variable "MATURITY" {
-  type = string
-  default = "dev"
-}
-
 locals {
   prefix = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
 
-  asf_remote_state_config = {
+  daac_remote_state_config = {
     bucket = "cumulus-${var.MATURITY}-tf-state"
-    key    = "asf/terraform.tfstate"
+    key    = "daac/terraform.tfstate"
     region = "${data.aws_region.current.name}"
   }
 
@@ -160,10 +148,10 @@ data "aws_subnet_ids" "subnet_ids" {
   vpc_id = data.aws_vpc.application_vpcs.id
 }
 
-data "terraform_remote_state" "asf" {
+data "terraform_remote_state" "daac" {
   backend = "s3"
   workspace = "${var.DEPLOY_NAME}"
-  config  = local.asf_remote_state_config
+  config  = local.daac_remote_state_config
 }
 
 data "terraform_remote_state" "data_persistence" {
