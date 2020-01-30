@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if (( $# != 3 )); then
-    echo "Usage: env.sh aws_profile_name deploy_name maturity"
+    echo "Usage: source env.sh aws_profile_name deploy_name maturity"
 else
     profile_name=$1
 
