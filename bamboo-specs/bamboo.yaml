@@ -1,0 +1,17 @@
+---
+version: 2
+plan:
+  project-key: CIR
+  key: CUMULUSBUILD
+  name: Build the cumulus
+
+# List of plan's stages and jobs
+stages:
+  - Build the cumulus:
+    - Build
+
+#Job definition
+Build:
+  tasks:
+    - script:
+        - echo "TODO: build Cumulus here"
