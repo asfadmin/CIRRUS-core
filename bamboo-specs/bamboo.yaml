@@ -1,8 +1,8 @@
 ---
 version: 2
 plan:
-  project-key: CIR
-  key: CUMULUSBUILD
+  project-key: ORNL
+  key: OCP
   name: Build the cumulus
 
 # List of plan's stages and jobs
