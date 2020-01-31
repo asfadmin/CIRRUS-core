@@ -14,4 +14,4 @@ stages:
 Build:
   tasks:
     - script:
-        - echo "TODO: build Cumulus here"
+        - echo "build Cumulus here, eventually."
