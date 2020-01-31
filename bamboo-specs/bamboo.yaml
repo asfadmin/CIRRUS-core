@@ -2,7 +2,7 @@
 version: 2
 plan:
   project-key: ORNL
-  key: ASFADMIN Cirrus Plan
+  key: OCP
   name: Build the cumulus
 
 # List of plan's stages and jobs
