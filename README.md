@@ -98,3 +98,13 @@ committed to git. The `.gitignore` file will ignore them by default.
 2. Deploy Cumulus:
 
         $ make all
+
+## Deploying Cumulus Workflows
+
+There is a sample Workflow Terraform module in the `workflows`
+directory. It deploys the example HelloWorldWorkflow that comes with
+Cumulus. You can use this as a base for deploying your own
+workflows. Modify the Terraform for your workflow(s) and deploy the
+workflow by:
+
+        $ make workflows
