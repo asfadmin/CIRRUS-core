@@ -1,47 +1,27 @@
+terraform {
+  required_providers {
+    aws  = "~> 2.46.0"
+    null = "~> 2.1.0"
+  }
+  backend "s3" {
+  }
+}
+
+provider "aws" {
+}
+
 module "hello_world_workflow" {
   source = "https://github.com/nasa/cumulus/releases/download/v1.17.0/terraform-aws-cumulus-workflow.zip"
 
-  prefix                                = local.prefix
-  name                                  = "HelloWorldWorkflow"
-  workflow_config                       = data.terraform_remote_state.cumulus.outputs.workflow_config
-  system_bucket                         = local.system_bucket
-  tags                                  = local.default_tags
+  prefix                   = local.prefix
+  name                     = "HelloWorldWorkflow"
+  workflow_config          = data.terraform_remote_state.cumulus.outputs.workflow_config
+  system_bucket            = local.system_bucket
+  tags                     = local.default_tags
 
-  state_machine_definition = <<JSON
-{
-  "Comment": "Returns Hello World",
-  "StartAt": "HelloWorld",
-  "States": {
-    "HelloWorld": {
-      "Parameters": {
-        "cma": {
-          "event.$": "$",
-          "task_config": {
-            "buckets": "{$.meta.buckets}",
-            "provider": "{$.meta.provider}",
-            "collection": "{$.meta.collection}"
-          }
-        }
-      },
-      "Type": "Task",
-      "Resource": "${data.terraform_remote_state.cumulus.outputs.hello_world_task.task_arn}",
-      "Retry": [
-        {
-          "ErrorEquals": [
-            "Lambda.ServiceException",
-            "Lambda.AWSLambdaException",
-            "Lambda.SdkClientException"
-          ],
-          "IntervalSeconds": 2,
-          "MaxAttempts": 6,
-          "BackoffRate": 2
-        }
-      ],
-      "End": true
-    }
-  }
-}
-JSON
+  state_machine_definition = templatefile("./hello_world_workflow.json", {
+    task_arn = data.terraform_remote_state.cumulus.outputs.hello_world_task.task_arn
+  })
 }
 
 locals {
