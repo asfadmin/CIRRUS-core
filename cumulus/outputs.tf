@@ -1,3 +1,11 @@
+output "workflow_config" {
+  value = module.cumulus.workflow_config
+}
+
+output "hello_world_task" {
+  value = module.cumulus.hello_world_task
+}
+
 output "archive_api_uri" {
   value = module.cumulus.archive_api_uri
 }

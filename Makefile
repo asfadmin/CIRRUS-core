@@ -14,7 +14,9 @@ export TF_VAR_AWS_REGION=${AWS_REGION}
 
 SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
-.PHONY: clean tf daac data-persistence cumulus destroy-cumulus all
+.PHONY: clean \
+	tf daac data-persistence cumulus destroy-cumulus all \
+	workflows
 
 clean:
 	rm -rf tmp
@@ -84,3 +86,18 @@ all: \
 	daac \
 	data-persistence \
 	cumulus
+
+
+# ------ Workflows ------
+
+.ONESHELL:
+workflows:
+	cd $@
+	rm -f .terraform/environment
+	terraform init -reconfigure -input=false \
+		-backend-config "region=${AWS_REGION}" \
+		-backend-config "bucket=cumulus-${MATURITY}-tf-state" \
+		-backend-config "key=$@/terraform.tfstate" \
+		-backend-config "dynamodb_table=cumulus-${MATURITY}-tf-locks"
+	terraform workspace new ${DEPLOY_NAME} || terraform workspace select ${DEPLOY_NAME}
+	terraform apply -input=false -auto-approve
