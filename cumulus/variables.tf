@@ -255,3 +255,7 @@ variable "deploy_distribution_s3_credentials_endpoint" {
 #   type = list(object({ name = string, arn = string }))
 #   default = []
 # }
+
+variable "ecs_cluster_instance_image_id" {
+  type = string
+}
