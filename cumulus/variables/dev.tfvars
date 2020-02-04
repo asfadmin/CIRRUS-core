@@ -18,3 +18,5 @@ cmr_environment  = "UAT"
 cmr_username     = ""
 
 launchpad_certificate = "launchpad.pfx"
+
+ecs_cluster_instance_image_id = ""
