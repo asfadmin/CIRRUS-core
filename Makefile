@@ -10,7 +10,6 @@
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
-export TF_VAR_AWS_REGION=${AWS_REGION}
 
 SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
