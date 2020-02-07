@@ -12,13 +12,13 @@ pipeline {
   agent { label 'docker' }
 
   stages {
-    stage('initial stuff') {
+    stage('Start Cumulus Deployment') {
       steps {
         // Send chat notification
         mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${env.CHATHOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
       }
     }
-    stage('clone and checkout DAAC repo/ref') {
+    stage('Clone and checkout DAAC repo/ref') {
       steps {
         sh "cd ${WORKSPACE}"
         sh "rm -f ./daac && rm -f ./workflows && rm -rf ./daac-repo"
@@ -29,7 +29,7 @@ pipeline {
         sh 'tree'
       }
     }
-    stage('docker makefile running') {
+    stage('Deploy Cumulus within Docker container') {
       environment {
         FOO="bar"
         CMR_CREDS = credentials("${CMR_CREDS_ID}")
