@@ -6,5 +6,5 @@ cd /workspace/ || exit 1
 # MATURITY needs to be lower case for AWS reasons.
 export MATURITY="`echo "$MATURITY_IN" | tr '[:upper:]' '[:lower:]'`"
 
-rm -rf ./daac
-# make all
+make all
+rm -rf ./daac-repo/tmp
