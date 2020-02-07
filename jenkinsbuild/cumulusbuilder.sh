@@ -8,4 +8,5 @@ MATURITY="`echo "$MATURITY_IN" | tr '[:upper:]' '[:lower:]'`"
 export MATURITY
 
 
+make checkout-daac
 make all
