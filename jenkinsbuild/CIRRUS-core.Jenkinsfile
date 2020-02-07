@@ -21,7 +21,7 @@ pipeline {
     stage('get DAAC specific repo') {
       steps {
         sh "cd ${WORKSPACE}"
-        sh 'git clone git@github.com:asfadmin/CIRRUS-DAAC.git' // TODO: param-ize this
+        sh "git clone ${env.DAAC_REPO}"
         sh 'tree'
       }
     }
