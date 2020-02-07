@@ -3,11 +3,12 @@
 #  AWS_ACCESS_KEY_ID:     Set for the account to which you are deploying
 #  AWS_SECRET_ACCESS_KEY: Set for the account to which you are deploying
 #  AWS_REGION:            The region to which you are deploying
-#  DEPLOY_NAME:           A unique name to distinguish this Cumulus instance from others
-#  MATURITY:              One of: DEV, INT, TEST, PROD
 #
 #  DAAC_REPO:             The git repository URL with DAAC-specific Cumulus customization
 #  DAAC_REF:              The DAAC_REPO git branch or tag name to checkout and deploy
+#
+#  DEPLOY_NAME:           A unique name to distinguish this Cumulus instance from others
+#  MATURITY:              One of: DEV, INT, TEST, PROD
 
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
