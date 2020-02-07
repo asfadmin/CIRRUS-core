@@ -18,6 +18,13 @@ pipeline {
         mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${env.CHATHOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
       }
     }
+    stage('get DAAC specific repo') {
+      steps {
+        sh "cd ${WORKSPACE}"
+        sh 'git clone git@github.com:asfadmin/CIRRUS-DAAC.git' // TODO: param-ize this
+        sh 'tree'
+      }
+    }
     stage('docker makefile running') {
       environment {
         FOO="bar"
