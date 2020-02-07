@@ -9,8 +9,11 @@ node_modules
 .env
 /deployer/cloudformation.yml
 .terraform*
-**/secrets/*.tfvars
+**/.secrets/*.tfvars
 .idea
 tmp
 terraform.tfstate.d
 yarn.lock
+daac-repo
+daac
+workflows

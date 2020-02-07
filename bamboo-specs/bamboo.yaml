@@ -1,17 +1,21 @@
 ---
 version: 2
 plan:
-  project-key: ORNL
-  key: OCP
-  name: Build the cumulus
+  project-key: <CHANGEME>
+  key: <CHANGEME>
+  name: Build and deploy cumulus
 
 # List of plan's stages and jobs
 stages:
-  - Build the cumulus:
-    - Build
+  - build_and_deploy_stage:
+    - build_and_deploy_job
 
 #Job definition
-Build:
+build_and_deploy_job:
   tasks:
-    - script:
-        - echo "build Cumulus here, eventually."
+    - docker_build:
+        - echo "build Docker image"
+    - docker_push:
+        - echo "push image to local Docker repo"
+    - deploy_cumulus:
+        - echo "run in the Docker container, deploy cumulus"
