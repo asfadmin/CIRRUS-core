@@ -18,13 +18,6 @@ pipeline {
         mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${env.CHATHOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
       }
     }
-    stage('get DAAC specific repo') {
-      steps {
-        sh "cd ${WORKSPACE}"
-        sh "git clone ${env.DAAC_REPO}"
-        sh 'tree'
-      }
-    }
     stage('docker makefile running') {
       environment {
         FOO="bar"
@@ -45,6 +38,8 @@ pipeline {
                                     --env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
                                     --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
                                     --env AWS_REGION=${AWS_REGION} \
+                                    --env DAAC_REPO=${DAAC_REPO} \
+                                    --env DAAC_REF=${DAAC_REF} \
                                     -v \"${WORKSPACE}\":/workspace \
                                     ${REGISTRY}/cumulus-builder:${env.CUMULUS_BUILDER_TAG} \
                                     /bin/bash /workspace/jenkinsbuild/cumulusbuilder.sh
