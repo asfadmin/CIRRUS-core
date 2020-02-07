@@ -18,6 +18,14 @@ pipeline {
         mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${env.CHATHOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
       }
     }
+    stage('clone and checkout DAAC repo/ref') {
+      steps {
+        sh "cd ${WORKSPACE}"
+        sh "git clone ${env.DAAC_REPO} daac"
+        sh "cd daac && git fetch && git checkout ${env.DAAC_REF} && git pull"
+        sh 'tree'
+      }
+    }
     stage('docker makefile running') {
       environment {
         FOO="bar"
