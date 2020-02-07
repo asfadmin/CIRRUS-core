@@ -21,8 +21,10 @@ pipeline {
     stage('clone and checkout DAAC repo/ref') {
       steps {
         sh "cd ${WORKSPACE}"
-        sh "git clone ${env.DAAC_REPO} daac"
-        sh "cd daac && git fetch && git checkout ${env.DAAC_REF} && git pull"
+        sh "git clone ${env.DAAC_REPO} daac-repo"
+        sh "cd daac-repo && git fetch && git checkout ${env.DAAC_REF} && git pull && cd .."
+        sh "ln -s daac-repo/daac ./daac"
+        sh "ln -s daac-repo/workflows ./workflows"
         sh 'tree'
       }
     }
