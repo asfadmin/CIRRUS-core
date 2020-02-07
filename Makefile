@@ -6,6 +6,8 @@
 #  DEPLOY_NAME:           A unique name to distinguish this Cumulus instance from others
 #  MATURITY:              One of: DEV, INT, TEST, PROD
 #
+#  DAAC_REPO:             The git repository URL with DAAC-specific Cumulus customization
+#  DAAC_REF:              The DAAC_REPO git branch or tag name to checkout and deploy
 
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
@@ -18,7 +20,11 @@ SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 	workflows
 
 clean:
-	rm -rf tmp
+	echo "Not implemented!"
+
+checkout-daac:
+	git clone ${DAAC_REPO} daac
+	cd daac && git fetch && git checkout ${DAAC_REF} && git pull
 
 .ONESHELL:
 tf:
@@ -30,21 +36,16 @@ tf:
 	terraform refresh -input=false -state=terraform.tfstate.d/${MATURITY}/terraform.tfstate
 	terraform apply -input=false -auto-approve
 
-tmp:
-	mkdir -p tmp
-
 .ONESHELL:
-daac data-persistence cumulus: tmp
-	cd $@
+daac:
+	cd daac/daac
 	rm -f .terraform/environment
 	terraform init -reconfigure -input=false \
 		-backend-config "region=${AWS_REGION}" \
 		-backend-config "bucket=cumulus-${MATURITY}-tf-state" \
-		-backend-config "key=$@/terraform.tfstate" \
+		-backend-config "key=daac/terraform.tfstate" \
 		-backend-config "dynamodb_table=cumulus-${MATURITY}-tf-locks"
 	terraform workspace new ${DEPLOY_NAME} || terraform workspace select ${DEPLOY_NAME}
-	cp $(SELF_DIR)/patch/fetch_or_create_rsa_keys.sh \
-		$(SELF_DIR)/cumulus/.terraform/modules/cumulus/tf-modules/archive/
 	if [ -f "variables/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
@@ -60,6 +61,68 @@ daac data-persistence cumulus: tmp
 		echo "***************************************************************"
 	fi
 	terraform apply \
+		$$VARIABLES_OPT \
+		$$SECRETS_OPT \
+		-input=false \
+		-auto-approve
+
+data-persistence:
+	cd $@
+	rm -f .terraform/environment
+	terraform init -reconfigure -input=false \
+		-backend-config "region=${AWS_REGION}" \
+		-backend-config "bucket=cumulus-${MATURITY}-tf-state" \
+		-backend-config "key=$@/terraform.tfstate" \
+		-backend-config "dynamodb_table=cumulus-${MATURITY}-tf-locks"
+	terraform workspace new ${DEPLOY_NAME} || terraform workspace select ${DEPLOY_NAME}
+	if [ -f "../daac/data-persistence/variables/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export VARIABLES_OPT="-var-file=../daac/data-persistence/variables/${MATURITY}.tfvars"
+		echo "Found maturity-specific variables: $$VARIABLES_OPT"
+		echo "***************************************************************"
+	fi
+	if [ -f "../daac/data-persistence/secrets/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export SECRETS_OPT="-var-file=../daac/data-persistence/secrets/${MATURITY}.tfvars"
+		echo "Found maturity-specific secrets: $$SECRETS_OPT"
+		echo "***************************************************************"
+	fi
+	terraform apply \
+		-var-file=../daac/data-persistence/terraform.tfvars \
+		$$VARIABLES_OPT \
+		$$SECRETS_OPT \
+		-input=false \
+		-auto-approve
+
+cumulus:
+	cd $@
+	rm -f .terraform/environment
+	terraform init -reconfigure -input=false \
+		-backend-config "region=${AWS_REGION}" \
+		-backend-config "bucket=cumulus-${MATURITY}-tf-state" \
+		-backend-config "key=$@/terraform.tfstate" \
+		-backend-config "dynamodb_table=cumulus-${MATURITY}-tf-locks"
+	terraform workspace new ${DEPLOY_NAME} || terraform workspace select ${DEPLOY_NAME}
+	cp $(SELF_DIR)/patch/fetch_or_create_rsa_keys.sh \
+		$(SELF_DIR)/cumulus/.terraform/modules/cumulus/tf-modules/archive/
+	if [ -f "../daac/cumulus/variables/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export VARIABLES_OPT="-var-file=../daac/cumulus/variables/${MATURITY}.tfvars"
+		echo "Found maturity-specific variables: $$VARIABLES_OPT"
+		echo "***************************************************************"
+	fi
+	if [ -f "../daac/cumulus/secrets/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export SECRETS_OPT="-var-file=../daac/cumulus/secrets/${MATURITY}.tfvars"
+		echo "Found maturity-specific secrets: $$SECRETS_OPT"
+		echo "***************************************************************"
+	fi
+	terraform apply \
+		-var-file=../daac/cumulus/terraform.tfvars \
 		$$VARIABLES_OPT \
 		$$SECRETS_OPT \
 		-input=false \
@@ -91,12 +154,12 @@ all: \
 
 .ONESHELL:
 workflows:
-	cd $@
+	cd daac/workflows
 	rm -f .terraform/environment
 	terraform init -reconfigure -input=false \
 		-backend-config "region=${AWS_REGION}" \
 		-backend-config "bucket=cumulus-${MATURITY}-tf-state" \
-		-backend-config "key=$@/terraform.tfstate" \
+		-backend-config "key=workflows/terraform.tfstate" \
 		-backend-config "dynamodb_table=cumulus-${MATURITY}-tf-locks"
 	terraform workspace new ${DEPLOY_NAME} || terraform workspace select ${DEPLOY_NAME}
 	terraform apply -input=false -auto-approve
