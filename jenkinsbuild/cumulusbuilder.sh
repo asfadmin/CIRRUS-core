@@ -4,8 +4,7 @@ env
 cd /workspace/ || exit 1
 
 # MATURITY needs to be lower case for AWS reasons.
-MATURITY="`echo "$MATURITY_IN" | tr '[:upper:]' '[:lower:]'`"
-export MATURITY
+export MATURITY="`echo "$MATURITY_IN" | tr '[:upper:]' '[:lower:]'`"
 
-
-make all
+rm -rf ./daac
+# make all
