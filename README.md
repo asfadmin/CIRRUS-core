@@ -1,14 +1,17 @@
-# Cumulus Core
+# CIRRUS Core
 
 ## Overview
 
 This repository contains the configuration and deployment scripts to
-deploy Cumulus Core for a DAAC. It is a modified version of the
-[Cumulus Template
-Deploy](https://github.com/nasa/cumulus-template-deploy)
-project. Specifically, all parts of the deployment have been
+deploy Cumulus Core for a DAAC. All parts of the deployment have been
 Terraformed and the configuration minimized by using outputs from
 other modules and lookups using Terraform AWS provider data sources.
+
+The project contains a Makefile and CI/CD configuration for Jenkins,
+CircleCI, and Bamboo. By configuring a job for one of those CI/CD
+providers, CIRRUS core can deploy a DAAC-specific Cumulus
+configuration that has been derived from
+[CIRRUS-DAAC](https://github.com/asfadmin/CIRRUS-DAAC).
 
 See the [Cumulus
 Documentation](https://nasa.github.io/cumulus/docs/deployment/deployment-readme)
@@ -19,7 +22,7 @@ Cumulus.
 
 * [Terraform](https://www.terraform.io/)
 * [AWS CLI](https://aws.amazon.com/cli/)
-* [GNU Make](https://www.gnu.org/software/make/)
+* [GNU Make v4.x](https://www.gnu.org/software/make/)
 * One or more NGAP accounts (sandbox, SIT, ...)
 * AWS credentials for the account(s)
 
@@ -39,45 +42,19 @@ variables and settings in a few of the modules. Specifically:
 
 ### tf module
 
-There is no additional configuration necessary in this module.
-
-### daac module
-
-To change which version of the [Cumulus Message
-Adapter](https://github.com/nasa/cumulus-message-adapter) is used to
-create the Lambda layer used by all Step Function Tasks, modify the
-corresponding variable in the `terraform.tfvars` file.
+Configuration of Terraform remote state resources.
 
 ### data-persistence module
 
-To change whether Elasticsearch is provisioned, modify the
-corresponding variable in the `terraform.tfvars`.
+Configuration of the Cumulus `data-persistence` module.
 
 ### cumulus module
 
-This module contains the bulk of the DAAC-specific settings. There are
-three specific things you should customize:
-
-* `terraform.tfvars`: Variables which are likely the same in all
-  environments (SIT, UAT, PROD) _and_ which are not 'secrets'.
-
-* `variables/*.tfvars`: Each file contains variables specific to the
-  corresponding 'maturity' or environment to which you are
-  deploying. For example, in `dev.tfvars` you will likely use a
-  pre-production `urs_url`, while in the `prod.tfvars` file you will
-  specify the production url.
-
-* `secrets/*.tfvars`: Like the variables above, these files contains
-  *secrets* which are specific to the 'maturity' or environment to
-  which you are deploying. Create one file for each environment and
-  populate it with secrets. See the example file in this directory for
-  a starting point. For example, your `dev` `urs_client_password` is
-  likely (hopefully!) different than your `prod` password.
-
-*Important Note*: The secrets files will *not* (and *should not*) be
-committed to git. The `.gitignore` file will ignore them by default.
+Configuration of the Cumulus `cumulus` module.
 
 ## Deploying Cumulus
+
+### Commandline
 
 *Important Note*: When choosing values for MATURITY and DEPLOY_NAME:
 * The combined length cannot exceed 12 characters
@@ -95,16 +72,39 @@ committed to git. The `.gitignore` file will ignore them by default.
 
         (This assumes we've setup AWS credentials with the name `xyz-sandbox-cumulus`)
 
-2. Deploy Cumulus:
+2. Create `secrets/*.tfvars` (OPTIONAL): These files contains
+  *secrets* which are specific to the 'maturity' or environment to
+  which you are deploying. Create one file for each environment and
+  populate it with secrets. For example, your `dev`
+  `urs_client_password` is likely (hopefully!) different than your
+  `prod` password.
+
+*Note*: This is only for commandline deployment from a developer
+workstation, for example. Normally these secrets would be provided by
+the CI/CD provider. See details below on how to do this for Jenkins,
+CircleCI, and Bamboo.
+
+*Important Note*: The secrets files will *not* (and *should not*) be
+committed to git. The `.gitignore` file will ignore them by default.
+
+3. Checkout the DAAC repo to deploy:
+
+        $ make checkout-daac \
+            DAAC_REPO=git@github.com:asfadmin/asf-cumulus-core.git \
+            DAAC_REF=feature-branch
+
+3. Deploy Cumulus:
 
         $ make all
 
-## Deploying Cumulus Workflows
+### Jenkins Job
 
-There is a sample Workflow Terraform module in the `workflows`
-directory. It deploys the example HelloWorldWorkflow that comes with
-Cumulus. You can use this as a base for deploying your own
-workflows. Modify the Terraform for your workflow(s) and deploy the
-workflow by:
+TODO
 
-        $ make workflows
+### CircleCI
+
+TODO
+
+### Bamboo
+
+TODO
