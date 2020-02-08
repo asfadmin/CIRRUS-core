@@ -1,0 +1,54 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: hashicorp/terraform:0.12.18
+    steps:
+      - checkout
+      - run:
+          command: apk add --update curl make
+      - run:
+          command: |
+            curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
+      - run:
+          command: |
+            export DEPLOY_NAME='asf'
+            export MATURITY='dev'
+            make validate
+  deploy:
+    docker:
+      - image: hashicorp/terraform:0.12.18
+    steps:
+      - checkout
+      - run:
+          command: apk add --update curl make
+      - run:
+          command: |
+            curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
+      - run:
+          command: |
+            export DEPLOY_NAME='asf'
+            export MATURITY='dev'
+            make all
+
+workflows:
+  version: 2
+  validate:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: /^.*$/
+              ignore: /^master$/
+          context: asf-cumulus-workflows-sandbox
+      - deploy:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: /^master$/
+          context: asf-cumulus-workflows-sandbox

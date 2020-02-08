@@ -1,0 +1,21 @@
+---
+version: 2
+plan:
+  project-key: <CHANGEME>
+  key: <CHANGEME>
+  name: Build and deploy cumulus
+
+# List of plan's stages and jobs
+stages:
+  - build_and_deploy_stage:
+    - build_and_deploy_job
+
+#Job definition
+build_and_deploy_job:
+  tasks:
+    - docker_build:
+        - echo "build Docker image"
+    - docker_push:
+        - echo "push image to local Docker repo"
+    - deploy_cumulus:
+        - echo "run in the Docker container, deploy cumulus"

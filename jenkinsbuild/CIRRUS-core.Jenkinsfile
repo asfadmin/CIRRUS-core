@@ -12,13 +12,24 @@ pipeline {
   agent { label 'docker' }
 
   stages {
-    stage('initial stuff') {
+    stage('Start Cumulus Deployment') {
       steps {
         // Send chat notification
         mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${env.CHATHOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
       }
     }
-    stage('docker makefile monstrosity') {
+    stage('Clone and checkout DAAC repo/ref') {
+      steps {
+        sh "cd ${WORKSPACE}"
+        sh "rm -f ./daac && rm -f ./workflows && rm -rf ./daac-repo"
+        sh "git clone ${env.DAAC_REPO} daac-repo"
+        sh "cd daac-repo && git fetch && git checkout ${env.DAAC_REF} && git pull && cd .."
+        sh "ln -s daac-repo/daac ./daac"
+        sh "ln -s daac-repo/workflows ./workflows"
+        sh 'tree'
+      }
+    }
+    stage('Deploy Cumulus within Docker container') {
       environment {
         FOO="bar"
         CMR_CREDS = credentials("${CMR_CREDS_ID}")
@@ -38,6 +49,8 @@ pipeline {
                                     --env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
                                     --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
                                     --env AWS_REGION=${AWS_REGION} \
+                                    --env DAAC_REPO=${DAAC_REPO} \
+                                    --env DAAC_REF=${DAAC_REF} \
                                     -v \"${WORKSPACE}\":/workspace \
                                     ${REGISTRY}/cumulus-builder:${env.CUMULUS_BUILDER_TAG} \
                                     /bin/bash /workspace/jenkinsbuild/cumulusbuilder.sh
@@ -67,22 +80,3 @@ pipeline {
   }
 
 } // pipeline
-
-
-
-
-
-//AWS_PROFILENAME=default
-//AWS_ACCESS_KEY_ID=`aws configure get aws_access_key_id --profile ${AWS_PROFILENAME}`
-//AWS_SECRET_ACCESS_KEY=`aws configure get aws_secret_access_key --profile ${AWS_PROFILENAME}`
-//AWS_REGION=`aws configure get region --profile ${AWS_PROFILENAME}`
-//WORKSPACE=~/Documents/projects
-
-//docker run --rm -it \
-//           --env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
-//           --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
-//           --env AWS_REGION=${AWS_REGION} \
-//           --env DEPLOYMENTNAME=asf-cumulus-core-bbarton5 \
-//           -v ${WORKSPACE}:/workspace \
-//           cumulusbuilder:latest \
-//           bash /workspace/asf-cumulus-core/build/cumulusbuilder.sh

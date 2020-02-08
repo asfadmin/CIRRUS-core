@@ -1,18 +1,14 @@
 terraform {
   required_providers {
-    aws  = "~> 2.0"
+    aws  = "~> 2.46.0"
   }
 }
 
-variable "MATURITY" {
-  type = string
+provider "aws" {
 }
 
 locals {
   cumulus-prefix = "cumulus-${var.MATURITY}"
-}
-
-provider "aws" {
 }
 
 resource "aws_s3_bucket" "tf-state-bucket" {
