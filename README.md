@@ -91,7 +91,7 @@ committed to git. The `.gitignore` file will ignore them by default.
    a CIRRUS-DAAC-forked repo, so link CIRRUS-core to that repo where
    you're doing active development.
 
-        $ make checkout-daac \
+        $ make link-daac \
             DAAC_REPO=$HOME/projects/my-daac-repo
 
 4. Deploy Cumulus. If this is your first Cumulus deployment for this
