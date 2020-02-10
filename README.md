@@ -54,11 +54,11 @@ Configuration of the Cumulus `cumulus` module.
 
 ## Deploying Cumulus
 
-### Commandline
-
 *Important Note*: When choosing values for MATURITY and DEPLOY_NAME:
 * The combined length cannot exceed 12 characters
 * Must consist of `a-z` (lower case characters), `0-9`, and `-` (hyphen) only
+
+### Local Development (Commandline)
 
 1. Setup your environment with the AWS profile that has permissions to
    deploy to the target NGAP account:
@@ -87,24 +87,32 @@ CircleCI, and Bamboo.
 *Important Note*: The secrets files will *not* (and *should not*) be
 committed to git. The `.gitignore` file will ignore them by default.
 
-3. Checkout the DAAC repo to deploy:
+3. Link to the DAAC repo to deploy. You're likely doing development on
+   a CIRRUS-DAAC-forked repo, so link CIRRUS-core to that repo where
+   you're doing active development.
 
-        $ make checkout-daac \
-            DAAC_REPO=git@github.com:asfadmin/asf-cumulus-core.git \
-            DAAC_REF=feature-branch
+        $ make link-daac \
+            DAAC_REPO=$HOME/projects/my-daac-repo
 
-3. Deploy Cumulus:
+4. Deploy Cumulus. If this is your first Cumulus deployment for this
+   stack, deploy the entire Cumulus stack:
 
         $ make all
 
-### Jenkins Job
+5. Deploy Workflows. If you're adding a new workflow, Lambdas, or
+   other resources for your workflow, and the rest of the Cumulus
+   deployment hasn't changed, just deploy the workflows:
+
+        $ make workflows
+
+### CI/CD: Jenkins Job
 
 TODO
 
-### CircleCI
+### CI/CD: CircleCI
 
 TODO
 
-### Bamboo
+### CI/CD: Bamboo
 
 TODO

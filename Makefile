@@ -29,6 +29,11 @@ clean:
 	rm daac
 	rm -rf daac-repo
 
+link-daac:
+	ln -s ${DAAC_REPO} ./daac-repo
+	ln -s daac-repo/daac ./daac
+	ln -s daac-repo/workflows ./workflows
+
 checkout-daac:
 	git clone ${DAAC_REPO} daac-repo
 	cd daac-repo && git fetch && git checkout ${DAAC_REF} && git pull && cd ..
