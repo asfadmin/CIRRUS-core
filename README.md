@@ -17,7 +17,7 @@ configuration that has been derived from
 
 ## CIRRUS In Action
 
-[![asciicast](https://asciinema.org/a/https://asciinema.org/a/300310.png)](https://asciinema.org/a/https://asciinema.org/a/300310?speed=2)
+[![asciicast](https://asciinema.org/a/300310.png)](https://asciinema.org/a/https://asciinema.org/a/300310?speed=2)
 
 See the [Cumulus
 Documentation](https://nasa.github.io/cumulus/docs/deployment/deployment-readme)
