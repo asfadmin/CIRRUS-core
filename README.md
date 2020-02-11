@@ -13,6 +13,8 @@ providers, CIRRUS core can deploy a DAAC-specific Cumulus
 configuration that has been derived from
 [CIRRUS-DAAC](https://github.com/asfadmin/CIRRUS-DAAC).
 
+![CIRRUS](docs/CIRRUS.png)
+
 See the [Cumulus
 Documentation](https://nasa.github.io/cumulus/docs/deployment/deployment-readme)
 for detailed information about configuring, deploying, and running
