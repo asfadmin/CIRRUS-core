@@ -1,0 +1,5 @@
+urs_client_password  = "password"
+metrics_es_password  = null
+cmr_password         = "password"
+launchpad_passphrase = ""
+token_secret         = "SECRETTOKEN"
