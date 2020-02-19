@@ -91,7 +91,7 @@ account.
 
         (This assumes we've setup a named AWS credentials profile with the name `xyz-sandbox-cumulus`)
 
-2. Create `secrets/*.tfvars` (OPTIONAL): These files contains
+2. Create `.secrets/*.tfvars` (OPTIONAL): These files contains
   *secrets* which are specific to the 'maturity' or environment to
   which you are deploying. Create one file for each environment you
   will be deploying to and populate it with secrets. For example, your
