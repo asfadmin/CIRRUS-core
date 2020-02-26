@@ -3,7 +3,6 @@ pipeline {
   // Environment Setup
   environment {
     AWS_PROFILENAME="jenkins"
-    REGISTRY="docker-registry.asf.alaska.edu:5000"
     MATURITY="dev"
 
   } // env
@@ -21,15 +20,20 @@ pipeline {
     stage('Clone and checkout DAAC repo/ref') {
       steps {
         sh "cd ${WORKSPACE}"
-        sh "rm -f ./daac && rm -f ./workflows && rm -rf ./daac-repo"
-        sh "git clone ${env.DAAC_REPO} daac-repo"
+        sh "if [ ! -d \"daac-repo\" ]; then git clone ${env.DAAC_REPO} daac-repo; fi"
+        sh "ls -al"
         sh "cd daac-repo && git fetch && git checkout ${env.DAAC_REF} && git pull && cd .."
-        sh "ln -s daac-repo/daac ./daac"
-        sh "ln -s daac-repo/workflows ./workflows"
         sh 'tree'
       }
     }
-    stage('Deploy Cumulus within Docker container') {
+    stage('Build the CIRRUS deploy Docker image') {
+      steps {
+        sh """cd jenkinsbuild && \
+              docker build -f nodebuild.Dockerfile -t cirrusbuilder .
+           """
+      }
+    }
+    stage('Deploy Cumulus within CIRRUS deploy Docker container') {
       environment {
         FOO="bar"
         CMR_CREDS = credentials("${CMR_CREDS_ID}")
@@ -39,7 +43,8 @@ pipeline {
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${env.AWSCREDS}"]])  {
 
-            sh """docker run --rm   --env TF_VAR_cmr_username=${CMR_CREDS_USR} \
+            sh """docker run --rm   --user `id -u` \
+                                    --env TF_VAR_cmr_username=${CMR_CREDS_USR} \
                                     --env TF_VAR_cmr_password=${CMR_CREDS_PSW} \
                                     --env TF_VAR_urs_client_id=${URS_CREDS_USR} \
                                     --env TF_VAR_urs_client_password=${URS_CREDS_PSW} \
@@ -52,7 +57,7 @@ pipeline {
                                     --env DAAC_REPO=${DAAC_REPO} \
                                     --env DAAC_REF=${DAAC_REF} \
                                     -v \"${WORKSPACE}\":/workspace \
-                                    ${REGISTRY}/cumulus-builder:${env.CUMULUS_BUILDER_TAG} \
+                                    cirrusbuilder \
                                     /bin/bash /workspace/jenkinsbuild/cumulusbuilder.sh
             """
 

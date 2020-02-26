@@ -118,7 +118,7 @@ secrets files will *not* (and *should not*) be committed to git. The
 
    This will deploy the Terraform modules that provision Terraform
    state resources, DAAC-specific resources, the Cumulus
-   `data-persistence` module, and the `cumulus` module.
+   `data-persistence` module, the `cumulus` module, and `workflows`.
 
 5. Deploy a specific part of the stack: If you're adding a new
    workflow, Lambdas, or other resources for your workflow, and the
