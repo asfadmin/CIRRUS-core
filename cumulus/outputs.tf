@@ -2,6 +2,10 @@ output "workflow_config" {
   value = module.cumulus.workflow_config
 }
 
+output "lambda_processing_role_arn" {
+  value = module.cumulus.lambda_processing_role_arn
+}
+
 output "sf_sns_report_task" {
   value = module.cumulus.sf_sns_report_task
 }
