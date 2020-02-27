@@ -124,10 +124,10 @@ cumulus: cumulus-init
 		$$SECRETS_OPT \
 		-input=false \
 		-auto-approve
-#	if [ $$? -ne 0 ] # Workaround random Cumulus deploy fails
-#	then
-#		terraform apply -input=false -auto-approve
-#	fi
+	if [ $$? -ne 0 ] # Workaround random Cumulus deploy fails
+	then
+		terraform apply -input=false -auto-approve
+	fi
 
 workflows: workflows-init
 	cd workflows
