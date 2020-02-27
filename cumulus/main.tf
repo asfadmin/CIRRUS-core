@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v1.17.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v1.18.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
   cumulus_message_adapter_lambda_layer_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
   prefix = local.prefix
@@ -84,13 +84,13 @@ locals {
   prefix = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
 
   daac_remote_state_config = {
-    bucket = "cumulus-${var.MATURITY}-tf-state"
+    bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state"
     key    = "daac/terraform.tfstate"
     region = "${data.aws_region.current.name}"
   }
 
   data_persistence_remote_state_config = {
-    bucket = "cumulus-${var.MATURITY}-tf-state"
+    bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state"
     key    = "data-persistence/terraform.tfstate"
     region = "${data.aws_region.current.name}"
   }
@@ -150,13 +150,13 @@ data "aws_subnet_ids" "subnet_ids" {
 
 data "terraform_remote_state" "daac" {
   backend = "s3"
-  workspace = "${var.DEPLOY_NAME}"
+  workspace = "${var.DEPLOY_NAME}-${var.MATURITY}"
   config  = local.daac_remote_state_config
 }
 
 data "terraform_remote_state" "data_persistence" {
   backend = "s3"
-  workspace = "${var.DEPLOY_NAME}"
+  workspace = "${var.DEPLOY_NAME}-${var.MATURITY}"
   config  = local.data_persistence_remote_state_config
 }
 
