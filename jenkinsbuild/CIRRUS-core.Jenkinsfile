@@ -4,7 +4,6 @@ pipeline {
   environment {
     AWS_PROFILENAME="jenkins"
     MATURITY="dev"
-
   } // env
 
   // Build on a slave with docker (for pre-req?)
@@ -21,7 +20,6 @@ pipeline {
       steps {
         sh "cd ${WORKSPACE}"
         sh "if [ ! -d \"daac-repo\" ]; then git clone ${env.DAAC_REPO} daac-repo; fi"
-        sh "ls -al"
         sh "cd daac-repo && git fetch && git checkout ${env.DAAC_REF} && git pull && cd .."
         sh 'tree'
       }
