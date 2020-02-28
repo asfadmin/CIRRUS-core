@@ -5,9 +5,9 @@ module "cumulus" {
   prefix = local.prefix
 
   vpc_id = data.aws_vpc.application_vpcs.id
-  lambda_subnet_ids = "${list(sort(data.aws_subnet_ids.subnet_ids.ids)[0])}"
+  lambda_subnet_ids = data.aws_subnet_ids.subnet_ids.ids
 
-  ecs_cluster_instance_subnet_ids = "${list(sort(data.aws_subnet_ids.subnet_ids.ids)[0])}"
+  ecs_cluster_instance_subnet_ids = data.aws_subnet_ids.subnet_ids.ids
   ecs_cluster_min_size            = 1
   ecs_cluster_desired_size        = 1
   ecs_cluster_max_size            = 2
@@ -147,6 +147,10 @@ data "aws_vpc" "application_vpcs" {
 
 data "aws_subnet_ids" "subnet_ids" {
   vpc_id = data.aws_vpc.application_vpcs.id
+
+  tags = {
+    Name = "Private application ${data.aws_region.current.name}a subnet"
+   }
 }
 
 data "terraform_remote_state" "daac" {
