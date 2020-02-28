@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v1.17.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v1.18.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
   cumulus_message_adapter_lambda_layer_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
   prefix = local.prefix
@@ -11,6 +11,7 @@ module "cumulus" {
   ecs_cluster_min_size            = 1
   ecs_cluster_desired_size        = 1
   ecs_cluster_max_size            = 2
+  ecs_cluster_instance_image_id   = var.ecs_cluster_instance_image_id
   key_name                        = var.key_name
 
   urs_url             = var.urs_url
@@ -49,7 +50,7 @@ module "cumulus" {
   saml_entity_id                  = var.saml_entity_id
   saml_assertion_consumer_service = var.saml_assertion_consumer_service
   saml_idp_login                  = var.saml_idp_login
-  saml_launchpad_metadata_path    = var.saml_launchpad_metadata_path
+  saml_launchpad_metadata_url     = var.saml_launchpad_metadata_url
 
   token_secret = var.token_secret
 
