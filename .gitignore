@@ -18,3 +18,4 @@ daac-repo
 daac
 workflows
 .python-version
+.secrets

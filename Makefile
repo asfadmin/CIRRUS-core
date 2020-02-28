@@ -33,6 +33,7 @@ link-daac:
 	ln -s ${DAAC_REPO} ./daac-repo
 	ln -s daac-repo/daac ./daac
 	ln -s daac-repo/workflows ./workflows
+	ln -s daac-repo/cumulus/secrets ./.secrets
 
 checkout-daac:
 	git clone ${DAAC_REPO} daac-repo
