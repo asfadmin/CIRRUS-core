@@ -42,13 +42,13 @@ checkout-daac:
 
 tf-init:
 	cd tf
-	terraform init -reconfigure -input=false
+	terraform init -reconfigure -input=false -no-color
 	terraform workspace new ${MATURITY} || terraform workspace select ${MATURITY}
 
 %-init:
 	cd $*
 	rm -f .terraform/environment
-	terraform init -reconfigure -input=false \
+	terraform init -reconfigure -input=false -no-color \
 		-backend-config "region=${AWS_REGION}" \
 		-backend-config "bucket=cumulus-${MATURITY}-tf-state" \
 		-backend-config "key=$*/terraform.tfstate" \
@@ -68,7 +68,7 @@ tf: tf-init
 	terraform import -input=false aws_s3_bucket.tf-state-bucket cumulus-${MATURITY}-tf-state || true
 	terraform import -input=false aws_dynamodb_table.tf-locks-table cumulus-${MATURITY}-tf-locks || true
 	terraform refresh -input=false -state=terraform.tfstate.d/${MATURITY}/terraform.tfstate
-	terraform apply -input=false -auto-approve
+	terraform apply -input=false -auto-approve -no-color
 
 daac: daac-init
 	cd $@
@@ -82,6 +82,7 @@ daac: daac-init
 	terraform apply \
 		$$VARIABLES_OPT \
 		-input=false \
+		-no-color \
 		-auto-approve
 
 data-persistence: data-persistence-init
@@ -97,6 +98,7 @@ data-persistence: data-persistence-init
 		-var-file=../daac-repo/$@/terraform.tfvars \
 		$$VARIABLES_OPT \
 		-input=false \
+		-no-color \
 		-auto-approve
 
 cumulus: cumulus-init
@@ -122,15 +124,16 @@ cumulus: cumulus-init
 		$$VARIABLES_OPT \
 		$$SECRETS_OPT \
 		-input=false \
+		-no-color \
 		-auto-approve
 	if [ $$? -ne 0 ] # Workaround random Cumulus deploy fails
 	then
-		terraform apply -input=false -auto-approve
+		terraform apply -input=false -auto-approve -no-color
 	fi
 
 workflows: workflows-init
 	cd workflows
-	terraform apply -input=false -auto-approve
+	terraform apply -input=false -auto-approve -no-color
 
 all: \
 	tf \
@@ -141,4 +144,4 @@ all: \
 
 destroy-cumulus: cumulus-init
 	cd cumulus
-	terraform destroy -input=false -auto-approve
+	terraform destroy -input=false -auto-approve -no-color
