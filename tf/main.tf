@@ -8,7 +8,7 @@ provider "aws" {
 }
 
 locals {
-  cumulus-prefix = "cumulus-${var.MATURITY}"
+  cumulus-prefix = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
 }
 
 resource "aws_s3_bucket" "tf-state-bucket" {

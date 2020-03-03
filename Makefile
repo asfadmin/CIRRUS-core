@@ -43,17 +43,17 @@ checkout-daac:
 tf-init:
 	cd tf
 	terraform init -reconfigure -input=false -no-color
-	terraform workspace new ${MATURITY} || terraform workspace select ${MATURITY}
+	terraform workspace new ${DEPLOY_NAME}-${MATURITY} || terraform workspace select ${DEPLOY_NAME}-${MATURITY}
 
 %-init:
 	cd $*
 	rm -f .terraform/environment
 	terraform init -reconfigure -input=false -no-color \
 		-backend-config "region=${AWS_REGION}" \
-		-backend-config "bucket=cumulus-${MATURITY}-tf-state" \
+		-backend-config "bucket=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state" \
 		-backend-config "key=$*/terraform.tfstate" \
-		-backend-config "dynamodb_table=cumulus-${MATURITY}-tf-locks"
-	terraform workspace new ${DEPLOY_NAME} || terraform workspace select ${DEPLOY_NAME}
+		-backend-config "dynamodb_table=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks"
+	terraform workspace new ${DEPLOY_NAME}-${MATURITY} || terraform workspace select ${DEPLOY_NAME}-${MATURITY}
 
 modules = tf daac data-persistence cumulus workflows
 init-modules := $(modules:%-init=%)
@@ -65,9 +65,9 @@ validate: $(init-modules)
 
 tf: tf-init
 	cd tf
-	terraform import -input=false aws_s3_bucket.tf-state-bucket cumulus-${MATURITY}-tf-state || true
-	terraform import -input=false aws_dynamodb_table.tf-locks-table cumulus-${MATURITY}-tf-locks || true
-	terraform refresh -input=false -state=terraform.tfstate.d/${MATURITY}/terraform.tfstate
+	terraform import -input=false aws_s3_bucket.tf-state-bucket ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state || true
+	terraform import -input=false aws_dynamodb_table.tf-locks-table ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks || true
+	terraform refresh -input=false -state=terraform.tfstate.d/${DEPLOY_NAME}-${MATURITY}/terraform.tfstate
 	terraform apply -input=false -auto-approve -no-color
 
 daac: daac-init
