@@ -259,3 +259,8 @@ variable "deploy_distribution_s3_credentials_endpoint" {
 variable "ecs_cluster_instance_image_id" {
   type = string
 }
+
+variable "bucket_map" {
+  type = map(object({ name = string, type = string }))
+  default = {}
+}
