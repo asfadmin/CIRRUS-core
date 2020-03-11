@@ -56,7 +56,7 @@ module "cumulus" {
   permissions_boundary_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/NGAPShRoleBoundary"
 
   system_bucket = local.system_bucket
-  buckets       = local.buckets
+  buckets       = data.terraform_remote_state.daac.outputs.bucket_map
 
   elasticsearch_alarms            = data.terraform_remote_state.data_persistence.outputs.elasticsearch_alarms
   elasticsearch_domain_arn        = data.terraform_remote_state.data_persistence.outputs.elasticsearch_domain_arn
@@ -96,25 +96,6 @@ locals {
   }
 
   system_bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-internal"
-
-  buckets = {
-    internal = {
-      name = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-internal"
-      type = "internal"
-    }
-    private = {
-      name = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-private"
-      type = "private"
-    },
-    protected = {
-      name = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-protected"
-      type = "protected"
-    },
-    public = {
-      name = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-public"
-      type = "public"
-    }
-  }
 
   cmr_client_id = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
 
