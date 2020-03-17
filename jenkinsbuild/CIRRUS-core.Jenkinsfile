@@ -5,6 +5,7 @@ pipeline {
     AWS_PROFILENAME="jenkins"
     REGISTRY="docker-registry.asf.alaska.edu:5000"
     MATURITY="dev"
+    ASF_RAIN_MD_SQS="https://sqs.us-west-2.amazonaws.com/117169578524/RAIN-MD-QUEUE-DEV"
 
   } // env
 
@@ -40,9 +41,10 @@ pipeline {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${env.AWSCREDS}"]])  {
 
             sh """docker run --rm   --env TF_VAR_cmr_username=${CMR_CREDS_USR} \
-                                    --env TF_VAR_cmr_password=${CMR_CREDS_PSW} \
+                                    --env TF_VAR_cmr_password='${CMR_CREDS_PSW}' \
                                     --env TF_VAR_urs_client_id=${URS_CREDS_USR} \
-                                    --env TF_VAR_urs_client_password=${URS_CREDS_PSW} \
+                                    --env TF_VAR_urs_client_password='${URS_CREDS_PSW}' \
+                                    --env TF_VAR_ASF_RAIN_MD_SQS=${ASF_RAIN_MD_SQS} \
                                     --env TF_VAR_token_secret=${TOKEN_SECRET} \
                                     --env DEPLOY_NAME=${DEPLOY_NAME} \
                                     --env MATURITY_IN=${MATURITY} \
