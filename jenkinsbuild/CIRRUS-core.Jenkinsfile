@@ -38,11 +38,10 @@ pipeline {
       }
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${env.AWSCREDS}"]])  {
-
             sh """docker run --rm   --env TF_VAR_cmr_username=${CMR_CREDS_USR} \
-                                    --env TF_VAR_cmr_password=${CMR_CREDS_PSW} \
+                                    --env TF_VAR_cmr_password='${CMR_CREDS_PSW}' \
                                     --env TF_VAR_urs_client_id=${URS_CREDS_USR} \
-                                    --env TF_VAR_urs_client_password=${URS_CREDS_PSW} \
+                                    --env TF_VAR_urs_client_password='${URS_CREDS_PSW}' \
                                     --env TF_VAR_token_secret=${TOKEN_SECRET} \
                                     --env DEPLOY_NAME=${DEPLOY_NAME} \
                                     --env MATURITY_IN=${MATURITY} \
