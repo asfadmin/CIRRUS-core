@@ -54,7 +54,6 @@ pipeline {
                                     --env AWS_REGION='${AWS_REGION}' \
                                     --env DAAC_REPO='${DAAC_REPO}' \
                                     --env DAAC_REF='${DAAC_REF}' \
-
                                     -v \"${WORKSPACE}\":/workspace \
                                     cirrusbuilder \
                                     /bin/bash /workspace/jenkinsbuild/cumulusbuilder.sh
