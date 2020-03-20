@@ -18,6 +18,8 @@ SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 .ONESHELL:
 
+.DEFAULT_GOAL := all
+
 .PHONY: clean \
 	checkout-daac \
 	validate \
@@ -25,20 +27,18 @@ SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 	destroy-cumulus
 
 clean:
-	rm workflows
-	rm daac
-	rm -rf daac-repo
+	rm -rf ${SELF_DIR}/daac-repo
 
 link-daac:
-	ln -s ${DAAC_REPO} ./daac-repo
-	ln -s daac-repo/daac ./daac
-	ln -s daac-repo/workflows ./workflows
+	ln -s ${DAAC_REPO} ${SELF_DIR}/daac-repo
 
 checkout-daac:
-	git clone ${DAAC_REPO} daac-repo
-	cd daac-repo && git fetch && git checkout ${DAAC_REF} && git pull && cd ..
-	ln -s daac-repo/daac ./daac
-	ln -s daac-repo/workflows ./workflows
+	git clone ${DAAC_REPO} ${SELF_DIR}/daac-repo
+	cd ${SELF_DIR}/daac-repo
+	git fetch
+	git checkout ${DAAC_REF}
+	git pull
+	cd ${SELF_DIR}
 
 tf-init:
 	cd tf
@@ -55,7 +55,7 @@ tf-init:
 		-backend-config "dynamodb_table=cumulus-${MATURITY}-tf-locks"
 	terraform workspace new ${DEPLOY_NAME} || terraform workspace select ${DEPLOY_NAME}
 
-modules = tf daac data-persistence cumulus workflows
+modules = tf data-persistence cumulus
 init-modules := $(modules:%-init=%)
 
 validate: $(init-modules)
@@ -71,19 +71,8 @@ tf: tf-init
 	terraform apply -input=false -auto-approve -no-color
 
 daac: daac-init
-	cd $@
-	if [ -f "variables/${MATURITY}.tfvars" ]
-	then
-		echo "***************************************************************"
-		export VARIABLES_OPT="-var-file=variables/${MATURITY}.tfvars"
-		echo "Found maturity-specific variables: $$VARIABLES_OPT"
-		echo "***************************************************************"
-	fi
-	terraform apply \
-		$$VARIABLES_OPT \
-		-input=false \
-		-no-color \
-		-auto-approve
+	cd ${SELF_DIR}/daac-repo
+	make daac
 
 data-persistence: data-persistence-init
 	cd $@
@@ -133,8 +122,8 @@ cumulus: cumulus-init
 	fi
 
 workflows: workflows-init
-	cd workflows
-	terraform apply -input=false -auto-approve -no-color
+	cd ${SELF_DIR}/daac-repo
+	make workflows
 
 all: \
 	tf \
