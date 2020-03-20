@@ -108,16 +108,17 @@ cumulus: cumulus-init
 		echo "Found maturity-specific variables: $$VARIABLES_OPT"
 		echo "***************************************************************"
 	fi
-	terraform apply \
-		-var-file=../daac-repo/$@/terraform.tfvars \
-		$$VARIABLES_OPT \
-		$$SECRETS_OPT \
-		-input=false \
-		-no-color \
-		-auto-approve
+	export TF_CMD="terraform apply \
+				-var-file=../daac-repo/$@/terraform.tfvars \
+				$$VARIABLES_OPT \
+				$$SECRETS_OPT \
+				-input=false \
+				-no-color \
+				-auto-approve"
+	eval $$TF_CMD
 	if [ $$? -ne 0 ] # Workaround random Cumulus deploy fails
 	then
-		terraform apply -input=false -auto-approve -no-color
+		eval $$TF_CMD
 	fi
 
 workflows: workflows-init
