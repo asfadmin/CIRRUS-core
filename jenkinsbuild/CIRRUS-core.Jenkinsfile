@@ -3,7 +3,6 @@ pipeline {
   // Environment Setup
   environment {
     AWS_PROFILENAME="jenkins"
-    MATURITY="dev"
   } // env
 
   // Build on a slave with docker (for pre-req?)
@@ -13,7 +12,7 @@ pipeline {
     stage('Start Cumulus Deployment') {
       steps {
         // Send chat notification
-        mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${env.CHATHOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
+        mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${env.CHAT_HOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
       }
     }
     stage('Clone and checkout DAAC repo/ref') {
@@ -33,7 +32,6 @@ pipeline {
     }
     stage('Deploy Cumulus within CIRRUS deploy Docker container') {
       environment {
-        FOO="bar"
         CMR_CREDS = credentials("${CMR_CREDS_ID}")
         URS_CREDS = credentials("${URS_CREDS_ID}")
         TOKEN_SECRET = credentials("${env.SECRET_TOKEN_ID}")/**/
@@ -69,7 +67,7 @@ pipeline {
       sh 'echo "done"'
     }
     success {
-      mattermostSend channel: "${CHAT_ROOM}", color: '#CEEBD3', endpoint: "${env.CHATHOST}", message: "Build Successful: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+      mattermostSend channel: "${CHAT_ROOM}", color: '#CEEBD3', endpoint: "${env.CHAT_HOST}", message: "Build Successful: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
     }
     failure {
       sh "env"
@@ -77,8 +75,11 @@ pipeline {
       sh "cd \"${WORKSPACE}\""
       sh "tree"
 
-      mattermostSend channel: "${CHAT_ROOM}", color: '#FFBDBD', endpoint: "${env.CHATHOST}", message: "Build Failed:  🤬${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)🤬"
+      mattermostSend channel: "${CHAT_ROOM}", color: '#FFBDBD', endpoint: "${env.CHAT_HOST}", message: "Build Failed:  🤬${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)🤬"
 
+    }
+    changed {
+      sh "echo 'This will run only if the state of the Pipeline has changed' && echo 'For example, if the Pipeline was previously failing but is now successful'"
     }
   }
 
