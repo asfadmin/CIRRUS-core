@@ -4,7 +4,6 @@ pipeline {
   environment {
     AWS_PROFILENAME="jenkins"
     MATURITY="dev"
-
   } // env
 
   // Build on a slave with docker (for pre-req?)
@@ -21,7 +20,6 @@ pipeline {
       steps {
         sh "cd ${WORKSPACE}"
         sh "if [ ! -d \"daac-repo\" ]; then git clone ${env.DAAC_REPO} daac-repo; fi"
-        sh "ls -al"
         sh "cd daac-repo && git fetch && git checkout ${env.DAAC_REF} && git pull && cd .."
         sh 'tree'
       }
@@ -44,18 +42,18 @@ pipeline {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${env.AWSCREDS}"]])  {
 
             sh """docker run --rm   --user `id -u` \
-                                    --env TF_VAR_cmr_username=${CMR_CREDS_USR} \
-                                    --env TF_VAR_cmr_password=${CMR_CREDS_PSW} \
-                                    --env TF_VAR_urs_client_id=${URS_CREDS_USR} \
-                                    --env TF_VAR_urs_client_password=${URS_CREDS_PSW} \
-                                    --env TF_VAR_token_secret=${TOKEN_SECRET} \
-                                    --env DEPLOY_NAME=${DEPLOY_NAME} \
-                                    --env MATURITY_IN=${MATURITY} \
-                                    --env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
-                                    --env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
-                                    --env AWS_REGION=${AWS_REGION} \
-                                    --env DAAC_REPO=${DAAC_REPO} \
-                                    --env DAAC_REF=${DAAC_REF} \
+                                    --env TF_VAR_cmr_username='${CMR_CREDS_USR}' \
+                                    --env TF_VAR_cmr_password='${CMR_CREDS_PSW}' \
+                                    --env TF_VAR_urs_client_id='${URS_CREDS_USR}' \
+                                    --env TF_VAR_urs_client_password='${URS_CREDS_PSW}' \
+                                    --env TF_VAR_token_secret='${TOKEN_SECRET}' \
+                                    --env DEPLOY_NAME='${DEPLOY_NAME}' \
+                                    --env MATURITY_IN='${MATURITY}' \
+                                    --env AWS_ACCESS_KEY_ID='${AWS_ACCESS_KEY_ID}' \
+                                    --env AWS_SECRET_ACCESS_KEY='${AWS_SECRET_ACCESS_KEY}' \
+                                    --env AWS_REGION='${AWS_REGION}' \
+                                    --env DAAC_REPO='${DAAC_REPO}' \
+                                    --env DAAC_REF='${DAAC_REF}' \
                                     -v \"${WORKSPACE}\":/workspace \
                                     cirrusbuilder \
                                     /bin/bash /workspace/jenkinsbuild/cumulusbuilder.sh

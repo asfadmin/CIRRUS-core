@@ -18,6 +18,8 @@ SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 .ONESHELL:
 
+.DEFAULT_GOAL := all
+
 .PHONY: clean \
 	checkout-daac \
 	validate \
