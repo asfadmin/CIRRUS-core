@@ -12,7 +12,6 @@ module "cumulus" {
   ecs_cluster_min_size            = 1
   ecs_cluster_desired_size        = 1
   ecs_cluster_max_size            = 2
-  ecs_cluster_instance_image_id   = var.ecs_cluster_instance_image_id
   key_name                        = var.key_name
 
   urs_url             = var.urs_url
