@@ -41,6 +41,14 @@ pipeline {
     string(name: 'DAAC_REPO', defaultValue: 'git@github.com:asfadmin/asf-cumulus-core.git', description: '')
     string(name: 'DAAC_REF', defaultValue: 'master', description: '')
 
+    credentials(
+        name: 'AWS_CREDS_EXAMPLE',
+        description: 'maybe this one works.',
+        defaultValue: 'ASF-117169578524',
+        credentialType: 'com.cloudbees.jenkins.plugins.awscredentials.AWSCredentialsImpl',
+        required: true
+      )
+
   }
   // Environment Setup
   environment {
@@ -56,6 +64,12 @@ pipeline {
       steps {
         // Send chat notification
         //mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${env.CHATHOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
+      sh """
+        echo "secret token id: ${params.SECRET_TOKEN_ID}"
+        echo "AWS_CREDS: ${params.AWS_CREDS}"
+        echo "CMR_CREDS: ${params.CMR_CREDS}"
+        echo "URS_CREDS_ID id: ${params.URS_CREDS_ID}"
+      """
       sh "env"
       sh "echo ${WORKSPACE}"
       sh "cd \"${WORKSPACE}\""
