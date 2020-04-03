@@ -53,14 +53,14 @@ pipeline {
     stage('Start Cumulus Deployment') {
       steps {
         // Send chat notification
-        mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${env.CHAT_HOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
+        mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${params.CHAT_HOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
       }
     }
     stage('Clone and checkout DAAC repo/ref') {
       steps {
         sh "cd ${WORKSPACE}"
-        sh "if [ ! -d \"daac-repo\" ]; then git clone ${env.DAAC_REPO} daac-repo; fi"
-        sh "cd daac-repo && git fetch && git checkout ${env.DAAC_REF} && git pull && cd .."
+        sh "if [ ! -d \"daac-repo\" ]; then git clone ${params.DAAC_REPO} daac-repo; fi"
+        sh "cd daac-repo && git fetch && git checkout ${params.DAAC_REF} && git pull && cd .."
         sh 'tree'
       }
     }
@@ -81,18 +81,18 @@ pipeline {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${params.AWS_CREDS}"]])  {
 
             sh """docker run --rm   --user `id -u` \
+                                    --env DEPLOY_NAME='${params.DEPLOY_NAME}' \
+                                    --env MATURITY='${params.MATURITY}' \
+                                    --env AWS_ACCESS_KEY_ID='${AWS_ACCESS_KEY_ID}' \
+                                    --env AWS_SECRET_ACCESS_KEY='${AWS_SECRET_ACCESS_KEY}' \
+                                    --env AWS_REGION='${params.AWS_REGION}' \
+                                    --env DAAC_REPO='${params.DAAC_REPO}' \
+                                    --env DAAC_REF='${params.DAAC_REF}' \
                                     --env TF_VAR_cmr_username='${CMR_CREDS_USR}' \
                                     --env TF_VAR_cmr_password='${CMR_CREDS_PSW}' \
                                     --env TF_VAR_urs_client_id='${URS_CREDS_USR}' \
                                     --env TF_VAR_urs_client_password='${URS_CREDS_PSW}' \
                                     --env TF_VAR_token_secret='${TOKEN_SECRET}' \
-                                    --env DEPLOY_NAME='${DEPLOY_NAME}' \
-                                    --env MATURITY_IN='${MATURITY}' \
-                                    --env AWS_ACCESS_KEY_ID='${AWS_ACCESS_KEY_ID}' \
-                                    --env AWS_SECRET_ACCESS_KEY='${AWS_SECRET_ACCESS_KEY}' \
-                                    --env AWS_REGION='${AWS_REGION}' \
-                                    --env DAAC_REPO='${DAAC_REPO}' \
-                                    --env DAAC_REF='${DAAC_REF}' \
                                     -v \"${WORKSPACE}\":/workspace \
                                     cirrusbuilder \
                                     /bin/bash /workspace/jenkinsbuild/cumulusbuilder.sh
@@ -108,7 +108,7 @@ pipeline {
       sh 'echo "done"'
     }
     success {
-      mattermostSend channel: "${CHAT_ROOM}", color: '#CEEBD3', endpoint: "${env.CHAT_HOST}", message: "Build Successful: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+      mattermostSend channel: "${CHAT_ROOM}", color: '#CEEBD3', endpoint: "${params.CHAT_HOST}", message: "Build Successful: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
     }
     failure {
       sh "env"
@@ -116,7 +116,7 @@ pipeline {
       sh "cd \"${WORKSPACE}\""
       sh "tree"
 
-      mattermostSend channel: "${CHAT_ROOM}", color: '#FFBDBD', endpoint: "${env.CHAT_HOST}", message: "Build Failed:  🤬${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)🤬"
+      mattermostSend channel: "${CHAT_ROOM}", color: '#FFBDBD', endpoint: "${params.CHAT_HOST}", message: "Build Failed:  🤬${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)🤬"
 
     }
     changed {
