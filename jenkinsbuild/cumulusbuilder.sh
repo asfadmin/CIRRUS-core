@@ -8,9 +8,8 @@ ls -al tf
 ls -al daac-repo
 
 # MATURITY needs to be lower case for AWS reasons.
-export MATURITY="`echo "$MATURITY_IN" | tr '[:upper:]' '[:lower:]'`"
+export MATURITY="`echo "$MATURITY" | tr '[:upper:]' '[:lower:]'`"
+env
 
 make all
-rval=$?
-
-exit $rval
+exit $?
