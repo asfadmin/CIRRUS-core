@@ -67,7 +67,7 @@ pipeline {
       sh """
         echo "secret token id: ${params.SECRET_TOKEN_ID}"
         echo "AWS_CREDS: ${params.AWS_CREDS}"
-        echo "CMR_CREDS: ${params.CMR_CREDS_ID}"
+        echo "CMR_CREDS_ID: ${params.CMR_CREDS_ID}"
         echo "URS_CREDS_ID id: ${params.URS_CREDS_ID}"
       """
       sh "env"
@@ -85,7 +85,7 @@ pipeline {
       sh 'echo "done"'
     }
     success {
-      mattermostSend channel: "${CHAT_ROOM}", color: '#CEEBD3', endpoint: "${env.CHATHOST}", message: "fake cirrus Build Successful: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+      mattermostSend channel: "${params.CHAT_ROOM}", color: '#CEEBD3', endpoint: "${params.CHAT_HOST}", message: "fake cirrus Build Successful: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
     }
     failure {
       sh "env"
@@ -93,7 +93,7 @@ pipeline {
       sh "cd \"${WORKSPACE}\""
       sh "tree"
 
-      //mattermostSend channel: "${CHAT_ROOM}", color: '#FFBDBD', endpoint: "${env.CHATHOST}", message: "Build Failed:  🤬${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)🤬"
+      //mattermostSend channel: "${params.CHAT_ROOM}", color: '#FFBDBD', endpoint: "${env.CHATHOST}", message: "Build Failed:  🤬${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)🤬"
 
     }
     changed {
