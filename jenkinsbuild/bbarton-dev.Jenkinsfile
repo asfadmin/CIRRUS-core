@@ -12,7 +12,7 @@ pipeline {
         required: true
       )
     credentials(
-        name: 'CMR_CREDS',
+        name: 'CMR_CREDS_ID',
         credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl',
         defaultValue: 'asf-cumulus-core-cmr_creds_UAT', //<option value="asf-cumulus-core-cmr_creds_UAT">benbart/****** (CMR username &amp; password for use in the asf-cumulus-core NGAP sandbox account)</option>
         description: '',
@@ -67,7 +67,7 @@ pipeline {
       sh """
         echo "secret token id: ${params.SECRET_TOKEN_ID}"
         echo "AWS_CREDS: ${params.AWS_CREDS}"
-        echo "CMR_CREDS: ${params.CMR_CREDS}"
+        echo "CMR_CREDS: ${params.CMR_CREDS_ID}"
         echo "URS_CREDS_ID id: ${params.URS_CREDS_ID}"
       """
       sh "env"
