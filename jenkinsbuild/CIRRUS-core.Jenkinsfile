@@ -1,9 +1,12 @@
 pipeline {
   parameters {
     choice(name: 'MATURITY', choices: ['DEV', 'INT', 'TEST', 'PROD'], description: 'The MATURITY (AWS) account to deploy')
-    string(name: 'DEPLOY_NAME', defaultValue: 'asf', description: 'The name of the stack for this MATURITY')
+    string(name: 'DEPLOY_NAME', required: true, description: 'The name of the stack for this MATURITY')
 
-    choice(name: 'AWS_REGION', choices: ['us-west-2', 'us-east-1'], description: '')
+    string(name: 'DAAC_REPO', defaultValue: 'git@github.com:asfadmin/asf-cumulus-core.git', description: '')
+    string(name: 'DAAC_REF', defaultValue: 'master', description: '')
+
+    string(name: 'AWS_REGION', required: true, description: 'AWS Region to deploy to')
     credentials(
         name: 'AWS_CREDS',
         description: '',
@@ -11,6 +14,7 @@ pipeline {
         credentialType: 'com.cloudbees.jenkins.plugins.awscredentials.AWSCredentialsImpl',
         required: true
       )
+
     credentials(
         name: 'CMR_CREDS_ID',
         credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl',
@@ -25,11 +29,6 @@ pipeline {
         description: 'urs_client_id and urs_password for cumulus',
         required: true
       )
-
-
-    string(name: 'CHAT_HOST', defaultValue: 'https://chat.asf.alaska.edu/hooks/dm8kzc8rxpr57xkt9w6tnfaasr', description: '')
-    choice(name: 'CHAT_ROOM', choices: ['bbarton-scratch', 'raindev', 'rain'], description: '')
-
     credentials(
         name: 'SECRET_TOKEN_ID',
         credentialType: 'com.cloudbees.plugins.credentials.impl.SecretTextCredentialsImpl',
@@ -38,9 +37,8 @@ pipeline {
         required: true
     )
 
-    string(name: 'DAAC_REPO', defaultValue: 'git@github.com:asfadmin/asf-cumulus-core.git', description: '')
-    string(name: 'DAAC_REF', defaultValue: 'master', description: '')
-
+    string(name: 'CHAT_HOST', defaultValue: 'https://chat.asf.alaska.edu/hooks/dm8kzc8rxpr57xkt9w6tnfaasr', description: '')
+    choice(name: 'CHAT_ROOM', choices: ['bbarton-scratch', 'raindev', 'rain'], description: '')
   }
 
   // Environment Setup
