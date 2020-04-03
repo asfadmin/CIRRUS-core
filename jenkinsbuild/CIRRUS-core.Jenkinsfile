@@ -1,12 +1,12 @@
 pipeline {
   parameters {
     choice(name: 'MATURITY', choices: ['DEV', 'INT', 'TEST', 'PROD'], description: 'The MATURITY (AWS) account to deploy')
-    string(name: 'DEPLOY_NAME', description: 'The name of the stack for this MATURITY')
+    string(name: 'DEPLOY_NAME', defaultValue: '', description: 'The name of the stack for this MATURITY')
 
-    string(name: 'DAAC_REPO', defaultValue: 'git@github.com:asfadmin/asf-cumulus-core.git', description: '')
+    string(name: 'DAAC_REPO', defaultValue: '', description: '')
     string(name: 'DAAC_REF', defaultValue: 'master', description: '')
 
-    string(name: 'AWS_REGION', description: 'AWS Region to deploy to')
+    string(name: 'AWS_REGION', defaultValue: '', description: 'AWS Region to deploy to')
     credentials(
         name: 'AWS_CREDS',
         description: '',
