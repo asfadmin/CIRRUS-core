@@ -47,6 +47,8 @@ tf-init:
 
 %-init:
 	cd $*
+	echo "*** Environment ***"
+	env
 	rm -f .terraform/environment
 	terraform init -reconfigure -input=false -no-color \
 		-backend-config "region=${AWS_REGION}" \
