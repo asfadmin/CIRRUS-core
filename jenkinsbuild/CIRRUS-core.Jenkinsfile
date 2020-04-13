@@ -60,7 +60,7 @@ pipeline {
       steps {
         sh "cd ${WORKSPACE}"
         sh "if [ ! -d \"daac-repo\" ]; then git clone ${params.DAAC_REPO} daac-repo; fi"
-        sh "cd daac-repo && git fetch && git checkout ${params.DAAC_REF} && git pull && cd .."
+        sh "cd daac-repo && git fetch origin ${params.DAAC_REF} && git checkout ${params.DAAC_REF} && cd .."
         sh 'tree'
       }
     }
