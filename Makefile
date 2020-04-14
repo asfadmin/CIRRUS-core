@@ -3,6 +3,7 @@
 #  AWS_ACCESS_KEY_ID:     Set for the account to which you are deploying
 #  AWS_SECRET_ACCESS_KEY: Set for the account to which you are deploying
 #  AWS_REGION:            The region to which you are deploying
+#  AWS_ACOUNT_ID:	  The AWS account ID to which you are deploying
 #
 #  DAAC_REPO:             The git repository URL with DAAC-specific Cumulus customization
 #  DAAC_REF:              The DAAC_REPO git branch or tag name to checkout and deploy
@@ -52,9 +53,9 @@ tf-init:
 	rm -f .terraform/environment
 	terraform init -reconfigure -input=false -no-color \
 		-backend-config "region=${AWS_REGION}" \
-		-backend-config "bucket=cumulus-${MATURITY}-tf-state" \
+		-backend-config "bucket=cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID}" \
 		-backend-config "key=$*/terraform.tfstate" \
-		-backend-config "dynamodb_table=cumulus-${MATURITY}-tf-locks"
+		-backend-config "dynamodb_table=cumulus-${MATURITY}-tf-locks-${AWS_ACCOUNT_ID}"
 	terraform workspace new ${DEPLOY_NAME} || terraform workspace select ${DEPLOY_NAME}
 
 modules = tf data-persistence cumulus
@@ -67,8 +68,8 @@ validate: $(init-modules)
 
 tf: tf-init
 	cd tf
-	terraform import -input=false aws_s3_bucket.tf-state-bucket cumulus-${MATURITY}-tf-state || true
-	terraform import -input=false aws_dynamodb_table.tf-locks-table cumulus-${MATURITY}-tf-locks || true
+	terraform import -input=false aws_s3_bucket.tf-state-bucket cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID} || true
+	terraform import -input=false aws_dynamodb_table.tf-locks-table cumulus-${MATURITY}-tf-locks-${AWS_ACCOUNT_ID} || true
 	terraform refresh -input=false -state=terraform.tfstate.d/${MATURITY}/terraform.tfstate
 	terraform apply -input=false -auto-approve -no-color
 
