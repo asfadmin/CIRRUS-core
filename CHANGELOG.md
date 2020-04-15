@@ -1,6 +1,6 @@
 ## v1.17.0.0
 
-Upgrade Notes:
+### Upgrade Notes:
 
 1. CIRRUS' Makefile will now delegate to the DAAC repo for the
    following make targets:
@@ -9,8 +9,8 @@ Upgrade Notes:
    * daac
    * workflows
 
-Add these three targets to your DAAC Makefile. See the CIRRUS-DAAC
-repo for examples of each of these three targets.
+  Add these three targets to your DAAC Makefile. See the CIRRUS-DAAC
+  repo for examples of each of these three targets.
 
 2. If you're currently using a previous version of CIRRUS, you'll
 need to migrate the Terraform state from the old backend AWS resources
@@ -23,6 +23,8 @@ maturity combination that you've deployed:
 You'll be prompted to migrate state from the old resources to the
 new. Simply respond with 'yes' to each of the four prompts and you'll
 be ready to go.
+
+### CHANGES
 
 * First official full release of CIRRUS
 * Uses Cumulus v1.17.0
