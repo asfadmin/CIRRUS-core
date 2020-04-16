@@ -4,6 +4,7 @@
 #  AWS_SECRET_ACCESS_KEY: Set for the account to which you are deploying
 #  AWS_REGION:            The region to which you are deploying
 #  AWS_ACCOUNT_ID:	  The AWS account ID to which you are deploying
+#  AWS_ACCOUNT_ID_LAST4:  The Last 4 digits of AWS_ACCOUNT_ID
 #
 #  DAAC_REPO:             The git repository URL with DAAC-specific Cumulus customization
 #  DAAC_REF:              The DAAC_REPO git branch or tag name to checkout and deploy
@@ -54,7 +55,7 @@ tf-init:
 	rm -f .terraform/environment
 	terraform init -reconfigure -input=false -no-color \
 		-backend-config "region=${AWS_REGION}" \
-		-backend-config "bucket=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID}" \
+		-backend-config "bucket=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4}" \
 		-backend-config "key=$*/terraform.tfstate" \
 		-backend-config "dynamodb_table=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks"
 	terraform workspace new ${DEPLOY_NAME} || terraform workspace select ${DEPLOY_NAME}
@@ -71,7 +72,7 @@ init-modules := $(init-modules-list:%-init=%)
 	rm -f .terraform/environment
 	terraform init -no-color \
 		-backend-config "region=${AWS_REGION}" \
-		-backend-config "bucket=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID}" \
+		-backend-config "bucket=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4}" \
 		-backend-config "key=$*/terraform.tfstate" \
 		-backend-config "dynamodb_table=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks"
 
@@ -98,7 +99,7 @@ tf: tf-init
 	cd tf
 	terraform import -input=false aws_s3_bucket.tf-state-bucket cumulus-${MATURITY}-tf-state || true
 	terraform import -input=false aws_dynamodb_table.tf-locks-table cumulus-${MATURITY}-tf-locks || true
-	terraform import -input=false aws_s3_bucket.backend-tf-state-bucket ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID} || true
+	terraform import -input=false aws_s3_bucket.backend-tf-state-bucket ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4} || true
 	terraform import -input=false aws_dynamodb_table.backend-tf-locks-table ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks || true
 	terraform refresh -input=false -state=terraform.tfstate.d/${MATURITY}/terraform.tfstate
 	terraform apply -input=false -auto-approve -no-color

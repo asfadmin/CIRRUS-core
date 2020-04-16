@@ -11,6 +11,8 @@ data "aws_caller_identity" "current" {}
 
 locals {
   cumulus-prefix = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
+  aws_account_id = data.aws_caller_identity.current.account_id
+  aws_account_id_last4 = substr(data.aws_caller_identity.current.account_id, -4, 4)
 }
 
 // Deprecated state bucket -- no longer used, but don't want to
@@ -27,7 +29,7 @@ resource "aws_s3_bucket" "tf-state-bucket" {
 }
 
 resource "aws_s3_bucket" "backend-tf-state-bucket" {
-  bucket = "${local.cumulus-prefix}-tf-state-${data.aws_caller_identity.current.account_id}"
+  bucket = "${local.cumulus-prefix}-tf-state-${local.aws_account_id_last4}"
   versioning {
     enabled = true
   }
