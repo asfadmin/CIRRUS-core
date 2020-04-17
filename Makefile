@@ -130,16 +130,7 @@ daac:
 data-persistence: data-persistence-init
 	$(banner)
 	cd $@
-	if [ -f "../daac-repo/$@/variables/${MATURITY}.tfvars" ]
-	then
-		echo "***************************************************************"
-		export VARIABLES_OPT="-var-file=../daac-repo/$@/variables/${MATURITY}.tfvars"
-		echo "Found maturity-specific variables: $$VARIABLES_OPT"
-		echo "***************************************************************"
-	fi
 	terraform apply \
-		-var-file=../daac-repo/$@/terraform.tfvars \
-		$$VARIABLES_OPT \
 		-input=false \
 		-no-color \
 		-auto-approve
