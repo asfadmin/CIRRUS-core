@@ -19,14 +19,30 @@ export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
 
 # ---------------------------
 SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
-.ONESHELL:
+
 .DEFAULT_GOAL := all
+.SILENT:
+.ONESHELL:
 .PHONY: clean \
 	checkout-daac \
 	validate \
 	migrate-tf-state migrate-daac-tf-state \
 	tf daac data-persistence cumulus workflows all \
 	destroy-cumulus
+
+# ---------------------------
+define banner =
+echo
+echo "========================================"
+if command -v figlet 2>/dev/null; then
+	figlet $@
+elif command -v banner 2>/dev/null; then
+	banner $@
+else
+	echo "Making: $@"
+fi
+echo "========================================"
+endef
 
 # ---------------------------
 clean:
@@ -46,11 +62,13 @@ checkout-daac:
 
 # ---------------------------
 tf-init:
+	$(banner)
 	cd tf
 	terraform init -reconfigure -input=false -no-color
-	terraform workspace new ${MATURITY} || terraform workspace select ${MATURITY}
+	terraform workspace new ${MATURITY} 2>/dev/null || terraform workspace select ${MATURITY}
 
 %-init:
+	$(banner)
 	cd $*
 	rm -f .terraform/environment
 	terraform init -reconfigure -input=false -no-color \
@@ -58,16 +76,14 @@ tf-init:
 		-backend-config "bucket=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4}" \
 		-backend-config "key=$*/terraform.tfstate" \
 		-backend-config "dynamodb_table=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks"
-	terraform workspace new ${DEPLOY_NAME} || terraform workspace select ${DEPLOY_NAME}
+	terraform workspace new ${DEPLOY_NAME} 2>/dev/null || terraform workspace select ${DEPLOY_NAME}
 
 init-modules-list = tf data-persistence cumulus
 init-modules := $(init-modules-list:%-init=%)
 
 # ---------------------------
 %-migrate-tf-state:
-	echo "---------------------------"
-	echo "Migrating state: " $*
-	echo "---------------------------"
+	$(banner)
 	cd $*
 	rm -f .terraform/environment
 	terraform init -no-color \
@@ -90,26 +106,29 @@ migrate-tf-state: \
 
 # ---------------------------
 validate: $(init-modules)
+	$(banner)
 	for module in modules; do \
 		cd $$module && terraform validate; \
 	done
 
 # ---------------------------
 tf: tf-init
+	$(banner)
 	cd tf
-	terraform import -input=false aws_s3_bucket.tf-state-bucket cumulus-${MATURITY}-tf-state || true
-	terraform import -input=false aws_dynamodb_table.tf-locks-table cumulus-${MATURITY}-tf-locks || true
-	terraform import -input=false aws_s3_bucket.backend-tf-state-bucket ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4} || true
-	terraform import -input=false aws_dynamodb_table.backend-tf-locks-table ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks || true
-	terraform refresh -input=false -state=terraform.tfstate.d/${MATURITY}/terraform.tfstate
+	terraform import -input=false aws_s3_bucket.tf-state-bucket cumulus-${MATURITY}-tf-state 2>/dev/null || true
+	terraform import -input=false aws_dynamodb_table.tf-locks-table cumulus-${MATURITY}-tf-locks 2>/dev/null || true
+	terraform import -input=false aws_s3_bucket.backend-tf-state-bucket ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4} 2>/dev/null || true
+	terraform import -input=false aws_dynamodb_table.backend-tf-locks-table ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks 2>/dev/null || true
 	terraform apply -input=false -auto-approve -no-color
 
+# ---------------------------
 daac:
 	cd ${SELF_DIR}/daac-repo
 	make daac
 
 # ---------------------------
 data-persistence: data-persistence-init
+	$(banner)
 	cd $@
 	if [ -f "../daac-repo/$@/variables/${MATURITY}.tfvars" ]
 	then
@@ -127,6 +146,7 @@ data-persistence: data-persistence-init
 
 # ---------------------------
 cumulus: cumulus-init
+	$(banner)
 	if [ -f "${SELF_DIR}/.secrets/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
@@ -158,13 +178,41 @@ cumulus: cumulus-init
 	fi
 
 destroy-cumulus: cumulus-init
+	$(banner)
+	if [ -f "${SELF_DIR}/.secrets/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export SECRETS_OPT="-var-file=${SELF_DIR}/.secrets/${MATURITY}.tfvars"
+		echo "Found maturity-specific secrets: $$SECRETS_OPT"
+		echo "***************************************************************"
+	fi
 	cd cumulus
-	terraform destroy -input=false -auto-approve -no-color
+	cp $(SELF_DIR)/patch/fetch_or_create_rsa_keys.sh \
+		$(SELF_DIR)/cumulus/.terraform/modules/cumulus/tf-modules/archive/
+	if [ -f "../daac-repo/cumulus/variables/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export VARIABLES_OPT="-var-file=../daac-repo/cumulus/variables/${MATURITY}.tfvars"
+		echo "Found maturity-specific variables: $$VARIABLES_OPT"
+		echo "***************************************************************"
+	fi
+	export TF_CMD="terraform destroy \
+				-var-file=../daac-repo/cumulus/terraform.tfvars \
+				$$VARIABLES_OPT \
+				$$SECRETS_OPT \
+				-input=false \
+				-no-color \
+				-auto-approve"
+	eval $$TF_CMD
 
 # ---------------------------
-workflows: workflows-init
+workflows:
 	cd ${SELF_DIR}/daac-repo
-	make workflows
+	make $@
+
+destroy-workflows:
+	cd ${SELF_DIR}/daac-repo
+	make $@
 
 # ---------------------------
 all: \
