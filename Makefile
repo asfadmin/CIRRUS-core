@@ -139,20 +139,20 @@ data-persistence: data-persistence-init
 # ---------------------------
 cumulus: cumulus-init
 	$(banner)
-	if [ -f "${SELF_DIR}/.secrets/${MATURITY}.tfvars" ]
+	if [ -f "${SELF_DIR}/daac-repo/$@/secrets/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
-		export SECRETS_OPT="-var-file=${SELF_DIR}/.secrets/${MATURITY}.tfvars"
+		export SECRETS_OPT="-var-file=${SELF_DIR}/daac-repo/$@/secrets/${MATURITY}.tfvars"
 		echo "Found maturity-specific secrets: $$SECRETS_OPT"
 		echo "***************************************************************"
 	fi
 	cd $@
 	cp $(SELF_DIR)/patch/fetch_or_create_rsa_keys.sh \
 		$(SELF_DIR)/cumulus/.terraform/modules/cumulus/tf-modules/archive/
-	if [ -f "../daac-repo/$@/variables/${MATURITY}.tfvars" ]
+	if [ -f "${SELF_DIR}/daac-repo/$@/variables/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
-		export VARIABLES_OPT="-var-file=../daac-repo/$@/variables/${MATURITY}.tfvars"
+		export VARIABLES_OPT="-var-file=${SELF_DIR}/daac-repo/$@/variables/${MATURITY}.tfvars"
 		echo "Found maturity-specific variables: $$VARIABLES_OPT"
 		echo "***************************************************************"
 	fi
@@ -171,20 +171,20 @@ cumulus: cumulus-init
 
 destroy-cumulus: cumulus-init
 	$(banner)
-	if [ -f "${SELF_DIR}/.secrets/${MATURITY}.tfvars" ]
+	if [ -f "${SELF_DIR}/daac-repo/$@/secrets/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
-		export SECRETS_OPT="-var-file=${SELF_DIR}/.secrets/${MATURITY}.tfvars"
+		export SECRETS_OPT="-var-file=${SELF_DIR}/daac-repo/$@/secrets/${MATURITY}.tfvars"
 		echo "Found maturity-specific secrets: $$SECRETS_OPT"
 		echo "***************************************************************"
 	fi
 	cd cumulus
 	cp $(SELF_DIR)/patch/fetch_or_create_rsa_keys.sh \
 		$(SELF_DIR)/cumulus/.terraform/modules/cumulus/tf-modules/archive/
-	if [ -f "../daac-repo/cumulus/variables/${MATURITY}.tfvars" ]
+	if [ -f "${SELF_DIR}/daac-repo/$@/variables/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
-		export VARIABLES_OPT="-var-file=../daac-repo/cumulus/variables/${MATURITY}.tfvars"
+		export VARIABLES_OPT="-var-file=${SELF_DIR}/daac-repo/$@/variables/${MATURITY}.tfvars"
 		echo "Found maturity-specific variables: $$VARIABLES_OPT"
 		echo "***************************************************************"
 	fi
