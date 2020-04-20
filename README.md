@@ -91,12 +91,11 @@ account.
 
         (This assumes we've setup a named AWS credentials profile with the name `xyz-sandbox-cumulus`)
 
-2. Create `.secrets/*.tfvars` (OPTIONAL): These files contains
-  *secrets* which are specific to the 'maturity' or environment to
-  which you are deploying. Create one file for each environment you
-  will be deploying to and populate it with secrets. For example, your
-  `dev` `urs_client_password` is likely (hopefully!) different than
-  your `prod` password.
+2. See the [CIRRUS-DAAC
+  README's](https://github.com/asfadmin/CIRRUS-DAAC/blob/master/README.md)
+  instructions for creating local secrets files. These will be files
+  located in the DAAC directory, and as the note describes below, are
+  **NOT** to be checked in to git!
 
 *Important Note*: This is only for local commandline deployment! For
 example, deploying from a developer workstation. Normally these
