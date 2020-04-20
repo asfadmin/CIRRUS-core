@@ -86,13 +86,13 @@ locals {
   prefix = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
 
   daac_remote_state_config = {
-    bucket = "cumulus-${var.MATURITY}-tf-state"
+    bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
     key    = "daac/terraform.tfstate"
     region = "${data.aws_region.current.name}"
   }
 
   data_persistence_remote_state_config = {
-    bucket = "cumulus-${var.MATURITY}-tf-state"
+    bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
     key    = "data-persistence/terraform.tfstate"
     region = "${data.aws_region.current.name}"
   }
