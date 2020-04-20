@@ -24,6 +24,13 @@ You'll be prompted to migrate state from the old resources to the
 new. Simply respond with 'yes' to each of the four prompts and you'll
 be ready to go.
 
+3. For local development, CIRRUS no longer looks for secrets in the
+   CIRRUS-core repo's `.secrets` directory. Instead, it relies on the
+   secrets being configured as described in the CIRRUS-DAAC
+   repo. Remove any local `.secrets` files and directory and see the
+   CIRRUS-DAAC README for instructions on how to setup local
+   development secrets.
+
 ### CHANGES
 
 * First official full release of CIRRUS
