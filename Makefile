@@ -61,9 +61,10 @@ container-shell:
 	docker run -it --rm \
 		--user `id -u` \
 		--env DAAC_DIR="/CIRRUS-DAAC" \
+		--env AWS_CONFIG_DIR="/" \
 		-v ${PWD}:/CIRRUS-core \
 		-v ${DAAC_DIR}:/CIRRUS-DAAC \
-		-v ~/.aws:/root/.aws \
+		-v ${HOME}/.aws:/.aws \
 		--name=cirrus-core \
 		cirrus-core \
 		bash
