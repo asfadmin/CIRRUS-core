@@ -1,3 +1,10 @@
+## v1.18.0.0
+
+### CHANGES
+
+* Upgrade to Cumulus v1.18.0. There should be no breaking changes from
+  CIRRUS v1.17.0.0.
+
 ## v1.17.0.0
 
 ### Upgrade Notes:
