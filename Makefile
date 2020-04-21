@@ -28,8 +28,7 @@ SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 .DEFAULT_GOAL := all
 .SILENT:
 .ONESHELL:
-.PHONY: clean \
-	checkout-daac \
+.PHONY: checkout-daac \
 	validate \
 	migrate-tf-state migrate-daac-tf-state \
 	tf daac data-persistence cumulus workflows all \
@@ -48,10 +47,6 @@ else
 fi
 echo "========================================"
 endef
-
-# ---------------------------
-clean:
-	rm -rf ${SELF_DIR}/daac-repo
 
 # ---------------------------
 image: Dockerfile
