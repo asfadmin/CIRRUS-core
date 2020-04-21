@@ -166,7 +166,7 @@ cumulus: cumulus-init
 		echo "***************************************************************"
 	fi
 	export TF_CMD="terraform apply \
-				-var-file=../daac-repo/$@/terraform.tfvars \
+				-var-file=${DAAC_DIR}/$@/terraform.tfvars \
 				$$VARIABLES_OPT \
 				$$SECRETS_OPT \
 				-input=false \
@@ -198,7 +198,7 @@ destroy-cumulus: cumulus-init
 		echo "***************************************************************"
 	fi
 	export TF_CMD="terraform destroy \
-				-var-file=../daac-repo/cumulus/terraform.tfvars \
+				-var-file=${DAAC_DIR}/cumulus/terraform.tfvars \
 				$$VARIABLES_OPT \
 				$$SECRETS_OPT \
 				-input=false \
