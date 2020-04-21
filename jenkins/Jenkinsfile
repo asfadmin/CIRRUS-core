@@ -66,8 +66,7 @@ pipeline {
     }
     stage('Build the CIRRUS deploy Docker image') {
       steps {
-        sh """cd jenkinsbuild && \
-              docker build -f nodebuild.Dockerfile -t cirrusbuilder .
+        sh """docker build -f Dockerfile -t cirrus-core .
            """
       }
     }
@@ -81,21 +80,21 @@ pipeline {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${params.AWS_CREDS}"]])  {
 
             sh """docker run --rm   --user `id -u` \
+                                    --env DAAC_DIR='daac-repo' \
                                     --env DEPLOY_NAME='${params.DEPLOY_NAME}' \
                                     --env MATURITY='${params.MATURITY}' \
                                     --env AWS_ACCESS_KEY_ID='${AWS_ACCESS_KEY_ID}' \
                                     --env AWS_SECRET_ACCESS_KEY='${AWS_SECRET_ACCESS_KEY}' \
                                     --env AWS_REGION='${params.AWS_REGION}' \
-                                    --env DAAC_REPO='${params.DAAC_REPO}' \
-                                    --env DAAC_REF='${params.DAAC_REF}' \
                                     --env TF_VAR_cmr_username='${CMR_CREDS_USR}' \
                                     --env TF_VAR_cmr_password='${CMR_CREDS_PSW}' \
                                     --env TF_VAR_urs_client_id='${URS_CREDS_USR}' \
                                     --env TF_VAR_urs_client_password='${URS_CREDS_PSW}' \
                                     --env TF_VAR_token_secret='${TOKEN_SECRET}' \
-                                    -v \"${WORKSPACE}\":/workspace \
-                                    cirrusbuilder \
-                                    /bin/bash /workspace/jenkinsbuild/cumulusbuilder.sh
+                                    -v \"${WORKSPACE}\":/CIRRUS-core \
+                                    --name=cirrus-core \
+                                    cirrus-core \
+                                    /bin/bash -c "make all"
             """
 
         }// withCredentials

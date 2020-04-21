@@ -1,13 +1,18 @@
-# This makefile assumes you have the following environment variables set:
+# To create the Docker image & start the container from it, this
+# makefile assumes you have the following environment variable set:
+#
+#  DAAC_DIR               The (local) directory containing a fork of the
+#                         `CIRRUS-DAAC` repo you wish to deploy.
+#
+# For deployment-related targets (run within the Docker container),
+# This makefile assumes you have the following environment variables
+# set:
 #
 #  AWS_ACCESS_KEY_ID:     Set for the account to which you are deploying
 #  AWS_SECRET_ACCESS_KEY: Set for the account to which you are deploying
 #  AWS_REGION:            The region to which you are deploying
 #  AWS_ACCOUNT_ID:	  The AWS account ID to which you are deploying
 #  AWS_ACCOUNT_ID_LAST4:  The Last 4 digits of AWS_ACCOUNT_ID
-#
-#  DAAC_REPO:             The git repository URL with DAAC-specific Cumulus customization
-#  DAAC_REF:              The DAAC_REPO git branch or tag name to checkout and deploy
 #
 #  DEPLOY_NAME:           A unique name to distinguish this Cumulus instance from others
 #  MATURITY:              One of: DEV, INT, TEST, PROD
@@ -49,16 +54,19 @@ clean:
 	rm -rf ${SELF_DIR}/daac-repo
 
 # ---------------------------
-link-daac:
-	ln -s ${DAAC_REPO} ${SELF_DIR}/daac-repo
+image: Dockerfile
+	docker build -f Dockerfile -t cirrus-core .
 
-checkout-daac:
-	git clone ${DAAC_REPO} ${SELF_DIR}/daac-repo
-	cd ${SELF_DIR}/daac-repo
-	git fetch
-	git checkout ${DAAC_REF}
-	git pull
-	cd ${SELF_DIR}
+container-shell:
+	docker run -it --rm \
+		--user `id -u` \
+		--env DAAC_DIR="/CIRRUS-DAAC" \
+		-v ${PWD}:/CIRRUS-core \
+		-v ${DAAC_DIR}:/CIRRUS-DAAC \
+		-v ~/.aws:/root/.aws \
+		--name=cirrus-core \
+		cirrus-core \
+		bash
 
 # ---------------------------
 tf-init:
@@ -97,7 +105,7 @@ migrate-modules-list = data-persistence cumulus
 migrate-modules := $(migrate-modules-list:%-migrate-tf-state=%)
 
 migrate-daac-tf-state:
-	cd ${SELF_DIR}/daac-repo
+	cd ${DAAC_DIR}
 	make migrate-tf-state
 
 migrate-tf-state: \
@@ -124,7 +132,7 @@ tf: tf-init
 
 # ---------------------------
 daac:
-	cd ${SELF_DIR}/daac-repo
+	cd ${DAAC_DIR}
 	make daac
 
 # ---------------------------
@@ -139,20 +147,20 @@ data-persistence: data-persistence-init
 # ---------------------------
 cumulus: cumulus-init
 	$(banner)
-	if [ -f "${SELF_DIR}/daac-repo/$@/secrets/${MATURITY}.tfvars" ]
+	if [ -f "${DAAC_DIR}/$@/secrets/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
-		export SECRETS_OPT="-var-file=${SELF_DIR}/daac-repo/$@/secrets/${MATURITY}.tfvars"
+		export SECRETS_OPT="-var-file=${DAAC_DIR}/$@/secrets/${MATURITY}.tfvars"
 		echo "Found maturity-specific secrets: $$SECRETS_OPT"
 		echo "***************************************************************"
 	fi
 	cd $@
 	cp $(SELF_DIR)/patch/fetch_or_create_rsa_keys.sh \
 		$(SELF_DIR)/cumulus/.terraform/modules/cumulus/tf-modules/archive/
-	if [ -f "${SELF_DIR}/daac-repo/$@/variables/${MATURITY}.tfvars" ]
+	if [ -f "${DAAC_DIR}/$@/variables/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
-		export VARIABLES_OPT="-var-file=${SELF_DIR}/daac-repo/$@/variables/${MATURITY}.tfvars"
+		export VARIABLES_OPT="-var-file=${DAAC_DIR}/$@/variables/${MATURITY}.tfvars"
 		echo "Found maturity-specific variables: $$VARIABLES_OPT"
 		echo "***************************************************************"
 	fi
@@ -171,20 +179,20 @@ cumulus: cumulus-init
 
 destroy-cumulus: cumulus-init
 	$(banner)
-	if [ -f "${SELF_DIR}/daac-repo/$@/secrets/${MATURITY}.tfvars" ]
+	if [ -f "${DAAC_DIR}/$@/secrets/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
-		export SECRETS_OPT="-var-file=${SELF_DIR}/daac-repo/$@/secrets/${MATURITY}.tfvars"
+		export SECRETS_OPT="-var-file=${DAAC_DIR}/$@/secrets/${MATURITY}.tfvars"
 		echo "Found maturity-specific secrets: $$SECRETS_OPT"
 		echo "***************************************************************"
 	fi
 	cd cumulus
 	cp $(SELF_DIR)/patch/fetch_or_create_rsa_keys.sh \
 		$(SELF_DIR)/cumulus/.terraform/modules/cumulus/tf-modules/archive/
-	if [ -f "${SELF_DIR}/daac-repo/$@/variables/${MATURITY}.tfvars" ]
+	if [ -f "${DAAC_DIR}/$@/variables/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
-		export VARIABLES_OPT="-var-file=${SELF_DIR}/daac-repo/$@/variables/${MATURITY}.tfvars"
+		export VARIABLES_OPT="-var-file=${DAAC_DIR}/$@/variables/${MATURITY}.tfvars"
 		echo "Found maturity-specific variables: $$VARIABLES_OPT"
 		echo "***************************************************************"
 	fi
@@ -199,11 +207,11 @@ destroy-cumulus: cumulus-init
 
 # ---------------------------
 workflows:
-	cd ${SELF_DIR}/daac-repo
+	cd ${DAAC_DIR}
 	make $@
 
 destroy-workflows:
-	cd ${SELF_DIR}/daac-repo
+	cd ${DAAC_DIR}
 	make $@
 
 # ---------------------------
