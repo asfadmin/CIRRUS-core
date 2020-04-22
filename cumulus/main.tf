@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v1.17.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v1.18.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
   cumulus_message_adapter_lambda_layer_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
   prefix = local.prefix
@@ -50,7 +50,7 @@ module "cumulus" {
   saml_entity_id                  = var.saml_entity_id
   saml_assertion_consumer_service = var.saml_assertion_consumer_service
   saml_idp_login                  = var.saml_idp_login
-  saml_launchpad_metadata_path    = var.saml_launchpad_metadata_path
+  saml_launchpad_metadata_url     = var.saml_launchpad_metadata_url
 
   token_secret = var.token_secret
 
@@ -74,7 +74,8 @@ module "cumulus" {
 
   archive_api_port            = var.archive_api_port
   private_archive_api_gateway = var.private_archive_api_gateway
-  api_gateway_stage = var.api_gateway_stage
+  api_gateway_stage = var.MATURITY
+  distribution_api_gateway_stage = var.MATURITY
   log_api_gateway_to_cloudwatch = var.log_api_gateway_to_cloudwatch
   log_destination_arn = var.log_destination_arn
 
@@ -85,13 +86,13 @@ locals {
   prefix = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
 
   daac_remote_state_config = {
-    bucket = "cumulus-${var.MATURITY}-tf-state"
+    bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
     key    = "daac/terraform.tfstate"
     region = "${data.aws_region.current.name}"
   }
 
   data_persistence_remote_state_config = {
-    bucket = "cumulus-${var.MATURITY}-tf-state"
+    bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
     key    = "data-persistence/terraform.tfstate"
     region = "${data.aws_region.current.name}"
   }

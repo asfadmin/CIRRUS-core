@@ -11,7 +11,7 @@ provider "aws" {
 }
 
 module "data_persistence" {
-  source = "https://github.com/nasa/cumulus/releases/download/v1.17.0/terraform-aws-cumulus.zip//tf-modules/data-persistence"
+  source = "https://github.com/nasa/cumulus/releases/download/v1.18.0/terraform-aws-cumulus.zip//tf-modules/data-persistence"
 
   prefix                     = local.prefix
   subnet_ids                 = data.aws_subnet_ids.subnet_ids.ids

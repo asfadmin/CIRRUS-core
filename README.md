@@ -17,7 +17,7 @@ configuration that has been derived from
 
 ## CIRRUS In Action
 
-[![asciicast](https://asciinema.org/a/300310.png)](https://asciinema.org/a/300310?speed=2)
+[![asciicast](https://asciinema.org/a/322104.png)](https://asciinema.org/a/322104?t=12&speed=2)
 
 See the [Cumulus
 Documentation](https://nasa.github.io/cumulus/docs/deployment/deployment-readme)
@@ -26,11 +26,19 @@ Cumulus.
 
 ## Prerequisites
 
-* [Terraform](https://www.terraform.io/)
-* [AWS CLI](https://aws.amazon.com/cli/)
-* [GNU Make v4.x](https://www.gnu.org/software/make/)
+* [Docker](https://www.docker.com/get-started)
 * One or more NGAP accounts (sandbox, SIT, ...)
-* AWS credentials for the account(s)
+* AWS credentials for those account(s)
+
+## Development Setup
+
+You can run tests and deploy the stack inside of a Docker container:
+
+        $ make image
+        $ DAAC_DIR=$HOME/projects/acme-cumulus make container-shell
+
+Here DAAC_DIR is the absolute path to the fork of `CIRRUS-DAAC` that
+you would like to deploy.
 
 ## Organization
 
@@ -74,9 +82,11 @@ The name of the Cumulus stack will be
 changing the DEPLOY_NAME you can deploy multiple Cumulus stacks to one
 account.
 
+### Deploying from the commandline
 
-
-### Local Development (Commandline)
+0. Start the Docker container as shown above (`... make
+   container-shell`), providing the `DAAC_DIR` variable you are
+   working with.
 
 1. Setup your environment with the [named AWS
    Profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
@@ -91,12 +101,11 @@ account.
 
         (This assumes we've setup a named AWS credentials profile with the name `xyz-sandbox-cumulus`)
 
-2. Create `.secrets/*.tfvars` (OPTIONAL): These files contains
-  *secrets* which are specific to the 'maturity' or environment to
-  which you are deploying. Create one file for each environment you
-  will be deploying to and populate it with secrets. For example, your
-  `dev` `urs_client_password` is likely (hopefully!) different than
-  your `prod` password.
+2. See the [CIRRUS-DAAC
+  README's](https://github.com/asfadmin/CIRRUS-DAAC/blob/master/README.md)
+  instructions for creating local secrets files. These will be files
+  located in the DAAC directory, and as the note describes below, are
+  **NOT** to be checked in to git!
 
 *Important Note*: This is only for local commandline deployment! For
 example, deploying from a developer workstation. Normally these
@@ -105,13 +114,7 @@ details below on how to do this for Jenkins, CircleCI, and Bamboo. The
 secrets files will *not* (and *should not*) be committed to git. The
 `.gitignore` file will ignore them by default.
 
-3. Link to the `CIRRUS-DAAC`-forked repo you'd like to deploy. For
-   example, if you've named your DAAC config repo `CIRRUS-Acme`:
-
-        $ make link-daac \
-            DAAC_REPO=$HOME/projects/CIRRUS-Acme
-
-4. Deploy Cumulus. If this is your first Cumulus deployment for this
+3. Deploy Cumulus. If this is your first Cumulus deployment for this
    stack, deploy the entire Cumulus stack:
 
         $ make all
@@ -120,14 +123,14 @@ secrets files will *not* (and *should not*) be committed to git. The
    state resources, DAAC-specific resources, the Cumulus
    `data-persistence` module, the `cumulus` module, and `workflows`.
 
-5. Deploy a specific part of the stack: If you're adding a new
+4. Deploy a specific part of the stack: If you're adding a new
    workflow, Lambdas, or other resources for your workflow, and the
    rest of the Cumulus deployment hasn't changed, just deploy the
    workflows:
 
         $ make workflows
 
-6. Deploying any part of the stack. You can deploy any part of the
+5. Deploying any part of the stack. You can deploy any part of the
    Cumulus stack by running one of the targeted commands:
 
         $ make tf
@@ -138,12 +141,16 @@ secrets files will *not* (and *should not*) be committed to git. The
 
 ### CI/CD: Jenkins Job
 
-TODO
+There is a Jenkins pipeline job definition in the `jenkins`
+directory. You can configure Jenkins using this file as the source of
+the pipeline. By providing the required parameters and provisioning
+Jenkins with the secrets, Jenkins will be able to deploy a CIRRUS-DAAC
+project to any NGAP account.
 
 ### CI/CD: CircleCI
 
-TODO
+A CircleCI pipeline will be provided in a future version of CIRRUS.
 
 ### CI/CD: Bamboo
 
-TODO
+A NASA Bamboo pipeline will be provided in a future version of CIRRUS.
