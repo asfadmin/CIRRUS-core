@@ -1,8 +1,8 @@
 #!/bin/bash
 
-AWS_ACCESS_KEY_ID=`aws configure get aws_access_key_id --profile $AWS_PROFILE`
-AWS_SECRET_ACCESS_KEY=`aws configure get aws_secret_access_key --profile $AWS_PROFILE`
-AWS_REGION=`aws configure get region --profile $AWS_PROFILE`
+AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id --profile "$AWS_PROFILE")
+AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key --profile "$AWS_PROFILE")
+AWS_REGION=$(aws configure get region --profile "$AWS_PROFILE")
 
 if (( $# != 3 )); then
     echo "Usage: source env.sh aws_profile_name deploy_name maturity"
