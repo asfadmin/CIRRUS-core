@@ -30,7 +30,6 @@ SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 .ONESHELL:
 .PHONY: checkout-daac \
 	validate \
-	migrate-tf-state migrate-daac-tf-state \
 	tf daac data-persistence cumulus workflows all \
 	destroy-cumulus
 
@@ -87,29 +86,6 @@ init-modules-list = tf data-persistence cumulus
 init-modules := $(init-modules-list:%-init=%)
 
 # ---------------------------
-%-migrate-tf-state:
-	$(banner)
-	cd $*
-	rm -f .terraform/environment
-	terraform init -no-color \
-		-backend-config "region=${AWS_REGION}" \
-		-backend-config "bucket=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4}" \
-		-backend-config "key=$*/terraform.tfstate" \
-		-backend-config "dynamodb_table=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks"
-
-migrate-modules-list = data-persistence cumulus
-migrate-modules := $(migrate-modules-list:%-migrate-tf-state=%)
-
-migrate-daac-tf-state:
-	cd ${DAAC_DIR}
-	make migrate-tf-state
-
-migrate-tf-state: \
-	migrate-daac-tf-state \
-	data-persistence-migrate-tf-state \
-	cumulus-migrate-tf-state
-
-# ---------------------------
 validate: $(init-modules)
 	$(banner)
 	for module in modules; do \
@@ -120,8 +96,6 @@ validate: $(init-modules)
 tf: tf-init
 	$(banner)
 	cd tf
-	terraform import -input=false aws_s3_bucket.tf-state-bucket cumulus-${MATURITY}-tf-state 2>/dev/null || true
-	terraform import -input=false aws_dynamodb_table.tf-locks-table cumulus-${MATURITY}-tf-locks 2>/dev/null || true
 	terraform import -input=false aws_s3_bucket.backend-tf-state-bucket ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4} 2>/dev/null || true
 	terraform import -input=false aws_dynamodb_table.backend-tf-locks-table ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks 2>/dev/null || true
 	terraform apply -input=false -auto-approve -no-color

@@ -1,3 +1,9 @@
+## v1.18.0.1
+
+### CHANGES
+
+* Remove the deprecated TF state resources that are no longer needed.
+
 ## v1.18.0.0
 
 ### CHANGES
