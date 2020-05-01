@@ -1,8 +1,10 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v1.18.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v1.19.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
   cumulus_message_adapter_lambda_layer_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
   prefix = local.prefix
+
+  tags = local.default_tags
 
   vpc_id = data.aws_vpc.application_vpcs.id
   lambda_subnet_ids = data.aws_subnet_ids.subnet_ids.ids
@@ -164,3 +166,5 @@ resource "aws_security_group" "no_ingress_all_egress" {
 
   tags = local.default_tags
 }
+
+resource
