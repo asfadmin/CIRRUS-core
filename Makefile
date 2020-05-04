@@ -149,20 +149,20 @@ cumulus: cumulus-init
 
 destroy-cumulus: cumulus-init
 	$(banner)
-	if [ -f "${DAAC_DIR}/$@/secrets/${MATURITY}.tfvars" ]
+	if [ -f "${DAAC_DIR}/cumulus/secrets/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
-		export SECRETS_OPT="-var-file=${DAAC_DIR}/$@/secrets/${MATURITY}.tfvars"
+		export SECRETS_OPT="-var-file=${DAAC_DIR}/cumulus/secrets/${MATURITY}.tfvars"
 		echo "Found maturity-specific secrets: $$SECRETS_OPT"
 		echo "***************************************************************"
 	fi
 	cd cumulus
 	cp $(SELF_DIR)/patch/fetch_or_create_rsa_keys.sh \
 		$(SELF_DIR)/cumulus/.terraform/modules/cumulus/tf-modules/archive/
-	if [ -f "${DAAC_DIR}/$@/variables/${MATURITY}.tfvars" ]
+	if [ -f "${DAAC_DIR}/cumulus/variables/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
-		export VARIABLES_OPT="-var-file=${DAAC_DIR}/$@/variables/${MATURITY}.tfvars"
+		export VARIABLES_OPT="-var-file=${DAAC_DIR}/cumulus/variables/${MATURITY}.tfvars"
 		echo "Found maturity-specific variables: $$VARIABLES_OPT"
 		echo "***************************************************************"
 	fi
