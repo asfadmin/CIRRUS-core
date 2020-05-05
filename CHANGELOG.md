@@ -1,3 +1,12 @@
+## v1.20.0.0
+
+### CHANGES
+
+* Upgrade to Cumulus v1.20.0.  There are several breaking changes in this
+  release.
+* `cumulus/main.tf` added `deploy_to_ngap = true` per Cumulus
+  [deployment instructions](https://github.com/nasa/Cumulus/releases/tag/v1.20.0)
+
 ## v1.19.0.0
 
 ### CHANGES
