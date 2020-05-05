@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v1.18.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v1.19.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
   cumulus_message_adapter_lambda_layer_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
   prefix = local.prefix
@@ -69,6 +69,7 @@ module "cumulus" {
   archive_api_users = var.api_users
 
   distribution_url = var.distribution_url
+  thin_egress_jwt_secret_name = "${local.prefix}-jwt_secret_for_tea"
 
   sts_credentials_lambda_function_arn = data.aws_lambda_function.sts_credentials.arn
 

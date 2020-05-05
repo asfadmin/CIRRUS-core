@@ -1,3 +1,17 @@
+## v1.19.0.0
+
+### CHANGES
+
+* Upgrade to Cumulus v1.19.0.  There are several breaking changes in this
+  release.  Make sure to follow the
+  [deployment instructions](https://github.com/nasa/Cumulus/releases/tag/v1.19.0).
+* `setup_jwt_cookie.sh` script added to create and deploy a TEA secret with the
+  name of `${DEPLOY_NAME}-cumulus-${MATURITY}-jwt_secret_for_tea`
+* `cumulus/main.tf` updated to make use of secret created by
+  `setup_jwt_cookie.sh`
+* `cumuluse/outputs.tf` updated to output `sf_sqs_report_task` rather than
+  `sf_sns_report_task`
+
 ## v1.18.0.1
 
 ### CHANGES

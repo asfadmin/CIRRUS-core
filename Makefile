@@ -125,8 +125,6 @@ cumulus: cumulus-init
 		echo "***************************************************************"
 	fi
 	cd $@
-	cp $(SELF_DIR)/patch/fetch_or_create_rsa_keys.sh \
-		$(SELF_DIR)/cumulus/.terraform/modules/cumulus/tf-modules/archive/
 	if [ -f "${DAAC_DIR}/$@/variables/${MATURITY}.tfvars" ]
 	then
 		echo "***************************************************************"
