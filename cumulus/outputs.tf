@@ -6,8 +6,8 @@ output "workflow_config" {
 
 # ---------
 # Cumulus Tasks
-output "sf_sns_report_task" {
-  value = module.cumulus.sf_sns_report_task
+output "sf_sqs_report_task" {
+  value = module.cumulus.sf_sqs_report_task
 }
 output "fake_processing_task" {
   value = module.cumulus.fake_processing_task
