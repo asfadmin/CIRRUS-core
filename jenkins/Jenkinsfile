@@ -1,6 +1,6 @@
 pipeline {
   parameters {
-    choice(name: 'MATURITY', choices: ['DEV', 'INT', 'TEST', 'PROD'], description: 'The MATURITY (AWS) account to deploy')
+    choice(name: 'MATURITY', choices: ['dev', 'int', 'test', 'prod'], description: 'The MATURITY (AWS) account to deploy')
     string(name: 'DEPLOY_NAME', defaultValue: '', description: 'The name of the stack for this MATURITY')
 
     string(name: 'DAAC_REPO', defaultValue: '', description: '')
