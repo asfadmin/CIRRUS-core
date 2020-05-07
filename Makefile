@@ -134,6 +134,9 @@ cumulus: cumulus-init
 		echo "Found maturity-specific variables: $$VARIABLES_OPT"
 		echo "***************************************************************"
 	fi
+	echo -var-file=${DAAC_DIR}/$@/terraform.tfvars
+	echo dumping structure for ${DAAC_DIR}/$@/
+	find ${DAAC_DIR}/$@/
 	export TF_CMD="terraform apply \
 				-var-file=${DAAC_DIR}/$@/terraform.tfvars \
 				$$VARIABLES_OPT \
