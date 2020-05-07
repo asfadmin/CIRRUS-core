@@ -97,6 +97,9 @@ account.
 
         (This assumes we've setup a named AWS credentials profile with the name `xyz-sandbox-cumulus`)
 
+        **NOTE**: this script is still a WIP and may not work
+        in all environments, contributions are welcome!
+
 1. Start the Docker container as shown above (`... make
    container-shell`), providing the `DAAC_DIR` variable you are
    working with.
