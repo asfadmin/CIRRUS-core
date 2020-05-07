@@ -84,11 +84,27 @@ account.
 
 ### Deploying from the commandline
 
-0. Start the Docker container as shown above (`... make
+0. Create AWS Secret for TEA access with the [named AWS
+   Profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+   that has permissions to deploy to the target NGAP account:
+
+        $ source setup_jwt_cookie.sh <profile-name> <deploy-name> <maturity>
+
+        e.g., to create a secret for XYZ DAAC's NGAP sandbox account with the initials
+        of a developer (to make the deployment unique) and a maturity of 'dev':
+
+        $ source setup_jwt_cookie.sh xyz-sandbox-cumulus kb dev
+
+        (This assumes we've setup a named AWS credentials profile with the name `xyz-sandbox-cumulus`)
+
+        **NOTE**: this script is still a WIP and may not work
+        in all environments, contributions are welcome!
+
+1. Start the Docker container as shown above (`... make
    container-shell`), providing the `DAAC_DIR` variable you are
    working with.
 
-1. Setup your environment with the [named AWS
+2. Setup your environment with the [named AWS
    Profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
    that has permissions to deploy to the target NGAP account:
 
@@ -101,7 +117,7 @@ account.
 
         (This assumes we've setup a named AWS credentials profile with the name `xyz-sandbox-cumulus`)
 
-2. See the [CIRRUS-DAAC
+4. See the [CIRRUS-DAAC
   README's](https://github.com/asfadmin/CIRRUS-DAAC/blob/master/README.md)
   instructions for creating local secrets files. These will be files
   located in the DAAC directory, and as the note describes below, are
