@@ -82,7 +82,7 @@ pipeline {
             sh '''export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
                   export AWS_ACCOUNT_ID_LAST4=$(echo -n $AWS_ACCOUNT_ID | tail -c 4)
                   docker run --rm   --user `id -u` \
-                                    --env DAAC_DIR="daac-repo" \
+                                    --env DAAC_DIR="/daac-repo" \
                                     --env DEPLOY_NAME="${DEPLOY_NAME}" \
                                     --env MATURITY="${MATURITY}" \
                                     --env AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
