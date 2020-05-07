@@ -80,6 +80,7 @@ pipeline {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${params.AWS_CREDS}"]])  {
 
             sh '''export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
+                  export AWS_ACCOUNT_ID_LAST4=$(echo ${AWS_ACCOUNT_ID: -4:4})
                   docker run --rm   --user `id -u` \
                                     --env DAAC_DIR="daac-repo" \
                                     --env DEPLOY_NAME="${DEPLOY_NAME}" \
@@ -87,7 +88,7 @@ pipeline {
                                     --env AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
                                     --env AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
                                     --env AWS_REGION="${AWS_REGION}" \
-                                    --env AWS_ACCOUNT_ID_LAST4="${AWS_ACCOUNT_ID: -4:4}" \
+                                    --env AWS_ACCOUNT_ID_LAST4="${AWS_ACCOUNT_ID_LAST4}" \
                                     --env TF_VAR_cmr_username="${CMR_CREDS_USR}" \
                                     --env TF_VAR_cmr_password="${CMR_CREDS_PSW}" \
                                     --env TF_VAR_urs_client_id="${URS_CREDS_USR}" \
