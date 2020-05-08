@@ -63,7 +63,7 @@ pipeline {
         sh "pwd && cd daac-repo && git fetch origin --tags && git checkout ${params.DAAC_REF}"
         sh "git show -s --pretty=%d HEAD"
         // If working in a branch, we need to be sure to `git pull` new changes
-        sh "pwd && cd daac-repo && if [ `git show -s --pretty=%d HEAD | grep -c tag` -gt 0 ]; then echo 'Tag is up-to-date'; else git pull; fi && cd .."
+        sh "pwd && cd daac-repo && if [ `git show -s --pretty=%d HEAD | grep -c 'HEAD, tag'` -gt 0 ]; then echo 'Tag is up-to-date'; else git pull; fi && cd .."
         sh 'tree'
       }
     }
