@@ -60,7 +60,10 @@ pipeline {
       steps {
         sh "cd ${WORKSPACE}"
         sh "if [ ! -d \"daac-repo\" ]; then git clone ${params.DAAC_REPO} daac-repo; fi"
-        sh "cd daac-repo && git fetch origin --tags && git checkout ${params.DAAC_REF} && git pull && cd .."
+        sh "cd daac-repo && git fetch origin --tags && git checkout ${params.DAAC_REF}"
+        # If working in a branch, we need to be sure to `git pull` new changes
+        sh "if [ `git show -s --pretty=%d HEAD | grep -c tag` -gt 0 ]; then echo 'Tag is up-to-date'; else git pull; fi"
+        sh "cd .."
         sh 'tree'
       }
     }
