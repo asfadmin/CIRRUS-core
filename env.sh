@@ -25,5 +25,5 @@ else
     echo "  AWS_ACCOUNT_ID:       $AWS_ACCOUNT_ID"
     echo "  AWS_ACCOUNT_ID_LAST4: $AWS_ACCOUNT_ID_LAST4"
     echo "  DEPLOY_NAME:          $DEPLOY_NAME"
-    echo "  MATURITY;             $MATURITY"
+    echo "  MATURITY:             $MATURITY"
 fi
