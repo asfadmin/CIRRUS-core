@@ -7,7 +7,7 @@ else
 
     AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id --profile "$AWS_PROFILE")
     AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key --profile "$AWS_PROFILE")
-    AWS_REGION=$(aws configure get region --profile "$AWS_PROFILE")
+    AWS_REGION=$(aws configure get region --profile "$AWS_PROFILE" || echo $AWS_DEFAULT_REGION)
     AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
     AWS_ACCOUNT_ID_LAST4=${AWS_ACCOUNT_ID: -4:4}
 
