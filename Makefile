@@ -69,7 +69,7 @@ tf-init:
 	cd tf
 	rm -rf terraform.tfstate.d
 	terraform init -reconfigure -input=false -no-color
-	terraform workspace new ${MATURITY} 2>/dev/null || terraform workspace select ${MATURITY}
+	terraform workspace new ${DEPLOY_NAME} 2>/dev/null || terraform workspace select ${DEPLOY_NAME}
 
 %-init:
 	$(banner)
