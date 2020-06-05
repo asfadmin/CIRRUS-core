@@ -69,6 +69,7 @@ module "cumulus" {
   dynamo_tables = data.terraform_remote_state.data_persistence.outputs.dynamo_tables
 
   archive_api_users = var.api_users
+  archive_api_url = var.archive_api_url
 
   distribution_url = var.distribution_url
   thin_egress_jwt_secret_name = "${local.prefix}-jwt_secret_for_tea"

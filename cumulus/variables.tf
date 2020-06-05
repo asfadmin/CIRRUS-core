@@ -193,6 +193,11 @@ variable "archive_api_port" {
   default = null
 }
 
+variable "archive_api_url" {
+  type    = string
+  default = null
+}
+
 variable "private_archive_api_gateway" {
   type = bool
   default = true
@@ -264,3 +269,4 @@ variable "bucket_map" {
   type = map(object({ name = string, type = string }))
   default = {}
 }
+
