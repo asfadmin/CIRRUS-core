@@ -58,7 +58,7 @@ container-shell:
 		--env AWS_CONFIG_DIR="/" \
 		-v ${PWD}:/CIRRUS-core \
 		-v ${DAAC_DIR}:/CIRRUS-DAAC \
-		-v ${HOME}/.aws:/.aws \
+		-v ${HOME}/.aws:/.aws:ro \
 		--name=cirrus-core \
 		cirrus-core \
 		bash

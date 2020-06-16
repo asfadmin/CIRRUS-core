@@ -97,6 +97,7 @@ pipeline {
                                     --env TF_VAR_urs_client_id="${URS_CREDS_USR}" \
                                     --env TF_VAR_urs_client_password="${URS_CREDS_PSW}" \
                                     --env TF_VAR_token_secret="${TOKEN_SECRET}" \
+                                    --env TF_VAR_BUILD_NUM="${BUILD_NUMBER}" \
                                     -v "${WORKSPACE}":/CIRRUS-core \
                                     -v "${WORKSPACE}/daac-repo":/daac-repo \
                                     --name=cirrus-core \
