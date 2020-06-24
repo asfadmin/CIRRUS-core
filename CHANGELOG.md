@@ -1,3 +1,12 @@
+## v1.24.0.0
+
+### CHANGES
+
+* Upgrade to Cumulus v1.24.0.
+* review Cumulus
+  [deployment instructions](https://github.com/nasa/Cumulus/releases/tag/v1.24.0)
+* added two extra cumulus outputs which are needed for ECS based tasks
+
 ## v1.23.2.0
 
 ### CHANGES

@@ -87,3 +87,11 @@ output "report_pdrs_sns_topic_arn" {
 output "subnet_ids" {
   value = data.aws_subnet_ids.subnet_ids.ids
 }
+
+output "ecs_cluster_arn" {
+  value = module.cumulus.ecs_cluster_arn
+}
+
+output "log2elasticsearch_lambda_function_arn" {
+  value = module.cumulus.log2elasticsearch_lambda_function_arn
+}
