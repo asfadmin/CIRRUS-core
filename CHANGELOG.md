@@ -1,3 +1,10 @@
+## Unreleased changes
+
+### CHANGES
+
+* Expose EC2 instance type for the default Cumulus ECS cluster.  Still deafaults to `t3.medium`.
+  Can be changed via any of the cumulus .tfvars files in CIRRUS-DAAC
+
 ## v1.24.0.0
 
 ### CHANGES
