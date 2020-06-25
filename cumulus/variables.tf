@@ -270,3 +270,7 @@ variable "bucket_map" {
   default = {}
 }
 
+variable "ecs_cluster_instance_type" {
+  type        = string
+  default     = "t3.medium"
+}
