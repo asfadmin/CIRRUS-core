@@ -6,7 +6,7 @@ pipeline {
     string(name: 'DAAC_REPO', defaultValue: '', description: '')
     string(name: 'DAAC_REF', defaultValue: 'master', description: '')
 
-    string(name: 'AWS_REGION', defaultValue: '', description: 'AWS Region to deploy to')
+    string(name: 'AWS_REGION', defaultValue: 'us-west-2', description: 'AWS Region to deploy to')
     credentials(
         name: 'AWS_CREDS',
         description: '',
