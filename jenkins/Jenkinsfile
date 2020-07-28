@@ -100,7 +100,7 @@ pipeline {
                                     --env TF_VAR_BUILD_NUM="${BUILD_NUMBER}" \
                                     -v "${WORKSPACE}":/CIRRUS-core \
                                     -v "${WORKSPACE}/daac-repo":/daac-repo \
-                                    --name=cirrus-core \
+                                    --name="cirrus-core-${env.BUILD_NUMBER}" \
                                     cirrus-core \
                                     /bin/bash -c "make all"
             '''
