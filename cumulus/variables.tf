@@ -270,3 +270,8 @@ variable "bucket_map" {
   type = map(object({ name = string, type = string }))
   default = {}
 }
+
+variable "ecs_cluster_instance_type" {
+  type        = string
+  default     = "t3.medium"
+}
