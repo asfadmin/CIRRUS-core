@@ -1,3 +1,11 @@
+## v2.0.1.0
+
+### CHANGES
+
+* Upgrade to Cumulus v2.0.1.
+* review Cumulus deployment instructions for version [2.0.0](https://github.com/nasa/Cumulus/releases/tag/v2.0.0)
+there is a manual step. [2.0.1](https://github.com/nasa/Cumulus/releases/tag/v2.0.1) only contains a bug fix
+
 ## v1.24.0.0
 
 ### CHANGES

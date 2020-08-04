@@ -10,7 +10,7 @@ FROM amazonlinux:2
 #   * AWS CLI
 #   * Terraform
 
-ENV NODE_VERSION "10.x"
+ENV NODE_VERSION "12.x"
 ENV TERRAFORM_VERSION "0.12.18"
 
 # Add NodeJS and Yarn repos & update package index
@@ -39,5 +39,5 @@ RUN \
 RUN \
         curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm" &&\
         yum install -y session-manager-plugin.rpm
-        
+
 WORKDIR /CIRRUS-core
