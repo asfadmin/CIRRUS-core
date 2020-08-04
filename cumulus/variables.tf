@@ -263,6 +263,7 @@ variable "deploy_distribution_s3_credentials_endpoint" {
 
 variable "ecs_cluster_instance_image_id" {
   type = string
+  default = ""
 }
 
 variable "bucket_map" {
