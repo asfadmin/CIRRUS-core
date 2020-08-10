@@ -271,6 +271,12 @@ variable "bucket_map" {
   default = {}
 }
 
+variable "bucket_map_key" {
+  description = "Optional S3 Key for TEA bucket map object to override default Cumulus configuration"
+  type        = string
+  default     = null
+}
+
 variable "ecs_cluster_instance_type" {
   type        = string
   default     = "t3.medium"

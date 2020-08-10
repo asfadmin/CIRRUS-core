@@ -74,6 +74,7 @@ module "cumulus" {
 
   distribution_url = var.distribution_url
   thin_egress_jwt_secret_name = "${local.prefix}-jwt_secret_for_tea"
+  bucket_map_key = var.bucket_map_key
 
   sts_credentials_lambda_function_arn = data.aws_lambda_function.sts_credentials.arn
 

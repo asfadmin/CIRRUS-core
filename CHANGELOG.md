@@ -1,3 +1,7 @@
+## [Unreleased]
+
+* add optional bucket_map_key variable to allow override of default TEA bucket_map
+
 ## v2.0.1.0
 
 ### CHANGES
