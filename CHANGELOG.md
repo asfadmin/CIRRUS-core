@@ -9,6 +9,8 @@
 * Upgrade to Cumulus v2.0.1.
 * review Cumulus deployment instructions for version [2.0.0](https://github.com/nasa/Cumulus/releases/tag/v2.0.0)
 there is a manual step. [2.0.1](https://github.com/nasa/Cumulus/releases/tag/v2.0.1) only contains a bug fix
+* Expose EC2 instance type for the default Cumulus ECS cluster.  Still deafaults to `t3.medium`.
+  Can be changed via any of the cumulus .tfvars files in CIRRUS-DAAC
 
 ## v1.24.0.0
 
