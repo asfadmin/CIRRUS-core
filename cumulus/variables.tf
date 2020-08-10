@@ -270,3 +270,9 @@ variable "bucket_map" {
   type = map(object({ name = string, type = string }))
   default = {}
 }
+
+variable "bucket_map_key" {
+  description = "Optional S3 Key for TEA bucket map object to override default Cumulus configuration"
+  type        = string
+  default     = null
+}
