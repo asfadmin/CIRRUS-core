@@ -24,6 +24,9 @@ output "files_to_granules_task" {
 output "hello_world_task" {
   value = module.cumulus.hello_world_task
 }
+output "hyrax_metadata_updates_task" {
+  value = module.cumulus.hyrax_metadata_updates_task
+}
 output "move_granules_task" {
   value = module.cumulus.move_granules_task
 }
