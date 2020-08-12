@@ -1,6 +1,7 @@
 ## [Unreleased]
 
 * add optional bucket_map_key variable to allow override of default TEA bucket_map
+* output cmr environment and hyrax-metadata-update task for use in workflows
 
 ## v2.0.1.0
 
