@@ -24,6 +24,9 @@ output "files_to_granules_task" {
 output "hello_world_task" {
   value = module.cumulus.hello_world_task
 }
+output "hyrax_metadata_updates_task" {
+  value = module.cumulus.hyrax_metadata_updates_task
+}
 output "move_granules_task" {
   value = module.cumulus.move_granules_task
 }
@@ -94,4 +97,8 @@ output "ecs_cluster_arn" {
 
 output "log2elasticsearch_lambda_function_arn" {
   value = module.cumulus.log2elasticsearch_lambda_function_arn
+}
+
+output "cmr_environment" {
+  value = var.cmr_environment
 }
