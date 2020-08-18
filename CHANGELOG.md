@@ -1,5 +1,6 @@
-## [Unreleased]
+## v2.0.2.0
 
+* Upgrade to Cumulus [V2.0.2](https://github.com/nasa/Cumulus/releases/tag/v2.0.2) to fix delete granule bug
 * add optional bucket_map_key variable to allow override of default TEA bucket_map
 * output cmr environment and hyrax-metadata-update task for use in workflows
 
