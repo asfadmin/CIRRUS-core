@@ -103,6 +103,7 @@ tf: tf-init
 # ---------------------------
 daac:
 	cd ${DAAC_DIR}
+	terraform init
 	make daac
 
 # ---------------------------
