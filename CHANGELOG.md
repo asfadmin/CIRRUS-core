@@ -1,3 +1,9 @@
+# CHANGELOG
+
+## v2.0.3.0
+
+* Upgrade to Cumulus [V2.0.3](https://github.com/nasa/Cumulus/releases/tag/v2.0.3) to fix syncgranule checksum and dashboard stats issues
+
 ## v2.0.2.0
 
 * Upgrade to Cumulus [V2.0.2](https://github.com/nasa/Cumulus/releases/tag/v2.0.2) to fix delete granule bug
