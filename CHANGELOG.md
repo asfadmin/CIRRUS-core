@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.0.4.0
+
+* Upgrade to Cumulus [V2.0.4](https://github.com/nasa/Cumulus/releases/tag/v2.0.4) to upgrade TEA to build 88
+
 ## v2.0.3.0
 
 * Upgrade to Cumulus [V2.0.3](https://github.com/nasa/Cumulus/releases/tag/v2.0.3) to fix syncgranule checksum and dashboard stats issues
