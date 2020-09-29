@@ -1,10 +1,10 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v2.0.2/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source                                   = "https://github.com/nasa/cumulus/releases/download/v2.0.4/terraform-aws-cumulus.zip//tf-modules/cumulus"
   cumulus_message_adapter_lambda_layer_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
   prefix = local.prefix
 
-  vpc_id = data.aws_vpc.application_vpcs.id
+  vpc_id            = data.aws_vpc.application_vpcs.id
   lambda_subnet_ids = data.aws_subnet_ids.subnet_ids.ids
 
   deploy_to_ngap = true
@@ -31,7 +31,7 @@ module "cumulus" {
   ems_submit_report     = var.ems_submit_report
   ems_username          = var.ems_username
 
-  metrics_es_host = var.metrics_es_host
+  metrics_es_host     = var.metrics_es_host
   metrics_es_username = var.metrics_es_username
   metrics_es_password = var.metrics_es_password
 
@@ -70,20 +70,20 @@ module "cumulus" {
   dynamo_tables = data.terraform_remote_state.data_persistence.outputs.dynamo_tables
 
   archive_api_users = var.api_users
-  archive_api_url = var.archive_api_url
+  archive_api_url   = var.archive_api_url
 
-  distribution_url = var.distribution_url
+  distribution_url            = var.distribution_url
   thin_egress_jwt_secret_name = "${local.prefix}-jwt_secret_for_tea"
-  bucket_map_key = var.bucket_map_key
+  bucket_map_key              = var.bucket_map_key
 
   sts_credentials_lambda_function_arn = data.aws_lambda_function.sts_credentials.arn
 
-  archive_api_port            = var.archive_api_port
-  private_archive_api_gateway = var.private_archive_api_gateway
-  api_gateway_stage = var.MATURITY
+  archive_api_port               = var.archive_api_port
+  private_archive_api_gateway    = var.private_archive_api_gateway
+  api_gateway_stage              = var.MATURITY
   distribution_api_gateway_stage = var.MATURITY
-  log_api_gateway_to_cloudwatch = var.log_api_gateway_to_cloudwatch
-  log_destination_arn = var.log_destination_arn
+  log_api_gateway_to_cloudwatch  = var.log_api_gateway_to_cloudwatch
+  log_destination_arn            = var.log_destination_arn
 
   deploy_distribution_s3_credentials_endpoint = var.deploy_distribution_s3_credentials_endpoint
 }
@@ -138,19 +138,19 @@ data "aws_subnet_ids" "subnet_ids" {
 
   tags = {
     Name = "Private application ${data.aws_region.current.name}a subnet"
-   }
+  }
 }
 
 data "terraform_remote_state" "daac" {
-  backend = "s3"
+  backend   = "s3"
   workspace = "${var.DEPLOY_NAME}"
-  config  = local.daac_remote_state_config
+  config    = local.daac_remote_state_config
 }
 
 data "terraform_remote_state" "data_persistence" {
-  backend = "s3"
+  backend   = "s3"
   workspace = "${var.DEPLOY_NAME}"
-  config  = local.data_persistence_remote_state_config
+  config    = local.data_persistence_remote_state_config
 }
 
 data "aws_lambda_function" "sts_credentials" {

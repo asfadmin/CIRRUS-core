@@ -11,11 +11,11 @@ provider "aws" {
 }
 
 module "data_persistence" {
-  source = "https://github.com/nasa/cumulus/releases/download/v2.0.2/terraform-aws-cumulus.zip//tf-modules/data-persistence"
+  source = "https://github.com/nasa/cumulus/releases/download/v2.0.4/terraform-aws-cumulus.zip//tf-modules/data-persistence"
 
-  prefix                     = local.prefix
-  subnet_ids                 = data.aws_subnet_ids.subnet_ids.ids
-  include_elasticsearch      = var.include_elasticsearch
+  prefix                = local.prefix
+  subnet_ids            = data.aws_subnet_ids.subnet_ids.ids
+  include_elasticsearch = var.include_elasticsearch
 }
 
 locals {
@@ -35,5 +35,5 @@ data "aws_subnet_ids" "subnet_ids" {
 
   tags = {
     Name = "Private application ${data.aws_region.current.name}a subnet"
-   }
+  }
 }
