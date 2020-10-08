@@ -38,7 +38,7 @@ pipeline {
     )
 
     string(name: 'CHAT_HOST', defaultValue: 'https://chat.asf.alaska.edu/hooks/dm8kzc8rxpr57xkt9w6tnfaasr', description: '')
-    choice(name: 'CHAT_ROOM', choices: ['bbarton-scratch', 'raindev', 'rain'], description: '')
+    choice(name: 'CHAT_ROOM', choices: ['rain-jenkinsnotifications', 'bbarton-scratch', 'raindev', 'rain'], description: '')
   }
 
   // Environment Setup
