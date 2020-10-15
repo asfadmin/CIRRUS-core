@@ -57,7 +57,7 @@ module "cumulus" {
 
   token_secret = var.token_secret
 
-  permissions_boundary_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/NGAPShRoleBoundary"
+  permissions_boundary_arn = local.permissions_boundary_arn
 
   system_bucket = local.system_bucket
   buckets       = local.buckets
@@ -113,6 +113,8 @@ locals {
   tea_stack_name              = "${local.prefix}-thin-egress-app"
   tea_stage_name              = var.MATURITY
   thin_egress_jwt_secret_name = "${local.prefix}-jwt_secret_for_tea"
+
+  permissions_boundary_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/NGAPShRoleBoundary"
 
   daac_remote_state_config = {
     bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
@@ -178,7 +180,7 @@ module "thin_egress_app" {
   jwt_secret_name                    = local.thin_egress_jwt_secret_name
   lambda_code_dependency_archive_key = var.thin_egress_lambda_code_dependency_archive_key
   log_api_gateway_to_cloudwatch      = var.log_api_gateway_to_cloudwatch
-  permissions_boundary_name          = var.permissions_boundary_arn == null ? null : reverse(split("/", var.permissions_boundary_arn))[0]
+  permissions_boundary_name          = local.permissions_boundary_arn == null ? null : reverse(split("/", local.permissions_boundary_arn))[0]
   private_vpc                        = data.aws_vpc.application_vpcs.id
   stack_name                         = local.tea_stack_name
   stage_name                         = local.tea_stage_name
