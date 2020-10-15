@@ -292,3 +292,33 @@ variable "ecs_cluster_instance_type" {
   type    = string
   default = "t3.medium"
 }
+
+variable "thin_egress_cookie_domain" {
+  type        = string
+  default     = null
+  description = "Valid domain for cookie"
+}
+
+variable "thin_egress_domain_cert_arn" {
+  type        = string
+  default     = null
+  description = "Certificate Manager SSL Cert ARN if deployed outside NGAP/CloudFront"
+}
+
+variable "thin_egress_download_role_in_region_arn" {
+  type        = string
+  default     = null
+  description = "ARN for reading of data buckets for in-region requests"
+}
+
+variable "thin_egress_jwt_algo" {
+  type        = string
+  default     = null
+  description = "Algorithm with which to encode the JWT cookie"
+}
+
+variable "thin_egress_lambda_code_dependency_archive_key" {
+  type        = string
+  default     = null
+  description = "S3 Key of packaged python modules for lambda dependency layer."
+}
