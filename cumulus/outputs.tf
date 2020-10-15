@@ -67,13 +67,13 @@ output "archive_api_redirect_uri" {
   value = module.cumulus.archive_api_redirect_uri
 }
 output "distribution_url" {
-  value = module.cumulus.distribution_url
+  value = module.thin_egress_app.api_endpoint
 }
 output "s3_credentials_redirect_uri" {
   value = module.cumulus.s3_credentials_redirect_uri
 }
 output "distribution_redirect_uri" {
-  value = module.cumulus.distribution_redirect_uri
+  value = module.thin_egress_app.urs_redirect_uri
 }
 
 # ---------
@@ -101,4 +101,8 @@ output "log2elasticsearch_lambda_function_arn" {
 
 output "cmr_environment" {
   value = var.cmr_environment
+}
+
+output "start_sf_queue_url" {
+  value = module.cumulus.start_sf_queue_url
 }

@@ -4,7 +4,7 @@ variable "DEPLOY_NAME" {
 }
 
 variable "MATURITY" {
-  type = string
+  type    = string
   default = "dev"
 }
 
@@ -25,22 +25,22 @@ variable "cmr_username" {
 }
 
 variable "cmr_oauth_provider" {
-  type = string
+  type    = string
   default = "earthdata"
 }
 
 variable "launchpad_api" {
-  type = string
+  type    = string
   default = "launchpadApi"
 }
 
 variable "launchpad_certificate" {
-  type = string
+  type    = string
   default = "launchpad.pfx"
 }
 
 variable "launchpad_passphrase" {
-  type = string
+  type    = string
   default = ""
 }
 
@@ -139,7 +139,7 @@ variable "ems_private_key" {
 variable "ems_provider" {
   type        = string
   description = "the provider used for sending reports to EMS"
-  default = null
+  default     = null
 }
 
 variable "ems_retention_in_days" {
@@ -157,7 +157,7 @@ variable "ems_submit_report" {
 variable "ems_username" {
   type        = string
   description = "the username used for sending reports to EMS"
-  default = null
+  default     = null
 
 }
 
@@ -174,6 +174,12 @@ variable "permissions_boundary_arn" {
 variable "aws_profile" {
   type    = string
   default = null
+}
+
+variable "ems_deploy" {
+  description = "If true, deploys the EMS reporting module"
+  type        = bool
+  default     = false
 }
 
 variable "log_api_gateway_to_cloudwatch" {
@@ -199,27 +205,27 @@ variable "archive_api_url" {
 }
 
 variable "private_archive_api_gateway" {
-  type = bool
+  type    = bool
   default = true
 }
 
 variable "metrics_es_host" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "metrics_es_password" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "metrics_es_username" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "api_users" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 
@@ -262,12 +268,12 @@ variable "deploy_distribution_s3_credentials_endpoint" {
 # }
 
 variable "ecs_cluster_instance_image_id" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "bucket_map" {
-  type = map(object({ name = string, type = string }))
+  type    = map(object({ name = string, type = string }))
   default = {}
 }
 
@@ -277,7 +283,12 @@ variable "bucket_map_key" {
   default     = null
 }
 
+variable "additional_log_groups_to_elk" {
+  type    = map(string)
+  default = {}
+}
+
 variable "ecs_cluster_instance_type" {
-  type        = string
-  default     = "t3.medium"
+  type    = string
+  default = "t3.medium"
 }

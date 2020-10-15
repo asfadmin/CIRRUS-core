@@ -100,10 +100,21 @@ tf: tf-init
 	terraform import -input=false aws_dynamodb_table.backend-tf-locks-table ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks 2>/dev/null || true
 	terraform apply -input=false -auto-approve -no-color
 
+plan-tf: tf-init
+	$(banner)
+	cd tf
+	terraform import -input=false aws_s3_bucket.backend-tf-state-bucket ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4} 2>/dev/null || true
+	terraform import -input=false aws_dynamodb_table.backend-tf-locks-table ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks 2>/dev/null || true
+	terraform plan -input=false -no-color
+
 # ---------------------------
 daac:
 	cd ${DAAC_DIR}
-	make daac
+	make $@
+
+plan-daac:
+	cd ${DAAC_DIR}
+	make $@
 
 # ---------------------------
 data-persistence: data-persistence-init
@@ -113,6 +124,14 @@ data-persistence: data-persistence-init
 		-input=false \
 		-no-color \
 		-auto-approve
+
+# ---------------------------
+plan-data-persistence: data-persistence-init
+	$(banner)
+	cd data-persistence
+	terraform plan \
+		-input=false \
+		-no-color
 
 # ---------------------------
 cumulus: cumulus-init
@@ -139,6 +158,36 @@ cumulus: cumulus-init
 				-input=false \
 				-no-color \
 				-auto-approve"
+	eval $$TF_CMD
+	if [ $$? -ne 0 ] # Workaround random Cumulus deploy fails
+	then
+		eval $$TF_CMD
+	fi
+
+# ---------------------------
+plan-cumulus: cumulus-init
+	$(banner)
+	if [ -f "${DAAC_DIR}/cumulus/secrets/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export SECRETS_OPT="-var-file=${DAAC_DIR}/cumulus/secrets/${MATURITY}.tfvars"
+		echo "Found maturity-specific secrets: $$SECRETS_OPT"
+		echo "***************************************************************"
+	fi
+	cd cumulus
+	if [ -f "${DAAC_DIR}/cumulus/variables/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export VARIABLES_OPT="-var-file=${DAAC_DIR}/cumulus/variables/${MATURITY}.tfvars"
+		echo "Found maturity-specific variables: $$VARIABLES_OPT"
+		echo "***************************************************************"
+	fi
+	export TF_CMD="terraform plan \
+				-var-file=${DAAC_DIR}/cumulus/terraform.tfvars \
+				$$VARIABLES_OPT \
+				$$SECRETS_OPT \
+				-input=false \
+				-no-color"
 	eval $$TF_CMD
 	if [ $$? -ne 0 ] # Workaround random Cumulus deploy fails
 	then
@@ -175,6 +224,10 @@ destroy-cumulus: cumulus-init
 
 # ---------------------------
 workflows:
+	cd ${DAAC_DIR}
+	make $@
+
+plan-workflows:
 	cd ${DAAC_DIR}
 	make $@
 
