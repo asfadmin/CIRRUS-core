@@ -7,11 +7,13 @@
   deletion and recreation of your TEA API Gateway.
 * change `Makefile` to add new `plan-*` targets for each step to allow running of
   `terraform plan` for each step (ex. `make plan-cumulus`)
-* change `cumulus/main.tf` many changes to support separation of TEA from Cumulus
+* change `cumulus/main.tf` changes to support separation of TEA from Cumulus
 * change `cumulus/outputs.tf` update the TEA outputs needed by workflows
 * change `cumulus/variables.tf` add new variables and formatting
 * change `data-persistence/main.tf` update for cumulus 3.0.0
 
+* add `cumulus/common.tf` items which are needed by both cumulus and tea
+* add `cumulus/thin_egress.tf` TEA tf module definition
 * add `cumulus/thin-egress-app/bucket_map.yaml.tmpl` the default TEA bucket map template
 * add `scripts/cumulus-v3.0.0/move-tea-tf-state.sh` contains the commands mentioned
 in the TEA migration instructions (https://nasa.github.io/cumulus/docs/upgrade-notes/migrate_tea_standalone)
