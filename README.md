@@ -155,6 +155,14 @@ secrets files will *not* (and *should not*) be committed to git. The
         $ make cumulus
         $ make workflows
 
+6. Any time you are upgrading a Cumulus stack please review the Cumulus and CIRRUS
+migration instructions (if any).  The Cumulus instructions are generally included
+in the [release notes](https://github.com/nasa/cumulus/releases).  CIRRUS
+instructions would be included in the CHANGELOG for
+[CIRRUS-core](https://github.com/asfadmin/CIRRUS-core/blob/master/CHANGELOG.md)
+and
+[CIRRUS-DAAC](https://github.com/asfadmin/CIRRUS-DAAC/blob/master/CHANGELOG.md).
+
 ### CI/CD: Jenkins Job
 
 There is a Jenkins pipeline job definition in the `jenkins`

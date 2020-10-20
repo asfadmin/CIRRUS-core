@@ -1,5 +1,34 @@
 # CHANGELOG
 
+## v3.0.0.0
+
+* Upgrade to Cumulus [V3.0.0](https://github.com/nasa/Cumulus/releases/tag/v3.0.0)
+* NOTE: Make sure to follow the upgrade instructions to prevent the
+  deletion and recreation of your TEA API Gateway.
+* change `Makefile` to add new `plan-*` targets for each step to allow running of
+  `terraform plan` for each step (ex. `make plan-cumulus`)
+* change `cumulus/main.tf` changes to support separation of TEA from Cumulus
+* change `cumulus/outputs.tf` update the TEA outputs needed by workflows
+* change `cumulus/variables.tf` add new variables and formatting
+* change `data-persistence/main.tf` update for cumulus 3.0.0
+
+* add `cumulus/common.tf` items which are needed by both cumulus and tea
+* add `cumulus/thin_egress.tf` TEA tf module definition
+* add `cumulus/thin-egress-app/bucket_map.yaml.tmpl` the default TEA bucket map template
+* add `scripts/cumulus-v3.0.0/move-tea-tf-state.sh` contains the commands mentioned
+in the TEA migration instructions (https://nasa.github.io/cumulus/docs/upgrade-notes/migrate_tea_standalone)
+
+### Notes about v3.0.0 migration as relates to CIRRUS
+
+* The `make daac` step of this version of CIRRUS generates a new output (`bucket_map_key`).  Look at the corresponding
+[CIRRUS-DAAC](https://github.com/asfadmin/CIRRUS-DAAC/blob/master/daac/outputs.tf) to add that value to your `daac/outputs.tf` file and then run `make daac`
+* Where the TEA migration instructions mention `terraform plan` use the new `make plan-cumulus` target get the output mentioned
+* Run `make daac` and `make data-persistence` prior to `make plan-cumulus`
+* Normally you run all CIRRUS `make` commands from the root `CIRRUS-core` directory.  All the `terraform state mv *` commands
+require being in the `CIRRUS-core/cumulus` directory.  A script has been added to `scripts/cumulus-v3.0.0` with all the commands
+in one file.  You may wish to run them from the script, or you may want to run them one at a time.  Make sure you have a
+backup of your state per the Cumulus instructions.
+
 ## v2.0.7.0
 
 * Upgrade to Cumulus [V2.0.7](https://github.com/nasa/Cumulus/releases/tag/v2.0.7)

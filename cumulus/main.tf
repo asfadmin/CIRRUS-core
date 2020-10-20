@@ -1,5 +1,5 @@
 module "cumulus" {
-  source                                   = "https://github.com/nasa/cumulus/releases/download/v2.0.7/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source                                   = "https://github.com/nasa/cumulus/releases/download/v3.0.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
   cumulus_message_adapter_lambda_layer_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
   prefix = local.prefix
@@ -57,10 +57,10 @@ module "cumulus" {
 
   token_secret = var.token_secret
 
-  permissions_boundary_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/NGAPShRoleBoundary"
+  permissions_boundary_arn = local.permissions_boundary_arn
 
   system_bucket = local.system_bucket
-  buckets       = data.terraform_remote_state.daac.outputs.bucket_map
+  buckets       = local.buckets
 
   elasticsearch_alarms            = data.terraform_remote_state.data_persistence.outputs.elasticsearch_alarms
   elasticsearch_domain_arn        = data.terraform_remote_state.data_persistence.outputs.elasticsearch_domain_arn
@@ -72,85 +72,32 @@ module "cumulus" {
   archive_api_users = var.api_users
   archive_api_url   = var.archive_api_url
 
-  distribution_url            = var.distribution_url
-  thin_egress_jwt_secret_name = "${local.prefix}-jwt_secret_for_tea"
-  bucket_map_key              = var.bucket_map_key
+  # Thin Egress App settings
+  # must match stack_name variable for thin-egress-app module
+  tea_stack_name = local.tea_stack_name
+  # must match stage_name variable for thin-egress-app module
+  tea_api_gateway_stage = local.tea_stage_name
+
+  tea_rest_api_id               = module.thin_egress_app.rest_api.id
+  tea_rest_api_root_resource_id = module.thin_egress_app.rest_api.root_resource_id
+  tea_internal_api_endpoint     = module.thin_egress_app.internal_api_endpoint
+  tea_external_api_endpoint     = module.thin_egress_app.api_endpoint
+  tea_api_egress_log_group      = var.log_api_gateway_to_cloudwatch == false ? null : "/aws/lambda/${local.prefix}-thin-egress-app-EgressLambda"
 
   sts_credentials_lambda_function_arn = data.aws_lambda_function.sts_credentials.arn
 
-  archive_api_port               = var.archive_api_port
-  private_archive_api_gateway    = var.private_archive_api_gateway
-  api_gateway_stage              = var.MATURITY
-  distribution_api_gateway_stage = var.MATURITY
-  log_api_gateway_to_cloudwatch  = var.log_api_gateway_to_cloudwatch
-  log_destination_arn            = var.log_destination_arn
+  archive_api_port            = var.archive_api_port
+  private_archive_api_gateway = var.private_archive_api_gateway
+  api_gateway_stage           = var.MATURITY
+  log_destination_arn         = var.log_destination_arn
 
   deploy_distribution_s3_credentials_endpoint = var.deploy_distribution_s3_credentials_endpoint
-}
 
-locals {
-  prefix = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
+  additional_log_groups_to_elk = var.additional_log_groups_to_elk
 
-  daac_remote_state_config = {
-    bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
-    key    = "daac/terraform.tfstate"
-    region = "${data.aws_region.current.name}"
-  }
+  ems_deploy = var.ems_deploy
 
-  data_persistence_remote_state_config = {
-    bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
-    key    = "data-persistence/terraform.tfstate"
-    region = "${data.aws_region.current.name}"
-  }
-
-  system_bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-internal"
-
-  cmr_client_id = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
-
-  default_tags = {
-    Deployment = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
-  }
-}
-
-terraform {
-  required_providers {
-    aws  = ">= 2.31.0"
-    null = "~> 2.1"
-  }
-  backend "s3" {
-  }
-}
-
-provider "aws" {
-}
-
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
-
-data "aws_vpc" "application_vpcs" {
-  tags = {
-    Name = "Application VPC"
-  }
-}
-
-data "aws_subnet_ids" "subnet_ids" {
-  vpc_id = data.aws_vpc.application_vpcs.id
-
-  tags = {
-    Name = "Private application ${data.aws_region.current.name}a subnet"
-  }
-}
-
-data "terraform_remote_state" "daac" {
-  backend   = "s3"
-  workspace = "${var.DEPLOY_NAME}"
-  config    = local.daac_remote_state_config
-}
-
-data "terraform_remote_state" "data_persistence" {
-  backend   = "s3"
-  workspace = "${var.DEPLOY_NAME}"
-  config    = local.data_persistence_remote_state_config
+  tags = local.default_tags
 }
 
 data "aws_lambda_function" "sts_credentials" {
