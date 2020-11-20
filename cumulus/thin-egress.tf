@@ -3,7 +3,7 @@ module "thin_egress_app" {
 
   auth_base_url                      = var.urs_url
   bucket_map_file                    = local.bucket_map_key == null ? aws_s3_bucket_object.bucket_map_yaml.id : local.bucket_map_key
-  bucketname_prefix                  = ""
+  bucketname_prefix                  = local.prefix
   config_bucket                      = local.system_bucket
   cookie_domain                      = var.thin_egress_cookie_domain
   domain_cert_arn                    = var.thin_egress_domain_cert_arn
