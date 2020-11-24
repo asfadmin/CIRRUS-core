@@ -1,4 +1,9 @@
 # CHANGELOG
+## v4.0.0.0
+
+* Upgrade to Cumulus [V4.0.0](https://github.com/nasa/Cumulus/releases/tag/v4.0.0)
+* change `cumulus_message_adapter_lambda_layer_arn` -> `cumulus_message_adapter_lambda_layer_arn` under the `cumulus` module in `cumulus/main.ft`
+* change `thin_egress_app` module's source to  `thin-egress-app/tea-terraform-build.100.zip` in `cumulus/thin_egress_app`
 
 ## v3.0.1.0
 
