@@ -6,6 +6,7 @@
 * change `thin_egress_app` module's source to  `thin-egress-app/tea-terraform-build.100.zip` in `cumulus/thin_egress_app`
 * add cumulus module output for new `update_granules_cmr_metadata_file_links` workflow lambda
 * add `egress_api_gateway_log_subscription_filter` subscription filter in `cumulus/thin_egress.tf` per Cumulus upgrade instructions
+* expose several ecs_cluster variables in `cumulus/main.tf` and `cumulus/variables.tf` for modification by CIRRUS users
 
 ## v3.0.1.0
 

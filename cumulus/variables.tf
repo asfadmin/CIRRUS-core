@@ -269,7 +269,36 @@ variable "deploy_distribution_s3_credentials_endpoint" {
 
 variable "ecs_cluster_instance_image_id" {
   type    = string
+  description = "AMI ID of ECS instances"
   default = ""
+}
+
+variable "ecs_cluster_instance_type" {
+  type    = string
+  default = "t3.medium"
+}
+
+variable "ecs_cluster_desired_size" {
+  description = "The desired maximum number of instances for your ECS autoscaling group"
+  type        = number
+  default     = 1
+}
+variable "ecs_cluster_max_size" {
+  description = "The maximum number of instances for your ECS cluster"
+  type        = number
+  default     = 2
+}
+
+variable "ecs_cluster_min_size" {
+  description = "The minimum number of instances for your ECS cluster"
+  type        = number
+  default     = 1
+}
+
+variable "ecs_cluster_instance_docker_volume_size" {
+  type        = number
+  description = "Size (in GB) of the volume that Docker uses for image and metadata storage"
+  default     = 50
 }
 
 variable "bucket_map" {
@@ -286,11 +315,6 @@ variable "bucket_map_key" {
 variable "additional_log_groups_to_elk" {
   type    = map(string)
   default = {}
-}
-
-variable "ecs_cluster_instance_type" {
-  type    = string
-  default = "t3.medium"
 }
 
 variable "thin_egress_cookie_domain" {
