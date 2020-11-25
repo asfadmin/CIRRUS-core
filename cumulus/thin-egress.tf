@@ -48,3 +48,12 @@ resource "aws_s3_bucket_object" "bucket_map_yaml" {
   }))
   tags = local.default_tags
 }
+
+resource "aws_cloudwatch_log_subscription_filter" "egress_api_gateway_log_subscription_filter" {
+  count           = (var.log_api_gateway_to_cloudwatch && var.log_destination_arn != null) ? 1 : 0
+  name            = "${local.prefix}-EgressApiGatewayCloudWatchLogSubscriptionToSharedDestination"
+  distribution    = "ByLogStream"
+  destination_arn = var.log_destination_arn
+  filter_pattern  = ""
+  log_group_name  = module.thin_egress_app.egress_log_group
+}
