@@ -2,8 +2,10 @@
 ## v4.0.0.0
 
 * Upgrade to Cumulus [V4.0.0](https://github.com/nasa/Cumulus/releases/tag/v4.0.0)
-* change `cumulus_message_adapter_lambda_layer_arn` -> `cumulus_message_adapter_lambda_layer_arn` under the `cumulus` module in `cumulus/main.ft`
+* change `cumulus_message_adapter_lambda_layer_arn` -> `cumulus_message_adapter_lambda_layer_arn` under the `cumulus` module in `cumulus/main.tf`
 * change `thin_egress_app` module's source to  `thin-egress-app/tea-terraform-build.100.zip` in `cumulus/thin_egress_app`
+* add cumulus module output for new `update_granules_cmr_metadata_file_links` workflow lambda
+* add `egress_api_gateway_log_subscription_filter` subscription filter in `cumulus/thin_egress.tf` per Cumulus upgrade instructions
 
 ## v3.0.1.0
 
