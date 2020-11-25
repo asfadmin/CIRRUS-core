@@ -1,6 +1,6 @@
 module "cumulus" {
-  source                                   = "https://github.com/nasa/cumulus/releases/download/v4.0.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
-  cumulus_message_adapter_lambda_layer_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
+  source                                           = "https://github.com/nasa/cumulus/releases/download/v4.0.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  cumulus_message_adapter_lambda_layer_version_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
   prefix = local.prefix
 
@@ -82,7 +82,6 @@ module "cumulus" {
   tea_rest_api_root_resource_id = module.thin_egress_app.rest_api.root_resource_id
   tea_internal_api_endpoint     = module.thin_egress_app.internal_api_endpoint
   tea_external_api_endpoint     = module.thin_egress_app.api_endpoint
-  tea_api_egress_log_group      = var.log_api_gateway_to_cloudwatch == false ? null : "/aws/lambda/${local.prefix}-thin-egress-app-EgressLambda"
 
   sts_credentials_lambda_function_arn = data.aws_lambda_function.sts_credentials.arn
 
