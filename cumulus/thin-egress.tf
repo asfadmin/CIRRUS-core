@@ -1,5 +1,5 @@
 module "thin_egress_app" {
-  source = "s3::https://s3.amazonaws.com/asf.public.code/thin-egress-app/tea-terraform-build.88.zip"
+  source = "s3::https://s3.amazonaws.com/asf.public.code/thin-egress-app/tea-terraform-build.100.zip"
 
   auth_base_url                      = var.urs_url
   bucket_map_file                    = local.bucket_map_key == null ? aws_s3_bucket_object.bucket_map_yaml.id : local.bucket_map_key
@@ -37,7 +37,7 @@ resource "aws_secretsmanager_secret_version" "thin_egress_urs_creds" {
 
 resource "aws_s3_bucket_object" "bucket_map_yaml" {
   bucket = local.system_bucket
-  key    = "${local.prefix}/thin-egress-app/bucket_map.yaml"
+  key    = "${local.prefix}/thin-egress-app/${local.prefix}-bucket_map.yaml"
   content = templatefile("./thin-egress-app/bucket_map.yaml.tmpl", {
     protected_buckets = local.protected_bucket_names,
     public_buckets    = local.public_bucket_names
@@ -47,4 +47,13 @@ resource "aws_s3_bucket_object" "bucket_map_yaml" {
     public_buckets    = local.public_bucket_names
   }))
   tags = local.default_tags
+}
+
+resource "aws_cloudwatch_log_subscription_filter" "egress_api_gateway_log_subscription_filter" {
+  count           = (var.log_api_gateway_to_cloudwatch && var.log_destination_arn != null) ? 1 : 0
+  name            = "${local.prefix}-EgressApiGatewayCloudWatchLogSubscriptionToSharedDestination"
+  distribution    = "ByLogStream"
+  destination_arn = var.log_destination_arn
+  filter_pattern  = ""
+  log_group_name  = module.thin_egress_app.egress_log_group
 }

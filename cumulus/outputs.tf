@@ -49,6 +49,10 @@ output "sync_granule_task" {
   value = module.cumulus.sync_granule_task
 }
 
+output "update_granules_cmr_metadata_file_links_task" {
+  value = module.cumulus.update_granules_cmr_metadata_file_links_task
+}
+
 # ---------
 # Cumulus IAM Resources
 output "lambda_processing_role_arn" {

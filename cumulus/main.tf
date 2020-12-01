@@ -1,6 +1,7 @@
 module "cumulus" {
-  source                                   = "https://github.com/nasa/cumulus/releases/download/v3.0.1/terraform-aws-cumulus.zip//tf-modules/cumulus"
-  cumulus_message_adapter_lambda_layer_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
+  source = "https://github.com/nasa/cumulus/releases/download/v4.0.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
+
+  cumulus_message_adapter_lambda_layer_version_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
   prefix = local.prefix
 
@@ -10,12 +11,15 @@ module "cumulus" {
   deploy_to_ngap = true
 
   ecs_cluster_instance_image_id   = "${var.ecs_cluster_instance_image_id != "" ? var.ecs_cluster_instance_image_id : data.aws_ssm_parameter.ecs_image_id.value}"
-  ecs_cluster_instance_subnet_ids = data.aws_subnet_ids.subnet_ids.ids
-  ecs_cluster_min_size            = 1
-  ecs_cluster_desired_size        = 1
-  ecs_cluster_max_size            = 2
-  ecs_cluster_instance_type       = var.ecs_cluster_instance_type
-  key_name                        = var.key_name
+
+  ecs_cluster_instance_subnet_ids         = data.aws_subnet_ids.subnet_ids.ids
+  ecs_cluster_min_size                    = var.ecs_cluster_min_size
+  ecs_cluster_desired_size                = var.ecs_cluster_desired_size
+  ecs_cluster_max_size                    = var.ecs_cluster_max_size
+  ecs_cluster_instance_type               = var.ecs_cluster_instance_type
+  ecs_cluster_instance_docker_volume_size = var.ecs_cluster_instance_docker_volume_size
+
+  key_name = var.key_name
 
   urs_url             = var.urs_url
   urs_client_id       = var.urs_client_id
@@ -82,7 +86,6 @@ module "cumulus" {
   tea_rest_api_root_resource_id = module.thin_egress_app.rest_api.root_resource_id
   tea_internal_api_endpoint     = module.thin_egress_app.internal_api_endpoint
   tea_external_api_endpoint     = module.thin_egress_app.api_endpoint
-  tea_api_egress_log_group      = var.log_api_gateway_to_cloudwatch == false ? null : "/aws/lambda/${local.prefix}-thin-egress-app-EgressLambda"
 
   sts_credentials_lambda_function_arn = data.aws_lambda_function.sts_credentials.arn
 
