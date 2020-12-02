@@ -8,9 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  ignore_tags {
-    key_prefixes = ["gsfc-ngap"]
-  }
+
 }
 
 locals {
