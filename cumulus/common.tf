@@ -8,6 +8,8 @@ terraform {
 }
 
 provider "aws" {
+  version = ">= 3.19.0"
+  source = "hashicorp/aws"
   ignore_tags {
     key_prefixes = ["gsfc-ngap"]
   }
