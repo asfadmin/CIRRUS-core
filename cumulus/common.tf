@@ -1,6 +1,6 @@
 terraform {
   required_providers {
-    aws  = ">= 2.31.0"
+    aws  = "~> 3.19.0"
     null = "~> 2.1"
   }
   backend "s3" {
@@ -8,8 +8,6 @@ terraform {
 }
 
 provider "aws" {
-  version = ">= 3.19.0"
-  source = "hashicorp/aws"
   ignore_tags {
     key_prefixes = ["gsfc-ngap"]
   }
