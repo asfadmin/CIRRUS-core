@@ -1,4 +1,8 @@
 # CHANGELOG
+## v4.0.0.1
+
+* Upgrade aws terraform provider to 3.19.x and ignore gsfc-ngap tags when deciding what components need to be rebuilt
+
 ## v4.0.0.0
 
 * Upgrade to Cumulus [V4.0.0](https://github.com/nasa/Cumulus/releases/tag/v4.0.0)

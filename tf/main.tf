@@ -1,17 +1,20 @@
 terraform {
   required_providers {
-    aws  = "~> 2.46.0"
+    aws = "~> 3.19.0"
   }
 }
 
 provider "aws" {
+  ignore_tags {
+    key_prefixes = ["gsfc-ngap"]
+  }
 }
 
 data "aws_caller_identity" "current" {}
 
 locals {
-  cumulus-prefix = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
-  aws_account_id = data.aws_caller_identity.current.account_id
+  cumulus-prefix       = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
+  aws_account_id       = data.aws_caller_identity.current.account_id
   aws_account_id_last4 = substr(data.aws_caller_identity.current.account_id, -4, 4)
   default_tags = {
     Deployment = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
@@ -30,9 +33,9 @@ resource "aws_s3_bucket" "backend-tf-state-bucket" {
 }
 
 resource "aws_dynamodb_table" "backend-tf-locks-table" {
-  name = "${local.cumulus-prefix}-tf-locks"
+  name         = "${local.cumulus-prefix}-tf-locks"
   billing_mode = "PAY_PER_REQUEST"
-  hash_key = "LockID"
+  hash_key     = "LockID"
   attribute {
     name = "LockID"
     type = "S"
