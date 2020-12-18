@@ -10,7 +10,7 @@ module "cumulus" {
 
   deploy_to_ngap = true
 
-  ecs_cluster_instance_image_id   = "${var.ecs_cluster_instance_image_id != "" ? var.ecs_cluster_instance_image_id : data.aws_ssm_parameter.ecs_image_id.value}"
+  ecs_cluster_instance_image_id   = var.ecs_cluster_instance_image_id != "" ? var.ecs_cluster_instance_image_id : data.aws_ssm_parameter.ecs_image_id.value
 
   ecs_cluster_instance_subnet_ids         = data.aws_subnet_ids.subnet_ids.ids
   ecs_cluster_min_size                    = var.ecs_cluster_min_size

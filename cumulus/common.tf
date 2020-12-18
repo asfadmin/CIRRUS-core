@@ -32,13 +32,13 @@ locals {
   daac_remote_state_config = {
     bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
     key    = "daac/terraform.tfstate"
-    region = "${data.aws_region.current.name}"
+    region = data.aws_region.current.name
   }
 
   data_persistence_remote_state_config = {
     bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
     key    = "data-persistence/terraform.tfstate"
-    region = "${data.aws_region.current.name}"
+    region = data.aws_region.current.name
   }
 
   system_bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-internal"
@@ -69,12 +69,12 @@ data "aws_subnet_ids" "subnet_ids" {
 
 data "terraform_remote_state" "daac" {
   backend   = "s3"
-  workspace = "${var.DEPLOY_NAME}"
+  workspace = var.DEPLOY_NAME
   config    = local.daac_remote_state_config
 }
 
 data "terraform_remote_state" "data_persistence" {
   backend   = "s3"
-  workspace = "${var.DEPLOY_NAME}"
+  workspace = var.DEPLOY_NAME
   config    = local.data_persistence_remote_state_config
 }
