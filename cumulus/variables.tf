@@ -268,9 +268,9 @@ variable "deploy_distribution_s3_credentials_endpoint" {
 # }
 
 variable "ecs_cluster_instance_image_id" {
-  type    = string
+  type        = string
   description = "AMI ID of ECS instances"
-  default = ""
+  default     = ""
 }
 
 variable "ecs_cluster_instance_type" {
@@ -345,4 +345,10 @@ variable "thin_egress_lambda_code_dependency_archive_key" {
   type        = string
   default     = null
   description = "S3 Key of packaged python modules for lambda dependency layer."
+}
+
+variable "egress_lambda_log_retention_days" {
+  type        = number
+  default     = 30
+  description = "Number of days to retain TEA logs"
 }
