@@ -1,4 +1,16 @@
 # CHANGELOG
+
+## v5.0.0.0
+
+* Upgrade to Cumulus [V5.0.0](https://github.com/nasa/Cumulus/releases/tag/v5.0.0)
+* Update includes the addition of the `egress_lambda_log_group` and
+  `egress_lambda_log_subscription_filter` plus the removal of the `tea_stack_name`
+  mentioned in the migration steps
+* Cumulus 5.0.0 requires a one time [reindex](https://nasa.github.io/cumulus-api/#reindex)
+  and [changeindex](https://nasa.github.io/cumulus-api/#change-index)
+* Update adds a `egress_lambda_log_retention_days` variable with a default of 30
+  to allow a DAAC to control the number of days to keep logs.
+
 ## v4.0.0.1
 
 * Upgrade aws terraform provider to 3.19.x and ignore gsfc-ngap tags when deciding what components need to be rebuilt

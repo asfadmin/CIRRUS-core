@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v4.0.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v5.0.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
 
   cumulus_message_adapter_lambda_layer_version_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
@@ -10,7 +10,7 @@ module "cumulus" {
 
   deploy_to_ngap = true
 
-  ecs_cluster_instance_image_id   = var.ecs_cluster_instance_image_id != "" ? var.ecs_cluster_instance_image_id : data.aws_ssm_parameter.ecs_image_id.value
+  ecs_cluster_instance_image_id = var.ecs_cluster_instance_image_id != "" ? var.ecs_cluster_instance_image_id : data.aws_ssm_parameter.ecs_image_id.value
 
   ecs_cluster_instance_subnet_ids         = data.aws_subnet_ids.subnet_ids.ids
   ecs_cluster_min_size                    = var.ecs_cluster_min_size
@@ -76,9 +76,6 @@ module "cumulus" {
   archive_api_users = var.api_users
   archive_api_url   = var.archive_api_url
 
-  # Thin Egress App settings
-  # must match stack_name variable for thin-egress-app module
-  tea_stack_name = local.tea_stack_name
   # must match stage_name variable for thin-egress-app module
   tea_api_gateway_stage = local.tea_stage_name
 
