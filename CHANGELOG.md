@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v5.0.1.0
+
+* Upgrade to Cumulus [v5.0.1](https://github.com/nasa/Cumulus/releases/tag/v5.0.1)
+
 ## v5.0.0.0
 
 * Upgrade to Cumulus [V5.0.0](https://github.com/nasa/Cumulus/releases/tag/v5.0.0)
