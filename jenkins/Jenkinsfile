@@ -1,6 +1,7 @@
 pipeline {
   parameters {
     choice(name: 'MATURITY', choices: ['dev', 'int', 'test', 'prod'], description: 'The MATURITY (AWS) account to deploy')
+    string(name: 'BUILD_NUM', defaultValue: '', description: 'The Cumulus build number')
     string(name: 'DEPLOY_NAME', defaultValue: '', description: 'The name of the stack for this MATURITY')
 
     string(name: 'DAAC_REPO', defaultValue: '', description: '')
@@ -86,6 +87,7 @@ pipeline {
                   docker run --rm   --user `id -u` \
                                     --env DAAC_DIR="/daac-repo" \
                                     --env DEPLOY_NAME="${DEPLOY_NAME}" \
+                                    --env BUILD_NUM="${BUILD_NUM}" \
                                     --env MATURITY="${MATURITY}" \
                                     --env AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
                                     --env AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
