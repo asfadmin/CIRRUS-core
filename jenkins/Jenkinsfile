@@ -76,7 +76,8 @@ pipeline {
       environment {
         CMR_CREDS = credentials("${params.CMR_CREDS_ID}")
         URS_CREDS = credentials("${params.URS_CREDS_ID}")
-        TOKEN_SECRET = credentials("${params.SECRET_TOKEN_ID}")/**/
+        TOKEN_SECRET = credentials("${params.SECRET_TOKEN_ID}")
+        BUILD_NUM = "${env.BUILD_NUMBER}"/**/
       }
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${params.AWS_CREDS}"]])  {
@@ -85,6 +86,7 @@ pipeline {
                   export AWS_ACCOUNT_ID_LAST4=$(echo -n $AWS_ACCOUNT_ID | tail -c 4)
                   docker run --rm   --user `id -u` \
                                     --env DAAC_DIR="/daac-repo" \
+                                    --env BUILD_NUM="${BUILD_NUM}" \
                                     --env DEPLOY_NAME="${DEPLOY_NAME}" \
                                     --env MATURITY="${MATURITY}" \
                                     --env AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
