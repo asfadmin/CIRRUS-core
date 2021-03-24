@@ -19,6 +19,9 @@ module "data_persistence" {
   prefix                = local.prefix
   subnet_ids            = data.aws_subnet_ids.subnet_ids.ids
   include_elasticsearch = var.include_elasticsearch
+
+  elasticsearch_config = var.elasticsearch_config
+
 }
 
 locals {

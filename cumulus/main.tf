@@ -39,6 +39,9 @@ module "cumulus" {
   metrics_es_username = var.metrics_es_username
   metrics_es_password = var.metrics_es_password
 
+  es_index_shards        = var.es_index_shards
+  es_request_concurrency = var.es_request_concurrency
+
   cmr_client_id   = local.cmr_client_id
   cmr_environment = var.cmr_environment
   cmr_username    = var.cmr_username

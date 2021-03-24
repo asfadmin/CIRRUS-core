@@ -241,31 +241,17 @@ variable "deploy_distribution_s3_credentials_endpoint" {
   default     = true
 }
 
-# variable "dynamo_tables" {
-#   description = "A map of objects with the `arn` and `name` of every DynamoDB table for your Cumulus deployment."
-#   type = map(object({ name = string, arn = string }))
-# }
+variable "es_index_shards" {
+  description = "The number of shards for the Elasticsearch index"
+  type        = number
+  default     = 2
+}
 
-# variable "elasticsearch_domain_arn" {
-#   description = "The ARN of an Elasticsearch domain to use for storing data"
-#   type = string
-# }
-
-# variable "elasticsearch_hostname" {
-#   description = "The hostname of an Elasticsearch domain to use for storing data"
-#   type = string
-# }
-
-# variable "elasticsearch_security_group_id" {
-#   description = "The ID of the security group for the Elasticsearch domain specified by `elasticsearch_domain_arn`"
-#   type = string
-# }
-
-# variable "elasticsearch_alarms" {
-#   description = "List of Cloudwatch alarms monitoring Elasticsearch domain"
-#   type = list(object({ name = string, arn = string }))
-#   default = []
-# }
+variable "es_request_concurrency" {
+  type        = number
+  default     = 10
+  description = "Maximum number of concurrent requests to send to Elasticsearch. Used in index-from-database operation"
+}
 
 variable "ecs_cluster_instance_image_id" {
   type        = string
