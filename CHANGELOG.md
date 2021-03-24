@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v5.0.1.2
+
+* Expose elasticsearch configuration parameters in both data-persistence and cumulus modules.
+* **Breaking change**:  the `Makefile` updated to handle per maturity data-persistence variables.  To be
+consistent with how other `make` targets behave, the CIRRUS-DAAC
+`data-persistence/terraform.tfvars` file needs to exist for `make data-persistence` to work.
+The file can be empty, but must exist.
+
 ## v5.0.1.1
 
 * Upgrade to TEA to build [102](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-build.102)

@@ -110,3 +110,7 @@ output "cmr_environment" {
 output "start_sf_queue_url" {
   value = module.cumulus.start_sf_queue_url
 }
+
+output "vpc" {
+  value = data.aws_vpc.application_vpcs.id
+}
