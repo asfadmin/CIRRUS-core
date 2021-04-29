@@ -1,5 +1,52 @@
 # CHANGELOG
 
+## v5.0.1.3
+
+The purpose of this update is to upgrade Terraform to v0.13.6 on existing
+deployments of Cumulus v5.0.1.  Cumulus notes for upgrading Terraform are
+available [here](https://github.com/nasa/cumulus/blob/master/docs/upgrade-notes/upgrading-tf-version-0.13.6.md).
+
+This CIRRUS update takes care of the running of the `0.13upgrade` command across
+all modules.  It resulted in the creation of a versions.tf file in each module
+and a syntax change to the `required_providers` section in the main.tf file in
+each module.
+
+### Prerequisites
+
+* Upgrade your CIRRUS-core release to v5.0.1.2 across all your environments.
+* Per the Cumulus notes, apply any configuration across all environments.
+
+### Upgrade Steps
+
+* Review the changes in CIRRUS-DAAC.  Add the versions.tf file and update the
+`required_providers` section of the main.tf file in your `daac` and `workflows` modules
+* In CIRRUS-core run `make image` to create a new Docker `cirrus-core` image with
+Terraform 0.13.6.
+* Run `make container-shell` - all the following commands are run from inside the
+container.
+* use the `source env.sh ...` command to set up your environment variables for
+the deployment you will be upgrading.
+* For each module run `make plan-modulename` (`make plan-tf`, `make plan-daac`, etc).
+Only `make plan-tf` will succeed the first time.  Even though unsuccessul, this step
+is necessary as it runs the `terraform init --reconfigure` mentioned in the Cumulus
+upgrade instructions.
+* cd to the module directory and run the necessary `terraform state replace-provider`
+commands to resolve the issues noted in the `plan` failure.
+* Run `make plan-module` again to confirm the issues are resolved
+
+The `scripts/cumulus-v5.0.1-tf-upgrade/replace_tf_providers.sh` script has all
+the commands necessary to iterate over each module.  **BE WARNED** You may want
+to use this as more of a copy-paste guide rather than actually running it.  It
+does work running end-to-end on my deployments but your mileage may vary.  In
+particular, you may want to remove the `-auto-approve` switch from the
+`terraform state replace-provider` command so you have a chance to review the
+changes before accepting them.
+
+* Once all `plans` run successfully you can then run `make modulename` for each
+module to complete the upgrade.
+
+The process will need to be repeated for each deployment.
+
 ## v5.0.1.2
 
 * Expose elasticsearch configuration parameters in both data-persistence and cumulus modules.

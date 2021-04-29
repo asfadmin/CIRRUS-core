@@ -49,7 +49,7 @@ endef
 
 # ---------------------------
 image: Dockerfile
-	docker build -f Dockerfile -t cirrus-core .
+	docker build -f Dockerfile --no-cache -t cirrus-core .
 
 container-shell:
 	docker run -it --rm \
