@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v6.0.0.0
+
+Upgraded all cumulus source urls to 6.0.0
+
 ## v5.0.1.3
 
 The purpose of this update is to upgrade Terraform to v0.13.6 on existing
