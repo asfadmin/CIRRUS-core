@@ -2,7 +2,14 @@
 
 ## v6.0.0.0
 
-Upgraded all cumulus source urls to 6.0.0
+* Upgrade to Cumulus [v6.0.0](https://github.com/nasa/Cumulus/releases/tag/v6.0.0)
+  * review the upgrade instructions
+* Upgrade to TEA to build [103](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-build.103)
+
+### Prerequisites
+
+* Upgrade your CIRRUS-core release to v5.0.1.3 across all your environments to
+ensure Terraform is upgraded to v13.6.
 
 ## v5.0.1.3
 
