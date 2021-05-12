@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## v8.1.0.0
+
+* Upgrade to Cumulus [v8.1.0](https://github.com/nasa/Cumulus/releases/tag/v8.1.0)
+  * While there are no specific migration instructions, please review the changes in all releases since v6.0.0
+    * [v7.0.0](https://github.com/nasa/Cumulus/releases/tag/v7.0.0)
+    * [v7.1.0](https://github.com/nasa/Cumulus/releases/tag/v7.1.0)
+    * [v7.2.0](https://github.com/nasa/Cumulus/releases/tag/v7.2.0)
+    * [v8.0.0](https://github.com/nasa/Cumulus/releases/tag/v8.0.0)
+* Cumulus v7.0.0 removed the `log2elasticsearch_lambda_function_arn` output from the
+cumulus module.  Any workflows which expected it will need to be updated.
+* Any workflows using DMRPP should upgrade to [v2.1.0](https://ghrcdaac.github.io/dmrpp-generator/#v210)
+* This version requires [v6.0.0](https://github.com/nasa/cumulus-dashboard/releases/tag/v6.0.0)
+of the Cumulus Dashboard
+
+### Prerequisites
+
+* The Cumulus team recommends updgrading your CIRRUS-core release to v6.0.0.0 across all your
+environments prior to upgrading to Cumulus 8.1.0.
+
 ## v6.0.0.0
 
 * Upgrade to Cumulus [v6.0.0](https://github.com/nasa/Cumulus/releases/tag/v6.0.0)
