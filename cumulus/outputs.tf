@@ -99,10 +99,6 @@ output "ecs_cluster_arn" {
   value = module.cumulus.ecs_cluster_arn
 }
 
-output "log2elasticsearch_lambda_function_arn" {
-  value = module.cumulus.log2elasticsearch_lambda_function_arn
-}
-
 output "cmr_environment" {
   value = var.cmr_environment
 }
