@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v8.1.1.0
+
+* Upgrade to Cumulus [v8.1.1](https://github.com/nasa/Cumulus/releases/tag/v8.1.1)
+
 ## v8.1.0.0
 
 * Upgrade to Cumulus [v8.1.0](https://github.com/nasa/Cumulus/releases/tag/v8.1.0)
