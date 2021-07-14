@@ -8,6 +8,9 @@ terraform {
       source  = "hashicorp/null"
       version = "~> 2.1"
     }
+    archive = {
+      source = "hashicorp/archive"
+    }
   }
   backend "s3" {
   }
@@ -68,8 +71,10 @@ data "aws_vpc" "application_vpcs" {
 data "aws_subnet_ids" "subnet_ids" {
   vpc_id = data.aws_vpc.application_vpcs.id
 
-  tags = {
-    Name = "Private application ${data.aws_region.current.name}a subnet"
+  filter {
+    name   = "tag:Name"
+    values = ["Private application ${data.aws_region.current.name}a subnet",
+              "Private application ${data.aws_region.current.name}b subnet"]
   }
 }
 

@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v8.1.1/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v9.2.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
 
   cumulus_message_adapter_lambda_layer_version_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
@@ -21,19 +21,13 @@ module "cumulus" {
 
   key_name = var.key_name
 
+  rds_security_group         = data.terraform_remote_state.data_persistence.outputs.rds_security_group_id
+  rds_user_access_secret_arn = data.terraform_remote_state.data_persistence.outputs.rds_user_access_secret_arn
+  rds_connection_heartbeat   = var.rds_connection_heartbeat
+
   urs_url             = var.urs_url
   urs_client_id       = var.urs_client_id
   urs_client_password = var.urs_client_password
-
-  ems_host              = var.ems_host
-  ems_port              = var.ems_port
-  ems_path              = var.ems_path
-  ems_datasource        = var.ems_datasource
-  ems_private_key       = var.ems_private_key
-  ems_provider          = var.ems_provider
-  ems_retention_in_days = var.ems_retention_in_days
-  ems_submit_report     = var.ems_submit_report
-  ems_username          = var.ems_username
 
   metrics_es_host     = var.metrics_es_host
   metrics_es_username = var.metrics_es_username
@@ -87,7 +81,9 @@ module "cumulus" {
   tea_internal_api_endpoint     = module.thin_egress_app.internal_api_endpoint
   tea_external_api_endpoint     = module.thin_egress_app.api_endpoint
 
-  sts_credentials_lambda_function_arn = data.aws_lambda_function.sts_credentials.arn
+  sts_credentials_lambda_function_arn   = data.aws_lambda_function.sts_credentials.arn
+  sts_policy_helper_lambda_function_arn = data.aws_lambda_function.sts_policy_helper.arn
+  cmr_acl_based_credentials             = var.cmr_acl_based_credentials
 
   archive_api_port            = var.archive_api_port
   private_archive_api_gateway = var.private_archive_api_gateway
@@ -98,13 +94,15 @@ module "cumulus" {
 
   additional_log_groups_to_elk = var.additional_log_groups_to_elk
 
-  ems_deploy = var.ems_deploy
-
   tags = local.default_tags
 }
 
 data "aws_lambda_function" "sts_credentials" {
   function_name = "gsfc-ngap-sh-s3-sts-get-keys"
+}
+
+data "aws_lambda_function" "sts_policy_helper" {
+  function_name = "gsfc-ngap-sh-sts-policy-helper"
 }
 
 data "aws_ssm_parameter" "ecs_image_id" {

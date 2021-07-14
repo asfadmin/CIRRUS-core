@@ -90,7 +90,7 @@ workflows-init:
 		-backend-config "dynamodb_table=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks"
 	terraform workspace new ${DEPLOY_NAME} 2>/dev/null || terraform workspace select ${DEPLOY_NAME}
 
-init-modules-list = tf data-persistence cumulus
+init-modules-list = tf data-persistence cumulus data-migration1
 init-modules := $(init-modules-list:%-init=%)
 
 # ---------------------------
@@ -123,6 +123,62 @@ daac:
 plan-daac:
 	cd ${DAAC_DIR}
 	make $@
+
+# ---------------------------
+rds:
+	cd ${DAAC_DIR}
+	make $@
+
+plan-rds:
+	cd ${DAAC_DIR}
+	make $@
+
+destroy-rds:
+	cd ${DAAC_DIR}
+	make $@
+
+# ---------------------------
+data-migration1: data-migration1-init
+	$(banner)
+	cd $@
+	if [ -f "${DAAC_DIR}/data-migration1/variables/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export VARIABLES_OPT="-var-file=${DAAC_DIR}/data-migration1/variables/${MATURITY}.tfvars"
+		echo "Found maturity-specific variables: $$VARIABLES_OPT"
+		echo "***************************************************************"
+	fi
+	export TF_CMD="terraform apply \
+			$$VARIABLES_OPT \
+			-input=false \
+			-no-color \
+			-auto-approve"
+	eval $$TF_CMD
+	if [ $$? -ne 0 ] # Workaround random Cumulus deploy fails
+	then
+		eval $$TF_CMD
+	fi
+
+# ---------------------------
+plan-data-migration1: data-migration1-init
+	$(banner)
+	cd data-migration1
+	if [ -f "${DAAC_DIR}/data-migration1/variables/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export VARIABLES_OPT="-var-file=${DAAC_DIR}/data-migration1/variables/${MATURITY}.tfvars"
+		echo "Found maturity-specific variables: $$VARIABLES_OPT"
+		echo "***************************************************************"
+	fi
+	export TF_CMD="terraform plan \
+			$$VARIABLES_OPT \
+			-input=false \
+			-no-color"
+	eval $$TF_CMD
+	if [ $$? -ne 0 ] # Workaround random Cumulus deploy fails
+	then
+		eval $$TF_CMD
+	fi
 
 # ---------------------------
 data-persistence: data-persistence-init

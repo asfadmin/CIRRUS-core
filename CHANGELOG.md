@@ -1,5 +1,54 @@
 # CHANGELOG
 
+## v9.2.0.0
+
+* Upgrade to Cumulus [v9.2.0](https://github.com/nasa/Cumulus/releases/tag/v9.2.0)
+  * Version [v9.0.1](https://github.com/nasa/Cumulus/releases/tag/v9.0.1) has a
+    number of migration instructions detailed
+    [here](https://nasa.github.io/cumulus/docs/upgrade-notes/upgrade-rds)
+  * Per the migration instructions, this version of CIRRUS assumes that the DAACs
+    RDS creation is contained the `rds` directory of that DAACs `CIRRUS-DAAC` code.
+    The datbase is created by running `make rds` with the appropriate parameters.
+    `make plan-rds` can be run to check parameters.
+  * A new `make data-migration1` target has been created and can be used for that
+    step of the migration.  `make plan-data-migration1` can be run to check parameters
+  * Scripts for the migration1 and 2 lambda invokecations can be found in the
+    `scripts/cumulus-v9.2.0` directory
+  * While there are no specific migration instructions, the release notes for
+    Version [v9.1.0](https://github.com/nasa/Cumulus/releases/tag/v9.1.0) should
+    also be reviewed
+  * a serverless RDS requires at least 2 subnets to be defined, CIRRUS had only been
+    using one via commands like this:
+
+```terraform
+data "aws_subnet_ids" "subnet_ids" {
+  vpc_id = data.aws_vpc.application_vpcs.id
+
+  tags = {
+    Name = "Private application ${data.aws_region.current.name}a subnet"
+  }
+}
+```
+
+* subnets are now defined like this throughout CIRRUS:
+
+```terraform
+data "aws_subnet_ids" "subnet_ids" {
+  vpc_id = data.aws_vpc.application_vpcs.id
+
+  filter {
+    name   = "tag:Name"
+    values = ["Private application ${data.aws_region.current.name}a subnet",
+              "Private application ${data.aws_region.current.name}b subnet"]
+  }
+}
+```
+
+* ElasticSearch stacks with mulitiple subnets require at least 2 nodes
+    so the default number was raised to 2
+* If using a serverless RDS make sure to set `rds_connection_heartbeat` to true
+in the cumulus module
+
 ## v8.1.1.0
 
 * Upgrade to Cumulus [v8.1.1](https://github.com/nasa/Cumulus/releases/tag/v8.1.1)

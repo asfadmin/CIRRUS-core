@@ -338,3 +338,15 @@ variable "egress_lambda_log_retention_days" {
   default     = 30
   description = "Number of days to retain TEA logs"
 }
+
+variable "rds_connection_heartbeat" {
+  description = "If true, send a query to verify database connection is live on connection creation and retry on initial connection timeout.  Set to false if not using serverless RDS"
+  type    = bool
+  default = false
+}
+
+variable "cmr_acl_based_credentials" {
+  type = bool
+  default = false
+  description = "Option to enable/disable user based CMR ACLs to derive permission for s3 credential access tokens"
+}
