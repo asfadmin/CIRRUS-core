@@ -72,7 +72,7 @@ module "data_migration1" {
   rds_user_access_secret_arn = data.terraform_remote_state.rds.outputs.rds_user_access_secret_arn
   rds_connection_heartbeat   = var.rds_connection_heartbeat
 
-  provider_kms_key_id = var.provider_kms_key_id[var.MATURITY]
+  provider_kms_key_id = var.provider_kms_key_id
 
   tags = merge(var.tags, local.default_tags)
 }
