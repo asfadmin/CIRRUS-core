@@ -19,6 +19,7 @@
     also be reviewed
   * a serverless RDS requires at least 2 subnets to be defined, CIRRUS had only been
     using one via commands like this:
+  * Added `MAKE_COMMAND` to `jenkins/Jenkinsfile` to allow specific cumulus modules to be deployed from Jenkins.  
 
 ```terraform
 data "aws_subnet_ids" "subnet_ids" {
