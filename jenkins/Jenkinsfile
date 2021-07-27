@@ -62,6 +62,7 @@ pipeline {
         sh "cd ${WORKSPACE}"
         sh "if [ ! -d \"daac-repo\" ]; then git clone ${params.DAAC_REPO} daac-repo; fi"
         sh "cd daac-repo && git fetch origin --tags && git checkout ${params.DAAC_REF}"
+        sh "cd daac-repo && git submodule update --init --recursive"
         // If working in a branch, we need to be sure to `git pull` new changes
         sh "cd daac-repo && if [ `git show -s --pretty=%d HEAD | grep -c 'HEAD, tag'` -gt 0 ]; then echo 'Tag is up-to-date'; else git pull; fi && cd .."
         sh 'tree'
