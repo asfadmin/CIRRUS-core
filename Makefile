@@ -329,6 +329,7 @@ cumulus_v9_2_0_upgrade:
 all: \
 	tf \
 	daac \
+	rds \
 	data-persistence \
 	cumulus \
 	workflows
