@@ -17,3 +17,11 @@ output "elasticsearch_security_group_id" {
 output "elasticsearch_alarms" {
   value = module.data_persistence.elasticsearch_alarms
 }
+
+output "rds_security_group_id" {
+  value = data.terraform_remote_state.rds.outputs.rds_security_group_id
+}
+
+output "rds_user_access_secret_arn" {
+  value = data.terraform_remote_state.rds.outputs.rds_user_access_secret_arn
+}
