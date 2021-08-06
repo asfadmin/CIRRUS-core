@@ -60,7 +60,7 @@ resource "aws_cloudwatch_log_subscription_filter" "egress_api_gateway_log_subscr
 
 # Egress Lambda Log Group
 resource "aws_cloudwatch_log_group" "egress_lambda_log_group" {
-  count             = (module.thin_egress_app.egress_lambda_name != null && var.log_destination_arn != null) ? 1 : 0
+  count             = (var.log_destination_arn != null) ? 1 : 0
   name              = "/aws/lambda/${module.thin_egress_app.egress_lambda_name}"
   retention_in_days = var.egress_lambda_log_retention_days
   tags              = local.default_tags
@@ -68,7 +68,7 @@ resource "aws_cloudwatch_log_group" "egress_lambda_log_group" {
 
 # Egress Lambda Log Group Filter
 resource "aws_cloudwatch_log_subscription_filter" "egress_lambda_log_subscription_filter" {
-  count           = (module.thin_egress_app.egress_lambda_name != null && var.log_destination_arn != null) ? 1 : 0
+  count           = (var.log_destination_arn != null) ? 1 : 0
   depends_on      = [aws_cloudwatch_log_group.egress_lambda_log_group]
   name            = "${local.prefix}-EgressLambdaLogSubscriptionToSharedDestination"
   destination_arn = var.log_destination_arn
