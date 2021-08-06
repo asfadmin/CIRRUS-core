@@ -328,7 +328,6 @@ cumulus_v9_2_0_upgrade:
 # ---------------------------
 all: \
 	tf \
-	rds \
 	daac \
 	data-persistence \
 	cumulus \
