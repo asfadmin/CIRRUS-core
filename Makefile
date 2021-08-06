@@ -316,6 +316,16 @@ destroy-workflows:
 	make $@
 
 # ---------------------------
+cumulus_v9_2_0_upgrade:
+	make rds
+	make data-persistence
+	make data-migration1
+	bash /CIRRUS-core/scripts/cumulus-v9.2.0/data_migration1.sh
+	make cumulus
+	bash /CIRRUS-core/scripts/cumulus-v9.2.0/data_migration2.sh
+	make workflows
+
+# ---------------------------
 all: \
 	tf \
 	daac \
