@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v9.2.0.1
+
+* Upgrade to TEA to build [1.1.1](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-build.111) 
+to resolve several CVE's
+
 ## v9.2.0.0
 
 * Upgrade to Cumulus [v9.2.0](https://github.com/nasa/Cumulus/releases/tag/v9.2.0)
