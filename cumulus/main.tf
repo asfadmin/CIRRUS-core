@@ -94,6 +94,11 @@ module "cumulus" {
 
   additional_log_groups_to_elk = var.additional_log_groups_to_elk
 
+  throttled_queues = [{
+    url             = aws_sqs_queue.background_job_queue.id,
+    execution_limit = var.thottled_queue_execution_limit
+  }]
+
   tags = local.default_tags
 }
 

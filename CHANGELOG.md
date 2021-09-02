@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v9.2.0.2
+
+* Add a throttled queue to the cumulus deployment per the 
+[data cookbook instructions](https://nasa.github.io/cumulus/docs/next/data-cookbooks/throttling-queued-executions).
+The number of concurrent executions defaults to 5 and can be overriden via a `thottled_queue_execution_limit` 
+variable in the appropriate CIRRUS-DAAC/cumulus/env.tfvars file
+* Added a `destroy-data-persistence` target to the Makefile borrowing heavily from NSIDC's instructions for [destroying the
+dynamo_db tables](scripts/destroy-dp-dynamo-tables.sh)  Since the script exits as soon as the tables are marked for
+destruction (and not actually destroyed), it's possible `make destroy-data-persistence` might need to be 
+executed multiple times to fully destroy the environment.
+
 ## v9.2.0.1
 
 * Upgrade to TEA to build [1.1.1](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-build.111) 
