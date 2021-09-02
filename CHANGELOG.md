@@ -8,8 +8,8 @@ The number of concurrent executions defaults to 5 and can be overriden via a `th
 variable in the appropriate CIRRUS-DAAC/cumulus/env.tfvars file
 * Added a `destroy-data-persistence` target to the Makefile borrowing heavily from NSIDC's instructions for [destroying the
 dynamo_db tables](scripts/destroy-dp-dynamo-tables.sh)  Since the script exits as soon as the tables are marked for
-destruction (and not actually destroyed), it's possible `make destroy-data-persistence` might need to be 
-executed multiple times to fully destroy the environment.
+destruction (and not actually destroyed), it's possible `make destroy-data-persistence` might need to be
+executed multiple times to fully destroy the environment.  Also need to run `make image` to add `jq` to it.
 
 ## v9.2.0.1
 
