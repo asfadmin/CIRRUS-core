@@ -216,6 +216,25 @@ plan-data-persistence: data-persistence-init
 		-no-color
 
 # ---------------------------
+destroy-data-persistence: data-persistence-init
+	$(banner)
+	./scripts/destroy-dp-dynamo-tables.sh
+	cd data-persistence
+	if [ -f "${DAAC_DIR}/data-persistence/variables/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export VARIABLES_OPT="-var-file=${DAAC_DIR}/data-persistence/variables/${MATURITY}.tfvars"
+		echo "Found maturity-specific variables: $$VARIABLES_OPT"
+		echo "***************************************************************"
+	fi
+	terraform destroy \
+		-var-file=${DAAC_DIR}/data-persistence/terraform.tfvars \
+		$$VARIABLES_OPT \
+		-input=false \
+		-no-color \
+		-auto-approve
+
+# ---------------------------
 cumulus: cumulus-init
 	$(banner)
 	if [ -f "${DAAC_DIR}/$@/secrets/${MATURITY}.tfvars" ]

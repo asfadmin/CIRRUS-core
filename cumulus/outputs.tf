@@ -107,6 +107,9 @@ output "start_sf_queue_url" {
   value = module.cumulus.start_sf_queue_url
 }
 
+output "background_job_queue_url" {
+  value = aws_sqs_queue.background_job_queue.id
+}
 output "vpc" {
   value = data.aws_vpc.application_vpcs.id
 }
