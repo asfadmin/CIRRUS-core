@@ -10,6 +10,7 @@ variable in the appropriate CIRRUS-DAAC/cumulus/env.tfvars file
 dynamo_db tables](scripts/destroy-dp-dynamo-tables.sh)  Since the script exits as soon as the tables are marked for
 destruction (and not actually destroyed), it's possible `make destroy-data-persistence` might need to be
 executed multiple times to fully destroy the environment.  Also need to run `make image` to add `jq` to it.
+* Add GitHub Action configuration for [TFLint](https://github.com/terraform-linters/tflint/)
 
 ## v9.2.0.1
 
