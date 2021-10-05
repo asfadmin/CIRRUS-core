@@ -20,7 +20,7 @@ provider "aws" {
 }
 
 module "data_persistence" {
-  source = "https://github.com/nasa/cumulus/releases/download/v9.2.0/terraform-aws-cumulus.zip//tf-modules/data-persistence"
+  source = "https://github.com/nasa/cumulus/releases/download/v9.7.0/terraform-aws-cumulus.zip//tf-modules/data-persistence"
 
   prefix                = local.prefix
   subnet_ids            = data.aws_subnet_ids.subnet_ids.ids
@@ -66,9 +66,9 @@ data "aws_subnet_ids" "subnet_ids" {
   vpc_id = data.aws_vpc.application_vpcs.id
 
   filter {
-    name   = "tag:Name"
+    name = "tag:Name"
     values = ["Private application ${data.aws_region.current.name}a subnet",
-              "Private application ${data.aws_region.current.name}b subnet"]
+    "Private application ${data.aws_region.current.name}b subnet"]
   }
 }
 

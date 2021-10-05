@@ -1,10 +1,24 @@
 # CHANGELOG
 
+## v9.7.0.0
+
+* Upgrade to Cumulus [v9.7.0](https://github.com/nasa/Cumulus/releases/tag/v9.7.0)
+* remove rds_connection_heartbeat variable due to change in Cumulus [v9.3.0](https://github.com/nasa/Cumulus/releases/tag/v9.3.0)
+* add timeout variables introduced in Cumulus [v9.5.0](https://github.com/nasa/Cumulus/releases/tag/v9.5.0)
+to allow CIRRUS users to customize Lambda timeouts.  Usage is documented
+[here](https://nasa.github.io/cumulus/docs/configuration/ingest-task-configuration#lambda_timeouts)
+* Upgrade TEA to build [115](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-build.115)
+to add Smarter In-Region control and Dynamic CORS Support plus CVE Remediation.
+As described in the release notes, it requires two migration steps to rebuild an IAM
+role and flush the IAM cache.  These commands are in [scripts/tea-115/iam_update_and_cache_clear.sh](./scripts/tea-115/iam_update_and_cache_clear.sh)
+* add `use_cors` variable to allow CIRRUS users to use this new feature of TEA
+* REMINDER: This release requires [v7.0.0 of the Cumulus Dashboard](https://github.com/nasa/cumulus-dashboard/releases/tag/v7.0.0)
+
 ## v9.2.0.2
 
-* Add a throttled queue to the cumulus deployment per the 
+* Add a throttled queue to the cumulus deployment per the
 [data cookbook instructions](https://nasa.github.io/cumulus/docs/next/data-cookbooks/throttling-queued-executions).
-The number of concurrent executions defaults to 5 and can be overriden via a `thottled_queue_execution_limit` 
+The number of concurrent executions defaults to 5 and can be overriden via a `thottled_queue_execution_limit`
 variable in the appropriate CIRRUS-DAAC/cumulus/env.tfvars file
 * Added a `destroy-data-persistence` target to the Makefile borrowing heavily from NSIDC's instructions for [destroying the
 dynamo_db tables](scripts/destroy-dp-dynamo-tables.sh)  Since the script exits as soon as the tables are marked for

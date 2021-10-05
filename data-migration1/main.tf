@@ -57,14 +57,14 @@ data "terraform_remote_state" "rds" {
 }
 
 module "data_migration1" {
-  source = "https://github.com/nasa/cumulus/releases/download/v9.2.0/terraform-aws-cumulus-data-migrations1.zip"
+  source = "https://github.com/nasa/cumulus/releases/download/v9.7.0/terraform-aws-cumulus-data-migrations1.zip"
 
   prefix = local.prefix
 
   permissions_boundary_arn = local.permissions_boundary_arn
 
-  vpc_id                   = data.aws_vpc.application_vpcs.id
-  lambda_subnet_ids        = data.aws_subnet_ids.subnet_ids.ids
+  vpc_id            = data.aws_vpc.application_vpcs.id
+  lambda_subnet_ids = data.aws_subnet_ids.subnet_ids.ids
 
   dynamo_tables = data.terraform_remote_state.data_persistence.outputs.dynamo_tables
 
@@ -87,8 +87,8 @@ data "aws_subnet_ids" "subnet_ids" {
   vpc_id = data.aws_vpc.application_vpcs.id
 
   filter {
-    name   = "tag:Name"
+    name = "tag:Name"
     values = ["Private application ${data.aws_region.current.name}a subnet",
-              "Private application ${data.aws_region.current.name}b subnet"]
+    "Private application ${data.aws_region.current.name}b subnet"]
   }
 }
