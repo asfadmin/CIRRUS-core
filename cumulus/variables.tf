@@ -339,12 +339,6 @@ variable "egress_lambda_log_retention_days" {
   description = "Number of days to retain TEA logs"
 }
 
-variable "rds_connection_heartbeat" {
-  description = "If true, send a query to verify database connection is live on connection creation and retry on initial connection timeout.  Set to false if not using serverless RDS"
-  type        = bool
-  default     = false
-}
-
 variable "cmr_acl_based_credentials" {
   type        = bool
   default     = false
@@ -355,4 +349,16 @@ variable "thottled_queue_execution_limit" {
   type        = number
   description = "Cumulus Throttled Queue execution limit"
   default     = 5
+}
+
+variable "lambda_timeouts" {
+  description = "Configurable map of timeouts for ingest task lambdas in the form <lambda_identifier>_timeout: <timeout>"
+  type        = map(string)
+  default     = {}
+}
+
+variable "use_cors" {
+  type        = bool
+  default     = false
+  description = "Enable cross origin resource sharing"
 }

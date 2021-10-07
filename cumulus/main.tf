@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v9.2.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v9.7.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
 
   cumulus_message_adapter_lambda_layer_version_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
@@ -23,7 +23,6 @@ module "cumulus" {
 
   rds_security_group         = data.terraform_remote_state.data_persistence.outputs.rds_security_group_id
   rds_user_access_secret_arn = data.terraform_remote_state.data_persistence.outputs.rds_user_access_secret_arn
-  rds_connection_heartbeat   = var.rds_connection_heartbeat
 
   urs_url             = var.urs_url
   urs_client_id       = var.urs_client_id
@@ -43,6 +42,8 @@ module "cumulus" {
   cmr_provider    = var.cmr_provider
 
   cmr_oauth_provider = var.cmr_oauth_provider
+
+  lambda_timeouts = var.lambda_timeouts
 
   launchpad_api         = var.launchpad_api
   launchpad_certificate = var.launchpad_certificate
