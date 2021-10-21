@@ -30,6 +30,7 @@ RUN \
 # AWS & Terraform
 RUN \
         yum install -y awscli && \
+        python3 -m pip install boto3 && \
         wget "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" && \
         unzip *.zip && \
         chmod +x terraform && \
