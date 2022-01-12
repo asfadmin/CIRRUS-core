@@ -2,14 +2,15 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.19.0"
+      version = "~> 3.70.0"
     }
     null = {
       source  = "hashicorp/null"
       version = "~> 2.1"
     }
     archive = {
-      source = "hashicorp/archive"
+      source  = "hashicorp/archive"
+      version = "~> 2.2.0"
     }
   }
   backend "s3" {
@@ -72,9 +73,9 @@ data "aws_subnet_ids" "subnet_ids" {
   vpc_id = data.aws_vpc.application_vpcs.id
 
   filter {
-    name   = "tag:Name"
+    name = "tag:Name"
     values = ["Private application ${data.aws_region.current.name}a subnet",
-              "Private application ${data.aws_region.current.name}b subnet"]
+    "Private application ${data.aws_region.current.name}b subnet"]
   }
 }
 
