@@ -6,6 +6,7 @@
 * Upgrade TEA to build [121](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-build.121)
 * Upgrade hashicorp/aws terraform to `~> v3.70.0`
 * Pin hashicorp/archive terraform to `~> v2.2.0`
+* Pin hashicrop/null terraform to `~> v2.1` consistently
 
 ## v9.7.0.1
 
