@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v10.0.1.0
+
+* Upgrade to Cumulus [v10.0.1](https://github.com/nasa/Cumulus/releases/tag/v10.0.1)
+    * see [Cumulus v10.0.0](https://github.com/nasa/Cumulus/releases/tag/v10.0.0) release notes for required migration steps for workflows and collection configurations
+
 ## v9.9.0.0
 
 * Upgrade to Cumulus [v9.9.0](https://github.com/nasa/Cumulus/releases/tag/v9.9.0)
