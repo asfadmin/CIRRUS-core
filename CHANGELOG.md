@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v10.1.2.0
+
+* Upgrade to Cumulus [v10.1.2](https://github.com/nasa/Cumulus/releases/tag/v10.1.2)
+    * see [Cumulus v10.0.0](https://github.com/nasa/Cumulus/releases/tag/v10.0.0) release notes for required migration steps for workflows and collection configurations
+        * note that some lambdas and other workflow components may need to be updated for compatibility with the message format changes made in Cumulus v10.0.0, e.g., the dmrpp-generator must be upgraded to [v3.3.0.beta](https://ghrcdaac.github.io/dmrpp-generator/#v330beta)
+    * add `scripts/cumulus-v10.1.1/data-migration1.sh` to execute the `data-migration1` lambda, per the migration step note for [Cumulus v10.1.1](https://github.com/nasa/Cumulus/releases/tag/v10.1.1). It must be run after `data_migration1` and `data-persistence` are deployed, but before `cumulus` is deployed.
+    * upgrade TEA to [v1.0.2](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-build.121)
+
 ## v9.9.0.0
 
 * Upgrade to Cumulus [v9.9.0](https://github.com/nasa/Cumulus/releases/tag/v9.9.0)
@@ -40,7 +48,7 @@ executed multiple times to fully destroy the environment.  Also need to run `mak
 
 ## v9.2.0.1
 
-* Upgrade to TEA to build [1.1.1](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-build.111) 
+* Upgrade to TEA to build [1.1.1](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-build.111)
 to resolve several CVE's
 
 ## v9.2.0.0
@@ -62,7 +70,7 @@ to resolve several CVE's
     also be reviewed
   * a serverless RDS requires at least 2 subnets to be defined, CIRRUS had only been
     using one via commands like this:
-  * Added `MAKE_COMMAND` to `jenkins/Jenkinsfile` to allow specific cumulus modules to be deployed from Jenkins.  
+  * Added `MAKE_COMMAND` to `jenkins/Jenkinsfile` to allow specific cumulus modules to be deployed from Jenkins.
 
 ```terraform
 data "aws_subnet_ids" "subnet_ids" {
