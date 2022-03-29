@@ -3,10 +3,10 @@
 ## v10.1.2.0
 
 * Upgrade to Cumulus [v10.1.2](https://github.com/nasa/Cumulus/releases/tag/v10.1.2)
-    * see [Cumulus v10.0.0](https://github.com/nasa/Cumulus/releases/tag/v10.0.0) release notes for required migration steps for workflows and collection configurations
-        * note that some lambdas and other workflow components may need to be updated for compatibility with the message format changes made in Cumulus v10.0.0, e.g., the dmrpp-generator must be upgraded to [v3.3.0.beta](https://ghrcdaac.github.io/dmrpp-generator/#v330beta)
-    * add `scripts/cumulus-v10.1.1/data-migration1.sh` to execute the `data-migration1` lambda, per the migration step note for [Cumulus v10.1.1](https://github.com/nasa/Cumulus/releases/tag/v10.1.1). It must be run after `data_migration1` and `data-persistence` are deployed, but before `cumulus` is deployed.
-    * upgrade TEA to [v1.0.2](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-build.121)
+  * see [Cumulus v10.0.0](https://github.com/nasa/Cumulus/releases/tag/v10.0.0) release notes for required migration steps for workflows and collection configurations
+    * note that some lambdas and other workflow components may need to be updated for compatibility with the message format changes made in Cumulus v10.0.0, e.g., the dmrpp-generator must be upgraded to [v3.3.0.beta](https://ghrcdaac.github.io/dmrpp-generator/#v330beta)
+  * add `scripts/cumulus-v10.1.1/data-migration1.sh` to execute the `data-migration1` lambda, per the migration step note for [Cumulus v10.1.1](https://github.com/nasa/Cumulus/releases/tag/v10.1.1). It must be run after `data_migration1` and `data-persistence` are deployed, but before `cumulus` is deployed.
+  * upgrade TEA to [v1.0.2](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.0.2)
 
 ## v9.9.0.0
 
@@ -242,7 +242,7 @@ The file can be empty, but must exist.
 * add `cumulus/thin_egress.tf` TEA tf module definition
 * add `cumulus/thin-egress-app/bucket_map.yaml.tmpl` the default TEA bucket map template
 * add `scripts/cumulus-v3.0.0/move-tea-tf-state.sh` contains the commands mentioned
-in the TEA migration instructions (https://nasa.github.io/cumulus/docs/upgrade-notes/migrate_tea_standalone)
+in the TEA migration instructions (<https://nasa.github.io/cumulus/docs/upgrade-notes/migrate_tea_standalone>)
 
 ### Notes about v3.0.0 migration as relates to CIRRUS
 
@@ -358,7 +358,7 @@ there is a manual step. [2.0.1](https://github.com/nasa/Cumulus/releases/tag/v2.
 
 ## v1.17.0.0
 
-### Upgrade Notes:
+### Upgrade Notes
 
 1. CIRRUS' Makefile will now delegate to the DAAC repo for the
    following make targets:
@@ -372,11 +372,11 @@ there is a manual step. [2.0.1](https://github.com/nasa/Cumulus/releases/tag/v2.
 
 2. If you're currently using a previous version of CIRRUS, you'll
 need to migrate the Terraform state from the old backend AWS resources
-to new ones. You can do this by running this for _*each*_ deployment /
+to new ones. You can do this by running this for __each__ deployment /
 maturity combination that you've deployed:
 
-        $ source env.sh ...        # See README
-        $ make migrate-tf-state
+        source env.sh ...        # See README
+        make migrate-tf-state
 
 You'll be prompted to migrate state from the old resources to the
 new. Simply respond with 'yes' to each of the four prompts and you'll
