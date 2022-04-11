@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v11.1.0.0
+
+* Upgrade to Cumulus [v11.1.0](https://github.com/nasa/Cumulus/releases/tag/v11.1.0)
+  * see [Cumulus v11.0.0](https://github.com/nasa/Cumulus/releases/tag/v11.0.0) release notes for required migration steps for workflows and collection configurations
+
 ## v10.1.2.0
 
 * Upgrade to Cumulus [v10.1.2](https://github.com/nasa/Cumulus/releases/tag/v10.1.2)
@@ -372,7 +377,7 @@ there is a manual step. [2.0.1](https://github.com/nasa/Cumulus/releases/tag/v2.
 
 2. If you're currently using a previous version of CIRRUS, you'll
 need to migrate the Terraform state from the old backend AWS resources
-to new ones. You can do this by running this for __each__ deployment /
+to new ones. You can do this by running this for **each** deployment /
 maturity combination that you've deployed:
 
         source env.sh ...        # See README
