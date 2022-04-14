@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v11.1.0.1
+
+* Add `scripts/cumulus-v11.0.0/` for the "After the `cumulus` deployment"
+  section of the [Cumulus v11.0.0 release
+  notes](https://github.com/nasa/cumulus/releases/tag/v11.0.0); see the release
+  notes for full details and usage
+
 ## v11.1.0.0
 
 * Upgrade to Cumulus [v11.1.0](https://github.com/nasa/Cumulus/releases/tag/v11.1.0)
