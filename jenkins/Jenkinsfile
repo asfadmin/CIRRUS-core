@@ -79,7 +79,7 @@ pipeline {
         CMR_CREDS = credentials("${params.CMR_CREDS_ID}")
         URS_CREDS = credentials("${params.URS_CREDS_ID}")
         TOKEN_SECRET = credentials("${params.SECRET_TOKEN_ID}")
-        MAKE_COMMAND = "${params.MAKE_COMMAND}"
+        MAKE_TARGET = "${params.MAKE_COMMAND}"
         BUILD_NUM = "${env.BUILD_NUMBER}"/**/
       }
       steps {
@@ -106,7 +106,7 @@ pipeline {
                                     -v "${WORKSPACE}/daac-repo":/daac-repo \
                                     --name=cirrus-core \
                                     cirrus-core \
-                                    /bin/bash -c "make $MAKE_COMMAND"
+                                    /bin/bash -c "make $MAKE_TARGET"
             '''
 
         }// withCredentials
