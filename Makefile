@@ -72,12 +72,10 @@ tf-init:
 	terraform workspace new ${MATURITY} 2>/dev/null || terraform workspace select ${MATURITY}
 
 daac-init:
-	cd ${DAAC_DIR}
-	make $@
+	$(MAKE) -C ${DAAC_DIR} $@
 
 workflows-init:
-	cd ${DAAC_DIR}
-	make $@
+	$(MAKE) -C ${DAAC_DIR} $@
 
 %-init:
 	$(banner)
@@ -117,25 +115,20 @@ plan-tf: tf-init
 
 # ---------------------------
 daac:
-	cd ${DAAC_DIR}
-	make $@
+	$(MAKE) -C ${DAAC_DIR} $@
 
 plan-daac:
-	cd ${DAAC_DIR}
-	make $@
+	$(MAKE) -C ${DAAC_DIR} $@
 
 # ---------------------------
 rds:
-	cd ${DAAC_DIR}
-	make $@
+	$(MAKE) -C ${DAAC_DIR} $@
 
 plan-rds:
-	cd ${DAAC_DIR}
-	make $@
+	$(MAKE) -C ${DAAC_DIR} $@
 
 destroy-rds:
-	cd ${DAAC_DIR}
-	make $@
+	$(MAKE) -C ${DAAC_DIR} $@
 
 # ---------------------------
 data-migration1: data-migration1-init
@@ -323,26 +316,23 @@ destroy-cumulus: cumulus-init
 
 # ---------------------------
 workflows:
-	cd ${DAAC_DIR}
-	make $@
+	$(MAKE) -C ${DAAC_DIR} $@
 
 plan-workflows:
-	cd ${DAAC_DIR}
-	make $@
+	$(MAKE) -C ${DAAC_DIR} $@
 
 destroy-workflows:
-	cd ${DAAC_DIR}
-	make $@
+	$(MAKE) -C ${DAAC_DIR} $@
 
 # ---------------------------
 cumulus_v9_2_0_upgrade:
-	make rds
-	make data-persistence
-	make data-migration1
+	$(MAKE) rds
+	$(MAKE) data-persistence
+	$(MAKE) data-migration1
 	bash /CIRRUS-core/scripts/cumulus-v9.2.0/data_migration1.sh
-	make cumulus
+	$(MAKE) cumulus
 	bash /CIRRUS-core/scripts/cumulus-v9.2.0/data_migration2.sh
-	make workflows
+	$(MAKE) workflows
 
 # ---------------------------
 all: \
