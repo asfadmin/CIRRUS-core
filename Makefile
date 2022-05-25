@@ -56,9 +56,12 @@ container-shell:
 		--user `id -u` \
 		--env DAAC_DIR="/CIRRUS-DAAC" \
 		--env AWS_CONFIG_DIR="/" \
+		--env PS1='\s-\v:\w\$$ ' \
+		--env HISTFILE="/CIRRUS-core/.container_bash_history" \
 		-v ${PWD}:/CIRRUS-core \
 		-v ${DAAC_DIR}:/CIRRUS-DAAC \
 		-v ${HOME}/.aws:/.aws \
+		-v ${HOME}/.cache/pip:/.cache/pip \
 		--name=cirrus-core \
 		cirrus-core \
 		bash

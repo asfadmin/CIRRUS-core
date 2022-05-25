@@ -20,3 +20,4 @@ workflows
 .python-version
 data-migration1/terraform.tfvars
 scripts/**/*.log
+.container_bash_history
