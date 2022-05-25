@@ -18,6 +18,7 @@
 #  MATURITY:              One of: DEV, INT, TEST, PROD
 
 # ---------------------------
+DOCKER_TAG := v11.1.0.1
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
@@ -49,7 +50,7 @@ endef
 
 # ---------------------------
 image: Dockerfile
-	docker build -f Dockerfile --no-cache -t cirrus-core .
+	docker build -f Dockerfile --no-cache -t cirrus-core:$(DOCKER_TAG) .
 
 container-shell:
 	docker run -it --rm \
@@ -63,7 +64,7 @@ container-shell:
 		-v ${HOME}/.aws:/.aws \
 		-v ${HOME}/.cache/pip:/.cache/pip \
 		--name=cirrus-core \
-		cirrus-core \
+		cirrus-core:$(DOCKER_TAG) \
 		bash
 
 # ---------------------------
