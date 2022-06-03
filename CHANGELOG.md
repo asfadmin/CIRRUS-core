@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+
+* Add a catchall target to the Makefile for forwarding unknown commands. For
+  instance running `make foo` from CIRRUS-core will attempt to call `make foo`
+  on CIRRUS-DAAC instead of erroring out immediately.
+
 ## v11.1.0.1
 
 * Add `scripts/cumulus-v11.0.0/` for the "After the `cumulus` deployment"

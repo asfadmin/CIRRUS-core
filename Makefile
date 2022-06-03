@@ -29,10 +29,7 @@ SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 .DEFAULT_GOAL := all
 .SILENT:
 .ONESHELL:
-.PHONY: checkout-daac \
-	validate \
-	tf daac data-persistence cumulus workflows all \
-	destroy-cumulus
+.PHONY:  validate tf data-persistence cumulus all destroy-cumulus
 
 # ---------------------------
 define banner =
@@ -75,12 +72,6 @@ tf-init:
 	terraform init -reconfigure -input=false -no-color
 	terraform workspace new ${MATURITY} 2>/dev/null || terraform workspace select ${MATURITY}
 
-daac-init:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-workflows-init:
-	$(MAKE) -C ${DAAC_DIR} $@
-
 %-init:
 	$(banner)
 	cd $*
@@ -116,23 +107,6 @@ plan-tf: tf-init
 	terraform import -input=false aws_s3_bucket.backend-tf-state-bucket ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4} 2>/dev/null || true
 	terraform import -input=false aws_dynamodb_table.backend-tf-locks-table ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks 2>/dev/null || true
 	terraform plan -input=false -no-color
-
-# ---------------------------
-daac:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-plan-daac:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-# ---------------------------
-rds:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-plan-rds:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-destroy-rds:
-	$(MAKE) -C ${DAAC_DIR} $@
 
 # ---------------------------
 data-migration1: data-migration1-init
@@ -319,16 +293,6 @@ destroy-cumulus: cumulus-init
 	eval $$TF_CMD
 
 # ---------------------------
-workflows:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-plan-workflows:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-destroy-workflows:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-# ---------------------------
 cumulus_v9_2_0_upgrade:
 	$(MAKE) rds
 	$(MAKE) data-persistence
@@ -337,6 +301,14 @@ cumulus_v9_2_0_upgrade:
 	$(MAKE) cumulus
 	bash /CIRRUS-core/scripts/cumulus-v9.2.0/data_migration2.sh
 	$(MAKE) workflows
+
+# ---------------------------
+# Catch-all target to forward any undefined targets to the DAAC Makefile
+# https://www.gnu.org/software/make/manual/html_node/Overriding-Makefiles.html#Overriding-Makefiles
+%: force
+	$(MAKE) -C ${DAAC_DIR} $@
+
+force: ;
 
 # ---------------------------
 all: \
