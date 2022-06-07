@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+
+* Upgrade container packages
+  * Upgrade node to 14.x
+  * Add C++ compiler
+
 ## v11.1.0.1
 
 * Add `scripts/cumulus-v11.0.0/` for the "After the `cumulus` deployment"
