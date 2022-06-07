@@ -20,7 +20,7 @@ RUN \
         yum update -y
 
 # CLI utilities
-RUN yum install -y gcc git make openssl unzip wget zip jq
+RUN yum install -y gcc gcc-c++ git make openssl unzip wget zip jq
 
 # Python 3 & NodeJS
 RUN \
