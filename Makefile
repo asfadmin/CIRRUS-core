@@ -29,10 +29,6 @@ SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 .DEFAULT_GOAL := all
 .SILENT:
 .ONESHELL:
-.PHONY: checkout-daac \
-	validate \
-	tf daac data-persistence cumulus workflows all \
-	destroy-cumulus
 
 # ---------------------------
 define banner =
@@ -49,9 +45,11 @@ echo "========================================"
 endef
 
 # ---------------------------
+.PHONY: image
 image: Dockerfile
 	docker build -f Dockerfile --no-cache -t cirrus-core:$(DOCKER_TAG) .
 
+.PHONY: container-shell
 container-shell:
 	docker run -it --rm \
 		--user `id -u` \
@@ -68,18 +66,13 @@ container-shell:
 		bash
 
 # ---------------------------
+.PHONY: tf-init
 tf-init:
 	$(banner)
 	cd tf
 	rm -rf terraform.tfstate.d
 	terraform init -reconfigure -input=false -no-color
 	terraform workspace new ${MATURITY} 2>/dev/null || terraform workspace select ${MATURITY}
-
-daac-init:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-workflows-init:
-	$(MAKE) -C ${DAAC_DIR} $@
 
 %-init:
 	$(banner)
@@ -96,6 +89,7 @@ init-modules-list = tf data-persistence cumulus data-migration1
 init-modules := $(init-modules-list:%-init=%)
 
 # ---------------------------
+.PHONY: validate
 validate: $(init-modules)
 	$(banner)
 	for module in modules; do \
@@ -103,6 +97,7 @@ validate: $(init-modules)
 	done
 
 # ---------------------------
+.PHONY: tf
 tf: tf-init
 	$(banner)
 	cd tf
@@ -110,6 +105,7 @@ tf: tf-init
 	terraform import -input=false aws_dynamodb_table.backend-tf-locks-table ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks 2>/dev/null || true
 	terraform apply -input=false -auto-approve -no-color
 
+.PHONY: plan-tf
 plan-tf: tf-init
 	$(banner)
 	cd tf
@@ -118,23 +114,7 @@ plan-tf: tf-init
 	terraform plan -input=false -no-color
 
 # ---------------------------
-daac:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-plan-daac:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-# ---------------------------
-rds:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-plan-rds:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-destroy-rds:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-# ---------------------------
+.PHONY: data-migration1
 data-migration1: data-migration1-init
 	$(banner)
 	cd $@
@@ -157,6 +137,7 @@ data-migration1: data-migration1-init
 	fi
 
 # ---------------------------
+.PHONY: plan-data-migration1
 plan-data-migration1: data-migration1-init
 	$(banner)
 	cd data-migration1
@@ -178,6 +159,7 @@ plan-data-migration1: data-migration1-init
 	fi
 
 # ---------------------------
+.PHONY: data-persistence
 data-persistence: data-persistence-init
 	$(banner)
 	cd $@
@@ -196,6 +178,7 @@ data-persistence: data-persistence-init
 		-auto-approve
 
 # ---------------------------
+.PHONY: plan-data-persistence
 plan-data-persistence: data-persistence-init
 	$(banner)
 	cd data-persistence
@@ -213,6 +196,7 @@ plan-data-persistence: data-persistence-init
 		-no-color
 
 # ---------------------------
+.PHONY: destroy-data-persistence
 destroy-data-persistence: data-persistence-init
 	$(banner)
 	./scripts/destroy-dp-dynamo-tables.sh
@@ -232,6 +216,7 @@ destroy-data-persistence: data-persistence-init
 		-auto-approve
 
 # ---------------------------
+.PHONY: cumulus
 cumulus: cumulus-init
 	$(banner)
 	if [ -f "${DAAC_DIR}/$@/secrets/${MATURITY}.tfvars" ]
@@ -263,6 +248,7 @@ cumulus: cumulus-init
 	fi
 
 # ---------------------------
+.PHONY: plan-cumulus
 plan-cumulus: cumulus-init
 	$(banner)
 	if [ -f "${DAAC_DIR}/cumulus/secrets/${MATURITY}.tfvars" ]
@@ -292,6 +278,7 @@ plan-cumulus: cumulus-init
 		eval $$TF_CMD
 	fi
 
+.PHONY: destroy-cumulus
 destroy-cumulus: cumulus-init
 	$(banner)
 	if [ -f "${DAAC_DIR}/cumulus/secrets/${MATURITY}.tfvars" ]
@@ -319,16 +306,7 @@ destroy-cumulus: cumulus-init
 	eval $$TF_CMD
 
 # ---------------------------
-workflows:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-plan-workflows:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-destroy-workflows:
-	$(MAKE) -C ${DAAC_DIR} $@
-
-# ---------------------------
+.PHONY: cumulus_v9_2_0_upgrade
 cumulus_v9_2_0_upgrade:
 	$(MAKE) rds
 	$(MAKE) data-persistence
@@ -339,6 +317,15 @@ cumulus_v9_2_0_upgrade:
 	$(MAKE) workflows
 
 # ---------------------------
+# Catch-all target to forward any undefined targets to the DAAC Makefile
+# https://www.gnu.org/software/make/manual/html_node/Overriding-Makefiles.html#Overriding-Makefiles
+%: force
+	$(MAKE) -C ${DAAC_DIR} $@
+
+force: ;
+
+# ---------------------------
+.PHONY: all
 all: \
 	tf \
 	daac \
