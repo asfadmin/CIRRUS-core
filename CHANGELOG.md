@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Upgrade container packages
+  * Upgrade node to 14.x
+  * Add C++ compiler
+* 
 * Add a catchall target to the Makefile for forwarding unknown commands. For
   instance running `make foo` from CIRRUS-core will attempt to call `make foo`
   on CIRRUS-DAAC instead of erroring out immediately.

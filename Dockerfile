@@ -10,7 +10,7 @@ FROM amazonlinux:2
 #   * AWS CLI
 #   * Terraform
 
-ENV NODE_VERSION "12.x"
+ENV NODE_VERSION "14.x"
 ENV TERRAFORM_VERSION "0.13.6"
 
 # Add NodeJS and Yarn repos & update package index
@@ -20,7 +20,7 @@ RUN \
         yum update -y
 
 # CLI utilities
-RUN yum install -y gcc git make openssl unzip wget zip jq
+RUN yum install -y gcc gcc-c++ git make openssl unzip wget zip jq
 
 # Python 3 & NodeJS
 RUN \
