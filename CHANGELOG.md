@@ -16,7 +16,8 @@
   section of the [Cumulus v11.0.0 release
   notes](https://github.com/nasa/cumulus/releases/tag/v11.0.0); see the release
   notes for full details and usage
-
+* Upgrade TEA to build [1.1.0](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.1.0)
+* 
 ## v11.1.0.0
 
 * Upgrade to Cumulus [v11.1.0](https://github.com/nasa/Cumulus/releases/tag/v11.1.0)
