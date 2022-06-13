@@ -9,7 +9,7 @@
 * Add a catchall target to the Makefile for forwarding unknown commands. For
   instance running `make foo` from CIRRUS-core will attempt to call `make foo`
   on CIRRUS-DAAC instead of erroring out immediately.
-* Upgrade TEA to build [1.1.0](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.1.0)
+* Upgrade TEA to build [1.1.0](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.1.0), Note that if you're upgarding from a version of TEA older than 115 you must run these commands [scripts/tea-115/iam_update_and_cache_clear.sh](./scripts/tea-115/iam_update_and_cache_clear.sh)
 
 ## v11.1.0.1
 
