@@ -18,6 +18,7 @@ else
     export AWS_ACCOUNT_ID_LAST4
     export DEPLOY_NAME=$2
     export MATURITY=$3
+    export PREFIX=$DEPLOY_NAME-cumulus-$MATURITY
 
     echo "CIRRUS environment:"
     echo "  AWS_PROFILE:          $AWS_PROFILE"
@@ -26,4 +27,5 @@ else
     echo "  AWS_ACCOUNT_ID_LAST4: $AWS_ACCOUNT_ID_LAST4"
     echo "  DEPLOY_NAME:          $DEPLOY_NAME"
     echo "  MATURITY:             $MATURITY"
+    echo "  PREFIX:               $PREFIX"
 fi
