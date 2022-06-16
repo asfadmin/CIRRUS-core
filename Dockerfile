@@ -12,6 +12,7 @@ FROM amazonlinux:2
 
 ENV NODE_VERSION "14.x"
 ENV TERRAFORM_VERSION "0.13.6"
+ENV AWS_CLI_VERSION "2.7.7"
 
 # Add NodeJS and Yarn repos & update package index
 RUN \
@@ -34,7 +35,7 @@ RUN \
         unzip *.zip && \
         chmod +x terraform && \
         mv terraform /usr/local/bin && \
-        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-$AWS_CLI_VERSION.zip" -o "awscliv2.zip" && \
         unzip awscliv2.zip && \
         ./aws/install
 
