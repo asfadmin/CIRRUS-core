@@ -12,6 +12,7 @@ FROM amazonlinux:2
 
 ENV NODE_VERSION "14.x"
 ENV TERRAFORM_VERSION "0.13.6"
+ENV AWS_CLI_VERSION "2.7.7"
 
 # Add NodeJS and Yarn repos & update package index
 RUN \
@@ -29,12 +30,14 @@ RUN \
 
 # AWS & Terraform
 RUN \
-        yum install -y awscli && \
         python3 -m pip install boto3 && \
         wget "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" && \
         unzip *.zip && \
         chmod +x terraform && \
-        mv terraform /usr/local/bin
+        mv terraform /usr/local/bin && \
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-$AWS_CLI_VERSION.zip" -o "awscliv2.zip" && \
+        unzip awscliv2.zip && \
+        ./aws/install
 
 # SSM SessionManager plugin
 RUN \

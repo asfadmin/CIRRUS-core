@@ -2,10 +2,13 @@
 
 ## Unreleased
 
+## v11.1.0.2
+
 * Upgrade container packages
   * Upgrade node to 14.x
   * Add C++ compiler
-* 
+  * upgrade AWS CLI to V2
+  * add `PREFIX` env variable as output from env.sh
 * Add a catchall target to the Makefile for forwarding unknown commands. For
   instance running `make foo` from CIRRUS-core will attempt to call `make foo`
   on CIRRUS-DAAC instead of erroring out immediately.
