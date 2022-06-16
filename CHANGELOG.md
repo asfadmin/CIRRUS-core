@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v11.1.0.2
+
 * Upgrade container packages
   * Upgrade node to 14.x
   * Add C++ compiler
