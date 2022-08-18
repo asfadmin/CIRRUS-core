@@ -18,7 +18,7 @@
 #  MATURITY:              One of: DEV, INT, TEST, PROD
 
 # ---------------------------
-DOCKER_TAG := v11.1.4.0
+DOCKER_TAG := v11.1.5.0
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
