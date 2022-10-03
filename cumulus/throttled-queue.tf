@@ -2,6 +2,7 @@ resource "aws_sqs_queue" "background_job_queue" {
   name                       = "${local.prefix}-backgroundJobQueue"
   receive_wait_time_seconds  = 20
   visibility_timeout_seconds = 60
+  tags                       = local.default_tags
 }
 
 resource "aws_cloudwatch_event_rule" "background_job_queue_watcher" {
