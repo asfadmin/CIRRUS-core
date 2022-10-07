@@ -16,13 +16,14 @@
 #
 #  DEPLOY_NAME:           A unique name to distinguish this Cumulus instance from others
 #  MATURITY:              One of: DEV, INT, TEST, PROD
+#  PYTHON_VER: 			  python3 or python38 which sets the build target in make file
 
 # ---------------------------
 DOCKER_TAG := v11.1.5.0
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
-
+PYTHON_VER ?= python3
 # ---------------------------
 SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
@@ -47,7 +48,7 @@ endef
 # ---------------------------
 .PHONY: image
 image: Dockerfile
-	docker build -f Dockerfile --no-cache -t cirrus-core:$(DOCKER_TAG) .
+	docker build -f Dockerfile --no-cache -t cirrus-core:$(DOCKER_TAG) --target $(PYTHON_VER) .
 
 .PHONY: container-shell
 container-shell:
