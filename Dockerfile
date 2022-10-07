@@ -1,5 +1,4 @@
-FROM amazonlinux:2
-
+FROM amazonlinux:2 as core_base
 # This image can be used to do Python 3 & NodeJS development, and
 # includes the AWS CLI and Terraform. It contains:
 
@@ -23,14 +22,8 @@ RUN \
 # CLI utilities
 RUN yum install -y gcc gcc-c++ git make openssl unzip wget zip jq
 
-# Python 3 & NodeJS
-RUN \
-        yum install -y python3-devel && \
-        yum install -y nodejs yarn
-
 # AWS & Terraform
 RUN \
-        python3 -m pip install boto3 && \
         wget "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" && \
         unzip *.zip && \
         chmod +x terraform && \
@@ -39,9 +32,28 @@ RUN \
         unzip awscliv2.zip && \
         ./aws/install
 
+# Node JS
+RUN \
+        yum install -y nodejs yarn
+
 # SSM SessionManager plugin
 RUN \
         curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm" &&\
         yum install -y session-manager-plugin.rpm
 
 WORKDIR /CIRRUS-core
+
+# Python38 target
+FROM core_base as python38
+RUN \
+        amazon-linux-extras install python3.8 && \
+        ln -s /usr/bin/python3.8 /usr/bin/python3 && \
+        ln -s /usr/bin/pip3.8 /usr/bin/pip3 && \
+        python3 -m pip install boto3
+
+# Python3 target
+FROM core_base as python3
+# Python 3
+RUN \
+        yum install -y python3-devel && \
+        python3 -m pip install boto3
