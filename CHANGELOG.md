@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## v13.3.2.0
+
+* Upgrade to [Cumulus v13.3.2](https://github.com/nasa/Cumulus/releases/tag/v13.3.2)
+* Upgrade to [TEA Release 1.1.1](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.1.1)
+* Allow CIRRUS Docker image to use Python 3.8
+  * By default `make image` Docker image with Python 3.7. Now `make image` target
+    looks for an environment variable named `PYTHON_VER`.  If
+    this variable is set to `python38` it will build an image with python 3.8.
+    Here's an example:
+
+        export PYTHON_VER=python38
+        make image
+* bug fixed - The `background_job_queue` built by `make cumulus` did not get tagged
+  correctly, this version corrects that problem.
+
 ## v11.1.5.0
 
 * Upgrade to [Cumulus v11.1.5](https://github.com/nasa/Cumulus/releases/tag/v11.1.5)
