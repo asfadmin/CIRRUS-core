@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v13.3.2/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v14.1.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
 
   cumulus_message_adapter_lambda_layer_version_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
@@ -94,6 +94,8 @@ module "cumulus" {
   deploy_distribution_s3_credentials_endpoint = var.deploy_distribution_s3_credentials_endpoint
 
   additional_log_groups_to_elk = var.additional_log_groups_to_elk
+
+  cloudwatch_log_retention_periods = var.cloudwatch_log_retention_periods
 
   throttled_queues = [{
     url             = aws_sqs_queue.background_job_queue.id,
