@@ -6,7 +6,9 @@ resource "aws_sqs_queue" "background_job_queue" {
 }
 
 resource "aws_cloudwatch_event_rule" "background_job_queue_watcher" {
+  name                = "${local.prefix}-background_job_queue_watcher"
   schedule_expression = "rate(1 minute)"
+  tags                = local.default_tags
 }
 
 resource "aws_cloudwatch_event_target" "background_job_queue_watcher" {
