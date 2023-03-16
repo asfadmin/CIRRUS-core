@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v14.1.0.1
+
+* Upgrade to [TEA Release 1.3.2](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.3.2) to
+fix a metrics reporting problem for public buckets
+* Add a name and tags to the `background_job_queue_watcher` event rule #9f87f55
+
 ## v14.1.0.0
 
 * Upgrade to [Cumulus v14.1.0](https://github.com/nasa/Cumulus/releases/tag/v14.1.0)
