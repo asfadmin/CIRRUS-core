@@ -4,7 +4,7 @@
 
 * Upgrade to [TEA Release 1.3.2](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.3.2) to
 fix a metrics reporting problem for public buckets
-* Add a name and tags to the `background_job_queue_watcher` event rule #9f87f55
+* Add a name and tags to the `background_job_queue_watcher` event rule [#27b9d247](27b9d247f893685d04a5a0ba69d99c71e2ed6436)
 
 ## v14.1.0.0
 
