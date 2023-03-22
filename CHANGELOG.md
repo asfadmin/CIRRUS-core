@@ -2,8 +2,11 @@
 
 ## v14.1.0.1
 
-* Upgrade to [TEA Release 1.3.2](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.3.2) to
-fix a metrics reporting problem for public buckets
+* Upgrade to [TEA Release 1.3.2](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.3.2) which
+upgrades dependencies and offers a new optional `s3credentials` end-point.  To make use of this feature set the
+`s3credentials_endpoint` variable to True.  Feature is documented [here](https://tea-docs.asf.alaska.edu/s3access/).  If
+using this feature you should disable the Cumulus equivalent `deploy_distribution_s3_credentials_endpoint` variable,
+testing would be required.
 * Add name and tags to the `background_job_queue_watcher` event rule - PR #[145](https://github.com/asfadmin/CIRRUS-core/pull/145)
 
 ## v14.1.0.0
