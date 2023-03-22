@@ -368,3 +368,9 @@ variable "cloudwatch_log_retention_periods" {
   description = "number of days logs will be retained for the respective cloudwatch log group, in the form of <module>_<cloudwatch_log_group_name>_log_retention"
   default     = {}
 }
+
+variable "s3credentials_endpoint" {
+  type        = bool
+  default     = false
+  description = "Switch that will enable TEA deployment of the /s3credentials endpoint for s3 direct access."
+}

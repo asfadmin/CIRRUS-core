@@ -1,5 +1,5 @@
 module "thin_egress_app" {
-  source = "s3::https://s3.amazonaws.com/asf.public.code/thin-egress-app/tea-terraform-build.1.1.1.zip"
+  source = "s3::https://s3.amazonaws.com/asf.public.code/thin-egress-app/tea-terraform-build.1.3.2.zip"
 
   auth_base_url                      = var.urs_url
   bucket_map_file                    = local.bucket_map_key == null ? aws_s3_bucket_object.bucket_map_yaml.id : local.bucket_map_key
@@ -15,6 +15,7 @@ module "thin_egress_app" {
   log_api_gateway_to_cloudwatch      = var.log_api_gateway_to_cloudwatch
   permissions_boundary_name          = "NGAPShRoleBoundary"
   private_vpc                        = data.aws_vpc.application_vpcs.id
+  s3credentials_endpoint             = var.s3credentials_endpoint
   stack_name                         = local.tea_stack_name
   stage_name                         = local.tea_stage_name
   urs_auth_creds_secret_name         = aws_secretsmanager_secret.thin_egress_urs_creds.name
