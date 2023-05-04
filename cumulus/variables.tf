@@ -369,6 +369,12 @@ variable "cloudwatch_log_retention_periods" {
   default     = {}
 }
 
+variable "default_log_retention_days" {
+  type = number
+  default = 30
+  description = "Optional default value that user chooses for their log retention periods"
+}
+
 variable "s3credentials_endpoint" {
   type        = bool
   default     = false
