@@ -351,6 +351,12 @@ variable "thottled_queue_execution_limit" {
   default     = 5
 }
 
+variable "lambda_memory_sizes" {
+  description = "Memory sizes for lambda functions"
+  type = map(string)
+  default = {}
+}
+
 variable "lambda_timeouts" {
   description = "Configurable map of timeouts for ingest task lambdas in the form <lambda_identifier>_timeout: <timeout>"
   type        = map(string)
