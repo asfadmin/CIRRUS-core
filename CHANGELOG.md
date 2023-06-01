@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v15.0.3.1
+
+* Add `lambda_memory_sizes` to cumulus module variables
+
 ## v15.0.3.0
 
 * Upgrade to [Cumulus v15.0.3](https://github.com/nasa/Cumulus/releases/tag/v15.0.3)
