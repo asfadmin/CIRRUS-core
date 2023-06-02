@@ -44,6 +44,36 @@ variable "launchpad_passphrase" {
   default = ""
 }
 
+variable "lzards_launchpad_certificate" {
+  description = "Name of the Launchpad certificate uploaded to the 'crypto' directory of the `system_bucket` for use with the lzards-backup task`."
+  type        = string
+  default     = "lzards_launchpad.pfx"
+}
+
+variable "lzards_launchpad_passphrase" {
+  description = "Passphrase for use with lzards_launchpad_certificate."
+  type        = string
+  default     = ""
+}
+
+variable "lzards_provider" {
+  description = "LZARDS provider name"
+  type        = string
+  default     = ""
+}
+
+variable "lzards_api" {
+  description = "LZARDS backup API endpoint"
+  type = string
+  default = ""
+}
+
+variable "lzards_s3_link_timeout" {
+  description = "LZARDS S3 access link timeout (seconds)"
+  type        = string
+  default     = ""
+}
+
 variable "oauth_provider" {
   type    = string
   default = "earthdata"
