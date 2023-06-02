@@ -162,19 +162,3 @@ instructions would be included in the CHANGELOG for
 [CIRRUS-core](https://github.com/asfadmin/CIRRUS-core/blob/master/CHANGELOG.md)
 and
 [CIRRUS-DAAC](https://github.com/asfadmin/CIRRUS-DAAC/blob/master/CHANGELOG.md).
-
-### CI/CD: Jenkins Job
-
-There is a Jenkins pipeline job definition in the `jenkins`
-directory. You can configure Jenkins using this file as the source of
-the pipeline. By providing the required parameters and provisioning
-Jenkins with the secrets, Jenkins will be able to deploy a CIRRUS-DAAC
-project to any NGAP account.
-
-### CI/CD: CircleCI
-
-A CircleCI pipeline will be provided in a future version of CIRRUS.
-
-### CI/CD: Bamboo
-
-A NASA Bamboo pipeline will be provided in a future version of CIRRUS.
