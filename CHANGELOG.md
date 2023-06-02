@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+* Add 'lzards' support to cumulus module
+
 ## v15.0.3.1
 
 * Add `lambda_memory_sizes` to cumulus module variables
