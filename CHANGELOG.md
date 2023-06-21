@@ -1,8 +1,12 @@
 # CHANGELOG
 
-## Unreleased
+## v15.0.3.2
 
 * Add 'lzards' support to cumulus module
+* Upgrade to [TEA Release 1.3.3](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.3.3)
+which now handles URLs with non-standard characters like colons
+* one additional change to the `tf` module to handle bucket versioning as required
+by the terraform aws version `>= 3.75.2`
 
 ## v15.0.3.1
 
