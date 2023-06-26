@@ -26,13 +26,17 @@ locals {
 
 resource "aws_s3_bucket" "backend-tf-state-bucket" {
   bucket = "${local.cumulus-prefix}-tf-state-${local.aws_account_id_last4}"
-  versioning {
-    enabled = true
-  }
   lifecycle {
     prevent_destroy = true
   }
   tags = local.default_tags
+}
+
+resource "aws_s3_bucket_versioning" "backend-tf-state-bucket-versioning" {
+  bucket = aws_s3_bucket.backend-tf-state-bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
 }
 
 resource "aws_dynamodb_table" "backend-tf-locks-table" {

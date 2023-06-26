@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v11.1.8.1
+
+* Upgrade to [TEA Release 1.3.3](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.3.3)
+which now handles URLs with non-standard characters like colons
+* one additional change to the `tf` module to handle bucket versioning as required
+by the terraform aws version `>= 3.75.2`
+
 ## v11.1.8.0
 
 * Upgrade to [Cumulus v11.1.8](https://github.com/nasa/Cumulus/releases/tag/v11.1.8)
