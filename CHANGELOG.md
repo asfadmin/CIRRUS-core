@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v11.1.8.2
+
+* Undo changes to terraform bucket versioning config
+
 ## v11.1.8.1
 
 * Upgrade to [TEA Release 1.3.3](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.3.3)
