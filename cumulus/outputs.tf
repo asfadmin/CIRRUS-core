@@ -6,17 +6,17 @@ output "workflow_config" {
 
 # ---------
 # Cumulus Tasks
-output "sf_sqs_report_task" {
-  value = module.cumulus.sf_sqs_report_task
-}
-output "fake_processing_task" {
-  value = module.cumulus.fake_processing_task
+output "add_missing_file_checksums_task" {
+  value = module.cumulus.add_missing_file_checksums_task
 }
 output "discover_granules_task" {
   value = module.cumulus.discover_granules_task
 }
 output "discover_pdrs_task" {
   value = module.cumulus.discover_pdrs_task
+}
+output "fake_processing_task" {
+  value = module.cumulus.fake_processing_task
 }
 output "files_to_granules_task" {
   value = module.cumulus.files_to_granules_task
@@ -27,6 +27,9 @@ output "hello_world_task" {
 output "hyrax_metadata_updates_task" {
   value = module.cumulus.hyrax_metadata_updates_task
 }
+output "lzards_backup_task" {
+  value = module.cumulus.lzards_backup_task
+}
 output "move_granules_task" {
   value = module.cumulus.move_granules_task
 }
@@ -36,21 +39,33 @@ output "parse_pdr_task" {
 output "pdr_status_check_task" {
   value = module.cumulus.pdr_status_check_task
 }
-output "post_to_cmr_task" {
-  value = module.cumulus.post_to_cmr_task
-}
+
 output "queue_granules_task" {
   value = module.cumulus.queue_granules_task
 }
 output "queue_pdrs_task" {
   value = module.cumulus.queue_pdrs_task
 }
+output "queue_workflow_task" {
+  value = module.cumulus.queue_workflow_task
+}
+output "sf_sqs_report_task" {
+  value = module.cumulus.sf_sqs_report_task
+}
 output "sync_granule_task" {
   value = module.cumulus.sync_granule_task
 }
-
+output "update_cmr_access_constraints_task" {
+  value = module.cumulus.update_cmr_access_constraints_task
+}
 output "update_granules_cmr_metadata_file_links_task" {
   value = module.cumulus.update_granules_cmr_metadata_file_links_task
+}
+output "post_to_cmr_task" {
+  value = module.cumulus.post_to_cmr_task
+}
+output "sqs2sfThrottle_lambda_function_arn" {
+  value = module.cumulus.sqs2sfThrottle_lambda_function_arn
 }
 
 # ---------
@@ -81,7 +96,13 @@ output "distribution_redirect_uri" {
 }
 
 # ---------
-# Workflow reporting SNS topics
+# Workflow reporting Queue and SNS topics
+output "stepfunction_event_reporter_queue_url" {
+  value = module.cumulus.stepfunction_event_reporter_queue_url
+}
+output "report_collections_sns_topic_arn" {
+  value = module.cumulus.report_collections_sns_topic_arn
+}
 output "report_executions_sns_topic_arn" {
   value = module.cumulus.report_executions_sns_topic_arn
 }
