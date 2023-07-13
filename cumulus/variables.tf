@@ -254,6 +254,11 @@ variable "metrics_es_username" {
   default = null
 }
 
+variable "metrics_es_aws_account_id" {
+  type    = string
+  default = null
+}
+
 variable "api_users" {
   type    = list(string)
   default = []
