@@ -19,7 +19,7 @@
 #  PYTHON_VER: 			  python3 or python38 which sets the build target in make file
 
 # ---------------------------
-DOCKER_TAG := v15.0.3.0
+DOCKER_TAG := v16.1.0-alpha.0
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
