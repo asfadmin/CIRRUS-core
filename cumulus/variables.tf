@@ -64,8 +64,8 @@ variable "lzards_provider" {
 
 variable "lzards_api" {
   description = "LZARDS backup API endpoint"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "lzards_s3_link_timeout" {
@@ -388,8 +388,8 @@ variable "thottled_queue_execution_limit" {
 
 variable "lambda_memory_sizes" {
   description = "Memory sizes for lambda functions"
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
 }
 
 variable "lambda_timeouts" {
@@ -411,8 +411,8 @@ variable "cloudwatch_log_retention_periods" {
 }
 
 variable "default_log_retention_days" {
-  type = number
-  default = 30
+  type        = number
+  default     = 30
   description = "Optional default value that user chooses for their log retention periods"
 }
 
