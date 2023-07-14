@@ -1,20 +1,18 @@
 module "cumulus" {
   source = "https://github.com/nasa/cumulus/releases/download/v16.1.0-alpha.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
 
-  ""
-
   cumulus_message_adapter_lambda_layer_version_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
   prefix = local.prefix
 
   vpc_id            = data.aws_vpc.application_vpcs.id
-  lambda_subnet_ids = data.aws_subnet_ids.subnet_ids.ids
+  lambda_subnet_ids = data.aws_subnets.subnet_ids.ids
 
   deploy_to_ngap = true
 
   ecs_cluster_instance_image_id = var.ecs_cluster_instance_image_id != "" ? var.ecs_cluster_instance_image_id : data.aws_ssm_parameter.ecs_image_id.value
 
-  ecs_cluster_instance_subnet_ids         = data.aws_subnet_ids.subnet_ids.ids
+  ecs_cluster_instance_subnet_ids         = data.aws_subnets.subnet_ids.ids
   ecs_cluster_min_size                    = var.ecs_cluster_min_size
   ecs_cluster_desired_size                = var.ecs_cluster_desired_size
   ecs_cluster_max_size                    = var.ecs_cluster_max_size

@@ -20,7 +20,7 @@ module "thin_egress_app" {
   stage_name                         = local.tea_stage_name
   urs_auth_creds_secret_name         = aws_secretsmanager_secret.thin_egress_urs_creds.name
   use_cors                           = var.use_cors
-  vpc_subnet_ids                     = data.aws_subnet_ids.subnet_ids.ids
+  vpc_subnet_ids                     = data.aws_subnets.subnet_ids.ids
 }
 
 resource "aws_secretsmanager_secret" "thin_egress_urs_creds" {
