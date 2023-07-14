@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v15.0.3.3
+
+* Update outputs to match cumulus module
+* Add support for EMS Reporting SNS policy
+
 ## v15.0.3.2
 
 * Add 'lzards' support to cumulus module
