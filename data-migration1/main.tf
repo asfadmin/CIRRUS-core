@@ -57,7 +57,7 @@ data "terraform_remote_state" "rds" {
 }
 
 module "data_migration1" {
-  source = "https://github.com/nasa/cumulus/releases/download/v15.0.3/terraform-aws-cumulus-data-migrations1.zip"
+  source = "https://github.com/nasa/cumulus/releases/download/v16.0.0/terraform-aws-cumulus-data-migrations1.zip"
 
   prefix = local.prefix
 
