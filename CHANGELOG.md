@@ -3,6 +3,21 @@
 ## v16.0.0.0
 
 * Upgrade to [Cumulus v16.0.0](https://github.com/nasa/Cumulus/releases/tag/v16.0.0)
+* **Note**: When upgrading to cumulus 16.0.0 `make cumulus` tries to delete 3 lambda
+functions and their associated cloudwatch log groups.  It gets stuck in a cycle.
+The `scripts/cumulus-v16.0.0/delete_log_groups.sh` script deletes the log groups
+which then allows `make cumulus` to complete
+
+
+```
+Error: Cycle: module.cumulus.module.archive.aws_lambda_function.granule_files_cache_updater (destroy), module.cumulus.module.archive.aws_cloudwatch_log_group.granule_files_cache_updater_logs (destroy)
+
+Error: Cycle: module.cumulus.module.archive.aws_lambda_function.publish_pdrs (destroy), module.cumulus.module.archive.aws_cloudwatch_log_group.publish_pdrs_logs (destroy)
+
+Error: Cycle: module.cumulus.module.archive.aws_lambda_function.publish_granules (destroy), module.cumulus.module.archive.aws_cloudwatch_log_group.publish_granules_logs (destroy)
+```
+
+
 
 ## v15.0.3.3
 
