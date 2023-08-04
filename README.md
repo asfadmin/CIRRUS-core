@@ -32,13 +32,24 @@ Cumulus.
 
 ## Development Setup
 
-You can run tests and deploy the stack inside of a Docker container:
+Set DAAC_DIR as an enviroment var:
 
-        $ make image
-        $ DAAC_DIR=$HOME/projects/acme-cumulus make container-shell
+      $ export DAAC_DIR=$HOME/projects/acme-cumulus
 
 Here DAAC_DIR is the absolute path to the fork of `CIRRUS-DAAC` that
 you would like to deploy.
+
+If DAAC_DIR is not set, make will give you the following error:
+
+        make: *** Makefile: Not a directory.  Stop.
+        make: *** [Makefile] Error 2
+
+
+You can start an interactive Docker container session and use this to run tests and deploy the stack:
+
+        $ make image
+        $ make container-shell
+
 
 ## Organization
 
@@ -132,12 +143,17 @@ secrets files will *not* (and *should not*) be committed to git. The
 
 3. Deploy Cumulus. If this is your first Cumulus deployment for this
    stack, deploy the entire Cumulus stack:
+   
 
-        $ make all
+      $ make initial-deploy
 
    This will deploy the Terraform modules that provision Terraform
    state resources, DAAC-specific resources, the Cumulus
-   `data-persistence` module, the `cumulus` module, and `workflows`.
+   `data-persistence` module, the `cumulus` module, the `rds` module, and `workflows`.
+
+If you want to deploy everything besides the `rds` module you can run the command:
+
+        $ make all
 
 4. Deploy a specific part of the stack: If you're adding a new
    workflow, Lambdas, or other resources for your workflow, and the
@@ -151,6 +167,7 @@ secrets files will *not* (and *should not*) be committed to git. The
 
         $ make tf
         $ make daac
+        $ make rds
         $ make data-persistence
         $ make cumulus
         $ make workflows
