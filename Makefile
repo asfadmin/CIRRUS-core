@@ -333,3 +333,12 @@ all: \
 	data-persistence \
 	cumulus \
 	workflows
+
+.PHONY: initial-deploy
+initial-deploy: \
+	tf \
+	daac \
+	rds \
+	data-persistence \
+	cumulus \
+	workflows
