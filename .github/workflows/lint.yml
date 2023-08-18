@@ -35,9 +35,6 @@ jobs:
     - name: TFLint - cumulus module
       run:  tflint cumulus
 
-    - name: TFLint - data-migration1 module
-      run:  tflint data-migration1
-
     - name: TFLint - data-persistence module
       run:  tflint data-persistence
 

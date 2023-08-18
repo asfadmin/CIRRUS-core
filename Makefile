@@ -86,7 +86,7 @@ tf-init:
 		-backend-config "dynamodb_table=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks"
 	terraform workspace new ${DEPLOY_NAME} 2>/dev/null || terraform workspace select ${DEPLOY_NAME}
 
-init-modules-list = tf data-persistence cumulus data-migration1
+init-modules-list = tf data-persistence cumulus
 init-modules := $(init-modules-list:%-init=%)
 
 # ---------------------------
@@ -113,51 +113,6 @@ plan-tf: tf-init
 	terraform import -input=false aws_s3_bucket.backend-tf-state-bucket ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4} 2>/dev/null || true
 	terraform import -input=false aws_dynamodb_table.backend-tf-locks-table ${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks 2>/dev/null || true
 	terraform plan -input=false -no-color
-
-# ---------------------------
-.PHONY: data-migration1
-data-migration1: data-migration1-init
-	$(banner)
-	cd $@
-	if [ -f "${DAAC_DIR}/data-migration1/variables/${MATURITY}.tfvars" ]
-	then
-		echo "***************************************************************"
-		export VARIABLES_OPT="-var-file=${DAAC_DIR}/data-migration1/variables/${MATURITY}.tfvars"
-		echo "Found maturity-specific variables: $$VARIABLES_OPT"
-		echo "***************************************************************"
-	fi
-	export TF_CMD="terraform apply \
-			$$VARIABLES_OPT \
-			-input=false \
-			-no-color \
-			-auto-approve"
-	eval $$TF_CMD
-	if [ $$? -ne 0 ] # Workaround random Cumulus deploy fails
-	then
-		eval $$TF_CMD
-	fi
-
-# ---------------------------
-.PHONY: plan-data-migration1
-plan-data-migration1: data-migration1-init
-	$(banner)
-	cd data-migration1
-	if [ -f "${DAAC_DIR}/data-migration1/variables/${MATURITY}.tfvars" ]
-	then
-		echo "***************************************************************"
-		export VARIABLES_OPT="-var-file=${DAAC_DIR}/data-migration1/variables/${MATURITY}.tfvars"
-		echo "Found maturity-specific variables: $$VARIABLES_OPT"
-		echo "***************************************************************"
-	fi
-	export TF_CMD="terraform plan \
-			$$VARIABLES_OPT \
-			-input=false \
-			-no-color"
-	eval $$TF_CMD
-	if [ $$? -ne 0 ] # Workaround random Cumulus deploy fails
-	then
-		eval $$TF_CMD
-	fi
 
 # ---------------------------
 .PHONY: data-persistence
@@ -305,17 +260,6 @@ destroy-cumulus: cumulus-init
 				-no-color \
 				-auto-approve"
 	eval $$TF_CMD
-
-# ---------------------------
-.PHONY: cumulus_v9_2_0_upgrade
-cumulus_v9_2_0_upgrade:
-	$(MAKE) rds
-	$(MAKE) data-persistence
-	$(MAKE) data-migration1
-	bash /CIRRUS-core/scripts/cumulus-v9.2.0/data_migration1.sh
-	$(MAKE) cumulus
-	bash /CIRRUS-core/scripts/cumulus-v9.2.0/data_migration2.sh
-	$(MAKE) workflows
 
 # ---------------------------
 # Catch-all target to forward any undefined targets to the DAAC Makefile
