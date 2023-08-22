@@ -113,7 +113,7 @@ output "report_pdrs_sns_topic_arn" {
   value = module.cumulus.report_pdrs_sns_topic_arn
 }
 output "subnet_ids" {
-  value = data.aws_subnet_ids.subnet_ids.ids
+  value = data.aws_subnets.subnet_ids.ids
 }
 
 output "ecs_cluster_arn" {

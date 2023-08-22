@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 3.75.2"
+      version = "~> 5.0"
     }
     null = {
       source  = "hashicorp/null"
@@ -69,9 +69,7 @@ data "aws_vpc" "application_vpcs" {
   }
 }
 
-data "aws_subnet_ids" "subnet_ids" {
-  vpc_id = data.aws_vpc.application_vpcs.id
-
+data "aws_subnets" "subnet_ids" {
   filter {
     name = "tag:Name"
     values = ["Private application ${data.aws_region.current.name}a subnet",
