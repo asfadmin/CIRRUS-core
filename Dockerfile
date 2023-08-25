@@ -41,6 +41,10 @@ RUN \
         curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm" &&\
         yum install -y session-manager-plugin.rpm
 
+# Add user to /etc/passwd for keygen in Makefile 
+RUN \
+        echo "user:x:502:0:root:/:/bin/bash" >> /etc/passwd
+
 WORKDIR /CIRRUS-core
 
 # Python38 target

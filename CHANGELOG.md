@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Unreleased
+
+* Update build Dockerfile to assign a username to UID 502 in the AWS Linux 2 image to
+  mitigate ssh-keygen errors when not assigned
+
 ## v16.0.0.0
 
 * Upgrade to [Cumulus v16.0.0](https://github.com/nasa/Cumulus/releases/tag/v16.0.0)
