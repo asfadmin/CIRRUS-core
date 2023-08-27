@@ -48,7 +48,7 @@ endef
 # ---------------------------
 .PHONY: image
 image: Dockerfile
-	docker build -f Dockerfile --no-cache -t cirrus-core:$(DOCKER_TAG) --target $(PYTHON_VER) .
+	docker build -f Dockerfile --no-cache -t cirrus-core:$(DOCKER_TAG) --target $(PYTHON_VER) --build-arg USER=`id -u` .
 
 .PHONY: container-shell
 container-shell:
