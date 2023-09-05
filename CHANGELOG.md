@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v15.0.3.4
+
+* Add `deploy_cumulus_distribution` variable to cumulus module
+
 ## v15.0.3.3
 
 * Update outputs to match cumulus module
