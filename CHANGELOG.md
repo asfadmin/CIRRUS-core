@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* Add `deploy_cumulus_distribution` variable to cumulus module
 * Update build Dockerfile to create an entry in /etc/passwd for the user building
   the image.  It allows the `setup_jwt_cookie.sh` script to be run inside the
   container.
@@ -31,6 +32,9 @@ Error: Cycle: module.cumulus.module.archive.aws_lambda_function.publish_pdrs (de
 Error: Cycle: module.cumulus.module.archive.aws_lambda_function.publish_granules (destroy), module.cumulus.module.archive.aws_cloudwatch_log_group.publish_granules_logs (destroy)
 ```
 
+## v15.0.3.4
+
+* Add `deploy_cumulus_distribution` variable to cumulus module
 
 ## v15.0.3.3
 

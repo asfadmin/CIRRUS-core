@@ -98,6 +98,7 @@ module "cumulus" {
   api_gateway_stage           = var.MATURITY
   log_destination_arn         = var.log_destination_arn
 
+  deploy_cumulus_distribution                 = var.deploy_cumulus_distribution
   deploy_distribution_s3_credentials_endpoint = var.deploy_distribution_s3_credentials_endpoint
 
   additional_log_groups_to_elk = var.additional_log_groups_to_elk
