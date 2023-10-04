@@ -33,6 +33,10 @@ output "lzards_backup_task" {
 output "move_granules_task" {
   value = module.cumulus.move_granules_task
 }
+
+output "orca_recovery_adapter_task" {
+  value = module.cumulus.orca_recovery_adapter_task
+}
 output "parse_pdr_task" {
   value = module.cumulus.parse_pdr_task
 }

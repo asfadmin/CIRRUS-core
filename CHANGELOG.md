@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v17.0.1.0
+* Add orca_recovery_adapter_task cumulus core module output added in cumulus v17
+
 ## v17.0.0.0
 * Upgrade to [Cumulus v17.0.0](https://github.com/nasa/cumulus/releases/tag/v17.0.0)
 * Upgrade terraform modules to use AWS provider version 5.0
