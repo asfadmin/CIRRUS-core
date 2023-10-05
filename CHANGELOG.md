@@ -1,7 +1,28 @@
 # CHANGELOG
 
 ## v17.0.1.0
-* Add orca_recovery_adapter_task cumulus core module output added in cumulus v17
+
+* Adds the following outputs to the `cumulus` cirrus module that were added to the cumulus core module output added in cumulus v17:
+  * "orca_recovery_adapter_task"
+  * "orca_copy_to_archive_adapter_task"
+
+* Update core `cumulus` module to allow for an Orca module that provides configuration values via remote state for the following Cumulus module variables:
+  * orca_lambda_copy_to_archive_arn
+  * orca_sfn_recovery_workflow_arn
+
+* Adds the following configuration variable:
+
+```tf
+variable "use_orca" {
+  description = "Use orca - rely on remote state convention to bring in ORCA lambdas" 
+  type = bool
+  default = false
+}
+```
+
+* Updates `cumulus` module behavior such that when `use orca` is set to true, the module reads a cirrus-daac module `orca`'s remote state via convention and uses the following remote state values to to pass configuration values to the `cumulus` module:
+  * outputs.orca.orca_lambda_copy_to_archive_arn
+  * outputs.orca.orca_sfn_recovery_workflow_arn
 
 ## v17.0.0.0
 * Upgrade to [Cumulus v17.0.0](https://github.com/nasa/cumulus/releases/tag/v17.0.0)

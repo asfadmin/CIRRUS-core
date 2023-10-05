@@ -58,6 +58,13 @@ locals {
   default_tags = {
     Deployment = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
   }
+  orca_remote_state_config = {
+    bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
+    key    = "orca/terraform.tfstate"
+    region = data.aws_region.current.name
+  }
+  orca_lambda_copy_to_archive_arn = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_lambda_copy_to_archive_arn : ""
+  orca_sfn_recovery_workflow_arn = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_sfn_recovery_workflow_arn : ""
 }
 
 data "aws_caller_identity" "current" {}

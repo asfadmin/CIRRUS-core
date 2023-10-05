@@ -29,6 +29,8 @@ variable "cmr_oauth_provider" {
   default = "earthdata"
 }
 
+
+
 variable "launchpad_api" {
   type    = string
   default = "launchpadApi"
@@ -82,6 +84,24 @@ variable "oauth_provider" {
 variable "oauth_user_group" {
   type    = string
   default = "N/A"
+}
+
+variable "orca_lambda_copy_to_archive_arn" {
+  description = "AWS ARN of the ORCA copy_to_archive lambda."
+  type        = string
+  default     = ""
+}
+
+variable "orca_sfn_recovery_workflow_arn" {
+  description = "The ARN of the recovery step function."
+  type        = string
+  default     = ""
+}
+
+variable "use_orca" {
+  description = "Use orca - rely on remote state convention to bring in ORCA lambdas"
+  type = bool
+  default = false
 }
 
 variable "s3_replicator_config" {

@@ -37,6 +37,11 @@ output "move_granules_task" {
 output "orca_recovery_adapter_task" {
   value = module.cumulus.orca_recovery_adapter_task
 }
+
+output "orca_copy_to_archive_adapter_task" {
+  value = module.cumulus.orca_copy_to_archive_adapter_task
+}
+
 output "parse_pdr_task" {
   value = module.cumulus.parse_pdr_task
 }
