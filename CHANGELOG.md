@@ -5,6 +5,7 @@
 * Pass tags to Thin Egress App module in `cumulus` cirrus module
 * update Node version to 16.x in Docker file to support v12.0.1 of the
 [Cumulus Dashboard](https://github.com/nasa/cumulus-dashboard/releases/tag/v12.0.1)
+* Add `html_template_dir` variable to cumulus module
 
 ## v15.0.3.4
 
