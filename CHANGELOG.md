@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v17.0.1.0
+## v17.0.0.1
 
 * Adds the following outputs to the `cumulus` cirrus module that were added to the cumulus core module output added in cumulus v17:
   * "orca_recovery_adapter_task"

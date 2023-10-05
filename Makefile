@@ -19,7 +19,7 @@
 #  PYTHON_VER: 			  python3 or python38 which sets the build target in make file
 
 # ---------------------------
-DOCKER_TAG := v17.0.1.0
+DOCKER_TAG := v17.0.0.1
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
@@ -192,7 +192,6 @@ cumulus: cumulus-init
 	fi
 	export TF_CMD="terraform apply \
 				-var-file=${DAAC_DIR}/$@/terraform.tfvars \
-				$$VARIABLES_OPT \
 				$$SECRETS_OPT \
 				-input=false \
 				-no-color \
