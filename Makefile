@@ -192,6 +192,7 @@ cumulus: cumulus-init
 	fi
 	export TF_CMD="terraform apply \
 				-var-file=${DAAC_DIR}/$@/terraform.tfvars \
+				$$VARIABLES_OPT \
 				$$SECRETS_OPT \
 				-input=false \
 				-no-color \
