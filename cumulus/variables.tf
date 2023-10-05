@@ -93,13 +93,13 @@ variable "orca_lambda_copy_to_archive_arn" {
 }
 
 variable "orca_sfn_recovery_workflow_arn" {
-  description = "The ARN of the recovery step function."
+  description = "The ARN of the ORCA sfn_recovery_workflow"
   type        = string
   default     = ""
 }
 
 variable "use_orca" {
-  description = "Use orca - rely on remote state convention to bring in ORCA lambdas"
+  description = "If set to true, pull in remote state values to configure cumulus core module for ORCA"
   type = bool
   default = false
 }
