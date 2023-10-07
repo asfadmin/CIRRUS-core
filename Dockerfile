@@ -44,7 +44,7 @@ RUN \
 # Add user for keygen in Makefile
 ARG USER
 RUN \
-        useradd -u ${USER} user
+        echo "user:x:${USER}:0:root:/:/bin/bash" >> /etc/passwd
 
 WORKDIR /CIRRUS-core
 
