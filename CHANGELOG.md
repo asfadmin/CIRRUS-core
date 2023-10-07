@@ -5,6 +5,7 @@
 * Update build Dockerfile to create an entry in /etc/passwd for the user building
   the image.  It allows the `setup_jwt_cookie.sh` script to be run inside the
   container.
+* update Node version to 16.x in Docker file
 
 ## v17.0.0.0
 * Upgrade to [Cumulus v17.0.0](https://github.com/nasa/cumulus/releases/tag/v17.0.0)
