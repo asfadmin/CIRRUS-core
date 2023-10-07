@@ -42,6 +42,7 @@ RUN \
         curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm" &&\
         yum install -y session-manager-plugin.rpm
 
+# Add user for keygen in Makefile
 ARG USER
 RUN \
         echo "user:x:${USER}:0:root:/:/bin/bash" >> /etc/passwd
