@@ -3,6 +3,7 @@
 ## v15.0.3.6
 
 * Pass tags to Thin Egress App module in `cumulus` cirrus module
+* update Node version to 16.x in Docker file
 
 ## v15.0.3.4
 
