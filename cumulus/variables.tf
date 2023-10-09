@@ -99,7 +99,7 @@ variable "orca_sfn_recovery_workflow_arn" {
 }
 
 variable "use_orca" {
-  description = "If set to true, pull in remote state values to configure cumulus core module for ORCA"
+  description = "If set to true, pull in remote state values from 'orca' module to configure cumulus core module for ORCA"
   type = bool
   default = false
 }

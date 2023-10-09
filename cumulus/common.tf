@@ -65,6 +65,7 @@ locals {
   }
   orca_lambda_copy_to_archive_arn = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_lambda_copy_to_archive_arn : ""
   orca_sfn_recovery_workflow_arn = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_sfn_recovery_workflow_arn : ""
+  orca_api_uri = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_api_deployment_invoke_url : ""
 }
 
 data "aws_caller_identity" "current" {}

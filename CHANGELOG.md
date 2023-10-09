@@ -9,12 +9,13 @@
 * Update core `cumulus` module to allow for an Orca module that provides configuration values via remote state for the following Cumulus module variables:
   * orca_lambda_copy_to_archive_arn
   * orca_sfn_recovery_workflow_arn
+  * orca_api_uri
 
 * Adds the following configuration variable:
 
 ```tf
 variable "use_orca" {
-  description = "Use orca - rely on remote state convention to bring in ORCA lambdas" 
+  description = "If set to true, pull in remote state values from 'orca' module to configure cumulus core module for ORCA" 
   type = bool
   default = false
 }
@@ -23,6 +24,7 @@ variable "use_orca" {
 * Updates `cumulus` module behavior such that when `use orca` is set to true, the module reads a cirrus-daac module `orca`'s remote state via convention and uses the following remote state values to to pass configuration values to the `cumulus` module:
   * outputs.orca.orca_lambda_copy_to_archive_arn
   * outputs.orca.orca_sfn_recovery_workflow_arn
+  * outputs.orca.orca_api_uri
 
 ## v17.0.0.0
 * Upgrade to [Cumulus v17.0.0](https://github.com/nasa/cumulus/releases/tag/v17.0.0)
