@@ -21,7 +21,7 @@ variable "use_orca" {
 }
 ```
 
-* Updates `cumulus` module behavior such that when `use orca` is set to true, the module reads a cirrus-daac module `orca`'s remote state via convention and uses the following remote state values to to pass configuration values to the `cumulus` module:
+* Updates `cumulus` module behavior such that when `use_orca` is set to true, the module reads a cirrus-daac module `orca`'s remote state via convention and uses the following remote state values to to pass configuration values to the `cumulus` module:
   * outputs.orca.orca_lambda_copy_to_archive_arn
   * outputs.orca.orca_sfn_recovery_workflow_arn
   * outputs.orca.orca_api_uri
