@@ -102,6 +102,7 @@ module "cumulus" {
   api_gateway_stage           = var.MATURITY
   log_destination_arn         = var.log_destination_arn
 
+  deploy_cumulus_distribution                 = var.deploy_cumulus_distribution
   deploy_distribution_s3_credentials_endpoint = var.deploy_distribution_s3_credentials_endpoint
 
   additional_log_groups_to_elk = var.additional_log_groups_to_elk
@@ -115,18 +116,6 @@ module "cumulus" {
   }]
 
   tags = local.default_tags
-}
-
-data "aws_lambda_function" "sts_credentials" {
-  function_name = "gsfc-ngap-sh-s3-sts-get-keys"
-}
-
-data "aws_lambda_function" "sts_policy_helper" {
-  function_name = "gsfc-ngap-sh-sts-policy-helper"
-}
-
-data "aws_ssm_parameter" "ecs_image_id" {
-  name = "image_id_ecs_amz2"
 }
 
 resource "aws_security_group" "no_ingress_all_egress" {

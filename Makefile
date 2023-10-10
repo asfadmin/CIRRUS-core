@@ -19,7 +19,7 @@
 #  PYTHON_VER: 			  python3 or python38 which sets the build target in make file
 
 # ---------------------------
-DOCKER_TAG := v17.0.0.1
+DOCKER_TAG := v17.0.0.2
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
@@ -48,7 +48,7 @@ endef
 # ---------------------------
 .PHONY: image
 image: Dockerfile
-	docker build -f Dockerfile --no-cache -t cirrus-core:$(DOCKER_TAG) --target $(PYTHON_VER) .
+	docker build -f Dockerfile --no-cache -t cirrus-core:$(DOCKER_TAG) --target $(PYTHON_VER) --build-arg USER=`id -u` .
 
 .PHONY: container-shell
 container-shell:

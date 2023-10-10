@@ -290,6 +290,12 @@ variable "urs_url" {
   default     = "https://uat.urs.earthdata.nasa.gov"
 }
 
+variable "deploy_cumulus_distribution" {
+  description = "If true, does not deploy the TEA distribution API"
+  type        = bool
+  default     = false
+}
+
 variable "deploy_distribution_s3_credentials_endpoint" {
   description = "Whether or not to include the S3 credentials endpoint in the Thin Egress App"
   type        = bool

@@ -1,28 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 2.1"
-    }
-    archive = {
-      source  = "hashicorp/archive"
-      version = "~> 2.2.0"
-    }
-  }
-  backend "s3" {
-  }
-}
-
-provider "aws" {
-  ignore_tags {
-    key_prefixes = ["gsfc-ngap"]
-  }
-}
-
 locals {
   prefix = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
 
@@ -40,25 +15,22 @@ locals {
   permissions_boundary_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/NGAPShRoleBoundary"
 
   daac_remote_state_config = {
-    bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
+    bucket = "${local.prefix}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
     key    = "daac/terraform.tfstate"
     region = data.aws_region.current.name
   }
 
   data_persistence_remote_state_config = {
-    bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
+    bucket = "${local.prefix}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
     key    = "data-persistence/terraform.tfstate"
     region = data.aws_region.current.name
   }
 
-  system_bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-internal"
+  system_bucket = "${local.prefix}-internal"
 
-  cmr_client_id = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
+  cmr_client_id = local.prefix
 
-  default_tags = {
-    Deployment = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
-  }
-  orca_remote_state_config = {
+    orca_remote_state_config = {
     bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
     key    = "orca/terraform.tfstate"
     region = data.aws_region.current.name
@@ -66,33 +38,8 @@ locals {
   orca_lambda_copy_to_archive_arn = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_lambda_copy_to_archive_arn : ""
   orca_sfn_recovery_workflow_arn = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_sfn_recovery_workflow_arn : ""
   orca_api_uri = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_api_deployment_invoke_url : ""
-}
 
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
-
-data "aws_vpc" "application_vpcs" {
-  tags = {
-    Name = "Application VPC"
+  default_tags = {
+    Deployment = local.prefix
   }
-}
-
-data "aws_subnets" "subnet_ids" {
-  filter {
-    name = "tag:Name"
-    values = ["Private application ${data.aws_region.current.name}a subnet",
-    "Private application ${data.aws_region.current.name}b subnet"]
-  }
-}
-
-data "terraform_remote_state" "daac" {
-  backend   = "s3"
-  workspace = var.DEPLOY_NAME
-  config    = local.daac_remote_state_config
-}
-
-data "terraform_remote_state" "data_persistence" {
-  backend   = "s3"
-  workspace = var.DEPLOY_NAME
-  config    = local.data_persistence_remote_state_config
 }

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v17.0.0.2
+
+* Add `deploy_cumulus_distribution` variable to cumulus module
+* Update build Dockerfile to create an entry in /etc/passwd for the user building
+  the image.  It allows the `setup_jwt_cookie.sh` script to be run inside the
+  container.
+* update Node version to 16.x in Docker file to support v12.0.1 of the
+[Cumulus Dashboard](https://github.com/nasa/cumulus-dashboard/releases/tag/v12.0.1)
+
 ## v17.0.0.1
 
 * Adds the following outputs to the `cumulus` cirrus module that were added to the cumulus core module output added in cumulus v17:
@@ -51,6 +60,9 @@ Error: Cycle: module.cumulus.module.archive.aws_lambda_function.publish_pdrs (de
 Error: Cycle: module.cumulus.module.archive.aws_lambda_function.publish_granules (destroy), module.cumulus.module.archive.aws_cloudwatch_log_group.publish_granules_logs (destroy)
 ```
 
+## v15.0.3.4
+
+* Add `deploy_cumulus_distribution` variable to cumulus module
 
 ## v15.0.3.3
 
