@@ -2,15 +2,6 @@
 
 ## v17.0.0.2
 
-* Add `deploy_cumulus_distribution` variable to cumulus module
-* Update build Dockerfile to create an entry in /etc/passwd for the user building
-  the image.  It allows the `setup_jwt_cookie.sh` script to be run inside the
-  container.
-* update Node version to 16.x in Docker file to support v12.0.1 of the
-[Cumulus Dashboard](https://github.com/nasa/cumulus-dashboard/releases/tag/v12.0.1)
-
-## v17.0.0.1
-
 * Adds the following outputs to the `cumulus` cirrus module that were added to the cumulus core module output added in cumulus v17:
   * "orca_recovery_adapter_task"
   * "orca_copy_to_archive_adapter_task"
@@ -34,6 +25,15 @@ variable "use_orca" {
   * outputs.orca.orca_lambda_copy_to_archive_arn
   * outputs.orca.orca_sfn_recovery_workflow_arn
   * outputs.orca.orca_api_uri
+
+## v17.0.0.1
+
+* Add `deploy_cumulus_distribution` variable to cumulus module
+* Update build Dockerfile to create an entry in /etc/passwd for the user building
+  the image.  It allows the `setup_jwt_cookie.sh` script to be run inside the
+  container.
+* update Node version to 16.x in Docker file to support v12.0.1 of the
+[Cumulus Dashboard](https://github.com/nasa/cumulus-dashboard/releases/tag/v12.0.1)
 
 ## v17.0.0.0
 * Upgrade to [Cumulus v17.0.0](https://github.com/nasa/cumulus/releases/tag/v17.0.0)
