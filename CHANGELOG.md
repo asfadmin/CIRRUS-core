@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v17.0.0.1
 
 * Add `deploy_cumulus_distribution` variable to cumulus module
 * Update build Dockerfile to create an entry in /etc/passwd for the user building
