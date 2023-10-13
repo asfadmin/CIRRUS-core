@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v15.0.3.6
+
+* Pass tags to Thin Egress App module in `cumulus` cirrus module
+
 ## v15.0.3.4
 
 * Add `deploy_cumulus_distribution` variable to cumulus module
