@@ -43,10 +43,10 @@ RUN \
         yum install -y session-manager-plugin.rpm
 
 # Add user for keygen in Makefile
-# ARG USER
-# RUN \
-#         echo "user:x:${USER}:0:root:/:/bin/bash" >> /etc/passwd
-#
+ARG USER
+RUN \
+        echo "user:x:${USER}:0:root:/:/bin/bash" >> /etc/passwd
+
 WORKDIR /CIRRUS-core
 
 # Python38 target
