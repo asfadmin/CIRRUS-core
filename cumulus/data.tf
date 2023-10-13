@@ -38,3 +38,10 @@ data "aws_lambda_function" "sts_policy_helper" {
 data "aws_ssm_parameter" "ecs_image_id" {
   name = "image_id_ecs_amz2"
 }
+
+data "terraform_remote_state" "orca" {
+  count = var.use_orca == true ? 1 : 0
+  backend   = "s3"
+  workspace = var.DEPLOY_NAME
+  config    = local.orca_remote_state_config
+}
