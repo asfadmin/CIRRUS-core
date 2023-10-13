@@ -320,10 +320,10 @@ cumulus_v9_2_0_upgrade:
 # ---------------------------
 # Catch-all target to forward any undefined targets to the DAAC Makefile
 # https://www.gnu.org/software/make/manual/html_node/Overriding-Makefiles.html#Overriding-Makefiles
-# %: force
-# 	$(MAKE) -C ${DAAC_DIR} $@
-#
-# force: ;
+%: force
+	$(MAKE) -C ${DAAC_DIR} $@
+
+force: ;
 
 # ---------------------------
 .PHONY: all
