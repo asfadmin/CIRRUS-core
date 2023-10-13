@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+* Pass tags to Thin Egress App module in `cumulus` cirrus module
+
 ## v17.0.0.2
 
 * Adds the following outputs to the `cumulus` cirrus module that were added to the cumulus core module output added in cumulus v17:
@@ -15,7 +19,7 @@
 
 ```tf
 variable "use_orca" {
-  description = "If set to true, pull in remote state values from 'orca' module to configure cumulus core module for ORCA" 
+  description = "If set to true, pull in remote state values from 'orca' module to configure cumulus core module for ORCA"
   type = bool
   default = false
 }
