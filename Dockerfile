@@ -9,13 +9,14 @@ FROM amazonlinux:2 as core_base
 #   * AWS CLI
 #   * Terraform
 
-ENV NODE_VERSION "14.x"
+ENV NODE_VERSION "16.x"
 ENV TERRAFORM_VERSION "0.13.6"
 ENV AWS_CLI_VERSION "2.7.7"
 
 # Add NodeJS and Yarn repos & update package index
 RUN \
-        curl -sL https://rpm.nodesource.com/setup_${NODE_VERSION} | bash - && \
+        yum install https://rpm.nodesource.com/pub_${NODE_VERSION}/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y && \
+        yum install nodejs -y --setopt=nodesource-nodejs.module_hotfixes=1 && \
         curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
         yum update -y
 
