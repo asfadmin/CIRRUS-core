@@ -9,6 +9,7 @@ module "thin_egress_app" {
   domain_cert_arn                    = var.thin_egress_domain_cert_arn
   domain_name                        = var.distribution_url == null ? null : replace(replace(var.distribution_url, "/^https?:///", ""), "//$/", "")
   download_role_in_region_arn        = var.thin_egress_download_role_in_region_arn
+  html_template_dir                  = var.html_template_dir
   jwt_algo                           = var.thin_egress_jwt_algo
   jwt_secret_name                    = local.thin_egress_jwt_secret_name
   lambda_code_dependency_archive_key = var.thin_egress_lambda_code_dependency_archive_key
