@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v17.0.0.2
 
 * Pass tags to Thin Egress App module in `cumulus` cirrus module
 * Add `html_template_dir` variable to cumulus module
