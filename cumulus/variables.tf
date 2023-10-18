@@ -29,6 +29,8 @@ variable "cmr_oauth_provider" {
   default = "earthdata"
 }
 
+
+
 variable "launchpad_api" {
   type    = string
   default = "launchpadApi"
@@ -82,6 +84,24 @@ variable "oauth_provider" {
 variable "oauth_user_group" {
   type    = string
   default = "N/A"
+}
+
+variable "orca_lambda_copy_to_archive_arn" {
+  description = "AWS ARN of the ORCA copy_to_archive lambda."
+  type        = string
+  default     = ""
+}
+
+variable "orca_sfn_recovery_workflow_arn" {
+  description = "The ARN of the ORCA sfn_recovery_workflow"
+  type        = string
+  default     = ""
+}
+
+variable "use_orca" {
+  description = "If set to true, pull in remote state values from 'orca' module to configure cumulus core module for ORCA"
+  type = bool
+  default = false
 }
 
 variable "s3_replicator_config" {
@@ -268,6 +288,12 @@ variable "urs_url" {
   description = "The URL of the Earthdata login (URS) site"
   type        = string
   default     = "https://uat.urs.earthdata.nasa.gov"
+}
+
+variable "deploy_cumulus_distribution" {
+  description = "If true, does not deploy the TEA distribution API"
+  type        = bool
+  default     = false
 }
 
 variable "deploy_distribution_s3_credentials_endpoint" {

@@ -3,6 +3,6 @@ variable "DEPLOY_NAME" {
 }
 
 variable "MATURITY" {
-  type = string
+  type    = string
   default = "dev"
 }
