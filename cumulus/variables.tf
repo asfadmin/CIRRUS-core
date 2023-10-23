@@ -447,3 +447,15 @@ variable "s3credentials_endpoint" {
   default     = false
   description = "Switch that will enable TEA deployment of the /s3credentials endpoint for s3 direct access."
 }
+
+
+variable "html_template_dir" {
+  type        = string
+  default     = null
+  description = <<-EOF
+    Directory in ConfigBucket where TEA will look for HTML templates.
+    TEA will not look into subdirectories.
+    Please put only HTML templates in this dir.
+    Leave this field blank to use default templates that are included with the lambda code zip file.
+  EOF
+}

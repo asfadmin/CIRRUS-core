@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## Unreleased
+## v17.0.0.3
 
 * Pass tags to Thin Egress App module in `cumulus` cirrus module
+* Add `html_template_dir` variable to cumulus module
 
 ## v17.0.0.2
 
@@ -63,6 +64,10 @@ Error: Cycle: module.cumulus.module.archive.aws_lambda_function.publish_pdrs (de
 
 Error: Cycle: module.cumulus.module.archive.aws_lambda_function.publish_granules (destroy), module.cumulus.module.archive.aws_cloudwatch_log_group.publish_granules_logs (destroy)
 ```
+
+## v15.0.3.5
+
+* Add `html_template_dir` variable to cumulus module
 
 ## v15.0.3.4
 
