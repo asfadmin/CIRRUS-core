@@ -81,6 +81,10 @@ module "cumulus" {
   archive_api_users = var.api_users
   archive_api_url   = var.archive_api_url
 
+  orca_lambda_copy_to_archive_arn = local.orca_lambda_copy_to_archive_arn
+  orca_sfn_recovery_workflow_arn  = local.orca_sfn_recovery_workflow_arn
+  orca_api_uri = local.orca_api_uri
+
   # must match stage_name variable for thin-egress-app module
   tea_api_gateway_stage = local.tea_stage_name
 

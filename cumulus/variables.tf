@@ -29,6 +29,8 @@ variable "cmr_oauth_provider" {
   default = "earthdata"
 }
 
+
+
 variable "launchpad_api" {
   type    = string
   default = "launchpadApi"
@@ -82,6 +84,24 @@ variable "oauth_provider" {
 variable "oauth_user_group" {
   type    = string
   default = "N/A"
+}
+
+variable "orca_lambda_copy_to_archive_arn" {
+  description = "AWS ARN of the ORCA copy_to_archive lambda."
+  type        = string
+  default     = ""
+}
+
+variable "orca_sfn_recovery_workflow_arn" {
+  description = "The ARN of the ORCA sfn_recovery_workflow"
+  type        = string
+  default     = ""
+}
+
+variable "use_orca" {
+  description = "If set to true, pull in remote state values from 'orca' module to configure cumulus core module for ORCA"
+  type = bool
+  default = false
 }
 
 variable "s3_replicator_config" {
@@ -426,4 +446,16 @@ variable "s3credentials_endpoint" {
   type        = bool
   default     = false
   description = "Switch that will enable TEA deployment of the /s3credentials endpoint for s3 direct access."
+}
+
+
+variable "html_template_dir" {
+  type        = string
+  default     = null
+  description = <<-EOF
+    Directory in ConfigBucket where TEA will look for HTML templates.
+    TEA will not look into subdirectories.
+    Please put only HTML templates in this dir.
+    Leave this field blank to use default templates that are included with the lambda code zip file.
+  EOF
 }

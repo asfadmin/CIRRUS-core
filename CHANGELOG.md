@@ -1,5 +1,36 @@
 # CHANGELOG
 
+## v17.0.0.3
+
+* Pass tags to Thin Egress App module in `cumulus` cirrus module
+* Add `html_template_dir` variable to cumulus module
+
+## v17.0.0.2
+
+* Adds the following outputs to the `cumulus` cirrus module that were added to the cumulus core module output added in cumulus v17:
+  * "orca_recovery_adapter_task"
+  * "orca_copy_to_archive_adapter_task"
+
+* Update core `cumulus` module to allow for an Orca module that provides configuration values via remote state for the following Cumulus module variables:
+  * orca_lambda_copy_to_archive_arn
+  * orca_sfn_recovery_workflow_arn
+  * orca_api_uri
+
+* Adds the following configuration variable:
+
+```tf
+variable "use_orca" {
+  description = "If set to true, pull in remote state values from 'orca' module to configure cumulus core module for ORCA"
+  type = bool
+  default = false
+}
+```
+
+* Updates `cumulus` module behavior such that when `use_orca` is set to true, the module reads a cirrus-daac module `orca`'s remote state via convention and uses the following remote state values to to pass configuration values to the `cumulus` module:
+  * outputs.orca.orca_lambda_copy_to_archive_arn
+  * outputs.orca.orca_sfn_recovery_workflow_arn
+  * outputs.orca.orca_api_uri
+
 ## v17.0.0.1
 
 * Add `deploy_cumulus_distribution` variable to cumulus module
@@ -33,6 +64,10 @@ Error: Cycle: module.cumulus.module.archive.aws_lambda_function.publish_pdrs (de
 
 Error: Cycle: module.cumulus.module.archive.aws_lambda_function.publish_granules (destroy), module.cumulus.module.archive.aws_cloudwatch_log_group.publish_granules_logs (destroy)
 ```
+
+## v15.0.3.5
+
+* Add `html_template_dir` variable to cumulus module
 
 ## v15.0.3.4
 
