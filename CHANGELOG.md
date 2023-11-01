@@ -6,6 +6,9 @@
 * **NOTE** If you are upgrading from a version of CIRRUS earlier than `v17.0.0.3` you
 may observe a CloudFormation error.  Use the information in the `v17.0.0.3` entry below
 to resolve it
+* This version of Cumulus uses Terraform v1.5.3, it's possible that DAAC terraform
+code may need to be updated.
+
 
 ## v17.0.0.3
 
