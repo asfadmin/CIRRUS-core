@@ -1,9 +1,19 @@
 # CHANGELOG
 
+## v18.0.0.0
+
+* Upgrade to [Cumulus v18.0.0](https://github.com/nasa/cumulus/releases/tag/v18.0.0)
+* **NOTE** If you are upgrading from a version of CIRRUS earlier than `v17.0.0.3` you
+may observe a CloudFormation error.  Use the information in the `v17.0.0.3` entry below
+to resolve it
+
 ## v17.0.0.3
 
 * Pass tags to Thin Egress App module in `cumulus` cirrus module
 * Add `html_template_dir` variable to cumulus module
+* **NOTE** ORNL observed a TEA CloudFormation error on the the first run of
+`make cumulus` with this release.  **DO NOT** rerun `make cumulus` until you resolve
+the problem per [this document](./docs/Resolve_TEA_CloudFormation_Error.md)
 
 ## v17.0.0.2
 
