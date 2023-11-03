@@ -1,5 +1,5 @@
 module "data_persistence" {
-  source = "https://github.com/nasa/cumulus/releases/download/v17.0.0/terraform-aws-cumulus.zip//tf-modules/data-persistence"
+  source = "https://github.com/nasa/cumulus/releases/download/v18.0.0/terraform-aws-cumulus.zip//tf-modules/data-persistence"
 
   prefix                = local.prefix
   subnet_ids            = data.aws_subnets.subnet_ids.ids

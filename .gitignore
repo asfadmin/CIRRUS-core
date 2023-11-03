@@ -8,7 +8,7 @@ app/dist
 node_modules
 .env
 /deployer/cloudformation.yml
-.terraform*
+.terraform
 **/.secrets/*.tfvars
 .idea
 tmp

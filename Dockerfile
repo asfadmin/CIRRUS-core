@@ -10,8 +10,8 @@ FROM amazonlinux:2 as core_base
 #   * Terraform
 
 ENV NODE_VERSION "16.x"
-ENV TERRAFORM_VERSION "0.13.6"
-ENV AWS_CLI_VERSION "2.7.7"
+ENV TERRAFORM_VERSION "1.5.3"
+ENV AWS_CLI_VERSION "2.13.25"
 
 # Add NodeJS and Yarn repos & update package index
 RUN \
