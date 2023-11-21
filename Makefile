@@ -24,6 +24,13 @@ export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
 PYTHON_VER ?= python3
+
+
+CIRRUS_DAAC_BRANCH := $(shell git -C $(DAAC_DIR) rev-parse --abbrev-ref HEAD)
+CIRRUS_CORE_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+export CIRRUS_CORE_VERSION=${CIRRUS_CORE_BRANCH}
+export CIRRUS_DAAC_VERSION=${CIRRUS_DAAC_BRANCH}
+
 # ---------------------------
 SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
@@ -270,13 +277,24 @@ destroy-cumulus: cumulus-init
 force: ;
 
 # ---------------------------
+
+.PHONY: upload-cirrus-version
+upload-cirrus-version:
+	git config --global --add safe.directory /CIRRUS-DAAC
+	git config --global --add safe.directory /CIRRUS-core
+
+	@echo Current CIRRUS_CORE branch is $(CIRRUS_CORE_VERSION)
+	@echo Current CIRRUS-DAAC branch is $(CIRRUS_DAAC_VERSION)
+	python3 scripts/upload_cirrus_versions.py
+
 .PHONY: all
 all: \
 	tf \
 	daac \
 	data-persistence \
 	cumulus \
-	workflows
+	workflows \
+	upload-cirrus-version
 
 .PHONY: initial-deploy
 initial-deploy: \
@@ -285,4 +303,5 @@ initial-deploy: \
 	rds \
 	data-persistence \
 	cumulus \
-	workflows
+	workflows \
+	upload-cirrus-version
