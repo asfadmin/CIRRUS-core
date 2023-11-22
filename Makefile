@@ -63,8 +63,8 @@ container-shell:
 		--env AWS_CONFIG_DIR="/" \
 		--env PS1='\s-\v:\w\$$ ' \
 		--env HISTFILE="/CIRRUS-core/.container_bash_history" \
-		--env CIRRUS_CORE_VERSION=${CIRRUS_CORE_BRANCH} \
-		--env CIRRUS_DAAC_VERSION=${CIRRUS_DAAC_BRANCH} \
+		--env TF_VAR_CIRRUS_CORE_VERSION=${CIRRUS_CORE_BRANCH} \
+		--env TF_VAR_CIRRUS_DAAC_VERSION=${CIRRUS_DAAC_BRANCH} \
 		-v ${PWD}:/CIRRUS-core \
 		-v ${DAAC_DIR}:/CIRRUS-DAAC \
 		-v ${HOME}/.aws:/.aws \
@@ -277,21 +277,13 @@ destroy-cumulus: cumulus-init
 force: ;
 
 # ---------------------------
-
-.PHONY: upload-cirrus-version
-upload-cirrus-version:
-	@echo Current CIRRUS_CORE branch is $(CIRRUS_CORE_VERSION)
-	@echo Current CIRRUS-DAAC branch is $(CIRRUS_DAAC_VERSION)
-	python3 scripts/upload_cirrus_versions.py
-
 .PHONY: all
 all: \
 	tf \
 	daac \
 	data-persistence \
 	cumulus \
-	workflows \
-	upload-cirrus-version
+	workflows
 
 .PHONY: initial-deploy
 initial-deploy: \
@@ -300,5 +292,4 @@ initial-deploy: \
 	rds \
 	data-persistence \
 	cumulus \
-	workflows \
-	upload-cirrus-version
+	workflows
