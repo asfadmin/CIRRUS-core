@@ -28,8 +28,6 @@ PYTHON_VER ?= python3
 
 CIRRUS_DAAC_BRANCH := $(shell git -C $(DAAC_DIR) rev-parse --abbrev-ref HEAD)
 CIRRUS_CORE_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
-export CIRRUS_CORE_VERSION=${CIRRUS_CORE_BRANCH}
-export CIRRUS_DAAC_VERSION=${CIRRUS_DAAC_BRANCH}
 
 # ---------------------------
 SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
@@ -65,6 +63,8 @@ container-shell:
 		--env AWS_CONFIG_DIR="/" \
 		--env PS1='\s-\v:\w\$$ ' \
 		--env HISTFILE="/CIRRUS-core/.container_bash_history" \
+		--env CIRRUS_CORE_VERSION=${CIRRUS_CORE_BRANCH} \
+		--env CIRRUS_DAAC_VERSION=${CIRRUS_DAAC_BRANCH} \
 		-v ${PWD}:/CIRRUS-core \
 		-v ${DAAC_DIR}:/CIRRUS-DAAC \
 		-v ${HOME}/.aws:/.aws \
@@ -280,9 +280,6 @@ force: ;
 
 .PHONY: upload-cirrus-version
 upload-cirrus-version:
-	git config --global --add safe.directory /CIRRUS-DAAC
-	git config --global --add safe.directory /CIRRUS-core
-
 	@echo Current CIRRUS_CORE branch is $(CIRRUS_CORE_VERSION)
 	@echo Current CIRRUS-DAAC branch is $(CIRRUS_DAAC_VERSION)
 	python3 scripts/upload_cirrus_versions.py
