@@ -25,11 +25,8 @@ export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
 PYTHON_VER ?= python3
 
-
-CIRRUS_DAAC_BRANCH := $(shell git -C $(DAAC_DIR) rev-parse --abbrev-ref HEAD)
-CIRRUS_CORE_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
-CIRRUS_DAAC_TAG := $(shell git -C $(DAAC_DIR) describe --tags --abbrev=0)
-CIRRUS_CORE_TAG := $(shell git describe --tags --abbrev=0)
+CIRRUS_CORE_VERSION := $(or $(shell git tag --points-at HEAD | head -n1),$(shell git rev-parse --short HEAD))
+CIRRUS_DAAC_VERSION := $(or $(shell git -C $(DAAC_DIR) tag --points-at HEAD | head -n1),$(shell git -C $(DAAC_DIR) rev-parse --short HEAD))
 
 # ---------------------------
 SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
@@ -65,10 +62,8 @@ container-shell:
 		--env AWS_CONFIG_DIR="/" \
 		--env PS1='\s-\v:\w\$$ ' \
 		--env HISTFILE="/CIRRUS-core/.container_bash_history" \
-		--env TF_VAR_CIRRUS_CORE_BRANCH=${CIRRUS_CORE_BRANCH} \
-		--env TF_VAR_CIRRUS_DAAC_BRANCH=${CIRRUS_DAAC_BRANCH} \
-		--env TF_VAR_CIRRUS_CORE_TAG=${CIRRUS_CORE_TAG} \
-		--env TF_VAR_CIRRUS_DAAC_TAG=${CIRRUS_DAAC_TAG} \
+		--env TF_VAR_CIRRUS_CORE_VERSION=${CIRRUS_CORE_VERSION} \
+		--env TF_VAR_CIRRUS_DAAC_VERSION=${CIRRUS_DAAC_VERSION} \
 		-v ${PWD}:/CIRRUS-core \
 		-v ${DAAC_DIR}:/CIRRUS-DAAC \
 		-v ${HOME}/.aws:/.aws \
