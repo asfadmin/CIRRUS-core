@@ -26,18 +26,3 @@ resource "aws_dynamodb_table" "backend-tf-locks-table" {
   }
   tags = local.default_tags
 }
-
-resource "aws_s3_object" "cirrus-versions" {
-  bucket = aws_s3_bucket.backend-tf-state-bucket.id
-  key    = "cirrus-versions.json"
-  content_type = "application/json"
-
-  content = <<JSON
-    {
-      "CIRRUS-core-version": "${local.cirrus_core_version}",
-      "CIRRUS-DAAC-version": "${local.cirrus_daac_version}",
-    }
-  JSON
-
-  tags = local.default_tags
-}
