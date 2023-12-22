@@ -7,6 +7,14 @@ variable "MATURITY" {
   default = "dev"
 }
 
+variable "CIRRUS_CORE_VERSION" {
+  type    = string
+}
+
+variable "CIRRUS_DAAC_VERSION" {
+  type    = string
+}
+
 variable "include_elasticsearch" {
   type    = bool
   default = true
