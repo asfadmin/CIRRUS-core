@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v17.0.0.4
+
+* Add CIRRUS-core and CIRRUS-DAAC versions to outputs for the `cumulus`, `data-persistence`, and `tf` modules.
+
 ## v17.0.0.3
 
 * Pass tags to Thin Egress App module in `cumulus` cirrus module
