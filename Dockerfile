@@ -21,7 +21,7 @@ RUN \
         yum update -y
 
 # CLI utilities
-RUN yum install -y gcc gcc-c++ git make openssl unzip wget zip jq
+RUN yum install -y gcc gcc-c++ git make openssl unzip wget zip jq docker
 
 # AWS & Terraform
 RUN \
@@ -63,3 +63,6 @@ FROM core_base as python3
 RUN \
         yum install -y python3-devel && \
         python3 -m pip install boto3
+
+RUN service docker start
+RUN chkconfig docker on
