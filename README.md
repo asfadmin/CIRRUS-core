@@ -24,6 +24,18 @@ Documentation](https://nasa.github.io/cumulus/docs/deployment/deployment-readme)
 for detailed information about configuring, deploying, and running
 Cumulus.
 
+## Generating Releases 
+
+### Naming Schema:
+The CIRRUS name schema is `vX.X.X.Y`. The X represents the [Cumulus version](https://github.com/nasa/cumulus/releases), 
+while the Y represents the CIRRUS version. 
+
+### Backporting Features
+A release branch should be created when backporting a feature, such as `release/v17.1.4.2`. 
+In this case, the release branch `release/v17.1.4.2` should be created from the tag `v17.1.4.1`. 
+You should then create a PR from your feature branch to the release branch. 
+Once the PR has been approved and merged, you can create a release based on the release branch. 
+
 ## Prerequisites
 
 * [Docker](https://www.docker.com/get-started)
