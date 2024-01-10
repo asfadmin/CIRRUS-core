@@ -1,4 +1,8 @@
 # CHANGELOG
+## v18.0.0.1
+
+* Remove terraform lockfiles to ensure easy upgrade to v18 and ratchet provider versions
+* Capture and pass through CIRRUS-core and CIRRUS-DAAC versions
 
 ## v18.0.0.0
 
