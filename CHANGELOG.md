@@ -1,4 +1,10 @@
 # CHANGELOG
+
+## Unreleased
+
+* add `--platform linux/amd64` to all Docker commands in `Makefile` so `make image` and
+`make container-shell` work on Apple Silicon machines
+
 ## v18.0.0.1
 
 * Remove terraform lockfiles to ensure easy upgrade to v18 and ratchet provider versions

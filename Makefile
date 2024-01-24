@@ -52,11 +52,17 @@ endef
 # ---------------------------
 .PHONY: image
 image: Dockerfile
-	docker build -f Dockerfile --no-cache -t cirrus-core:$(DOCKER_TAG) --target $(PYTHON_VER) --build-arg USER=`id -u` .
+	docker build -f Dockerfile \
+		--platform linux/amd64 \
+		--no-cache \
+		-t cirrus-core:$(DOCKER_TAG) \
+		--target $(PYTHON_VER) \
+		--build-arg USER=`id -u` .
 
 .PHONY: container-shell
 container-shell:
 	docker run -it --rm \
+		--platform linux/amd64 \
 		--user `id -u` \
 		--env DAAC_DIR="/CIRRUS-DAAC" \
 		--env AWS_CONFIG_DIR="/" \
