@@ -12,6 +12,7 @@ module "thin_egress_app" {
   html_template_dir                  = var.html_template_dir
   jwt_algo                           = var.thin_egress_jwt_algo
   jwt_secret_name                    = local.thin_egress_jwt_secret_name
+  lambda_timeout                     = var.thin_egress_lambda_timeout
   lambda_code_dependency_archive_key = var.thin_egress_lambda_code_dependency_archive_key
   log_api_gateway_to_cloudwatch      = var.log_api_gateway_to_cloudwatch
   permissions_boundary_name          = "NGAPShRoleBoundary"

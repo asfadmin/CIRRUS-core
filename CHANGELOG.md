@@ -1,4 +1,9 @@
 # CHANGELOG
+
+## Unreleased
+
+* expose the TEA lambda timeout value to allow for DAAC customization
+
 ## v18.0.0.1
 
 * Remove terraform lockfiles to ensure easy upgrade to v18 and ratchet provider versions
