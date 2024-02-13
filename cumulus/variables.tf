@@ -402,6 +402,12 @@ variable "thin_egress_lambda_code_dependency_archive_key" {
   description = "S3 Key of packaged python modules for lambda dependency layer."
 }
 
+variable "thin_egress_lambda_timeout" {
+  type        = number
+  default     = 6
+  description = "Timeout in seconds for thin egress lambda."
+}
+
 variable "egress_lambda_log_retention_days" {
   type        = number
   default     = 30
