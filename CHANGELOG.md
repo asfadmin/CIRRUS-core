@@ -3,6 +3,8 @@
 ## Unreleased
 
 * expose the TEA lambda timeout value to allow for DAAC customization
+* add `--platform linux/amd64` to all Docker commands in `Makefile` so `make image` and
+`make container-shell` work on Apple Silicon machines
 
 ## v18.0.0.1
 
