@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v17.0.0.5
+* Update TEA source to tea-release.1.3.5
+
 ## v17.0.0.4
 
 * Add CIRRUS-core and CIRRUS-DAAC versions to outputs for the `cumulus`, `data-persistence`, and `tf` modules.
