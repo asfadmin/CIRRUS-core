@@ -1,7 +1,15 @@
 # CHANGELOG
 
-## Unreleased
+## v18.2.0.0
 
+* Upgrade to [Cumulus v18.2.0](https://github.com/nasa/cumulus/releases/tag/v18.2.0)
+* **NOTE** this version of Cumulus requires changes to the RDS database per
+[these instructions](https://nasa.github.io/cumulus/docs/upgrade-notes/upgrade-rds-cluster-tf-postgres-13/)
+* upgrade TEA to [v1.3.5](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.1.3.5)
+* update required terraform version to `>= 1.5` in all CIRRUS modules matching the requirements
+from the Cumulus application.
+* Add `DAR=YES` tag to terraform state bucket created by `make tf`
+* replace deprecated use of terraform `s3_bucket_object` with `s3_object`
 * expose the TEA lambda timeout value to allow for DAAC customization
 * add `--platform linux/amd64` to all Docker commands in `Makefile` so `make image` and
 `make container-shell` work on Apple Silicon machines
