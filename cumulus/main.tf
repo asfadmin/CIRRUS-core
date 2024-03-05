@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v18.0.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v18.2.0/terraform-aws-cumulus.zip//tf-modules/cumulus"
 
   cumulus_message_adapter_lambda_layer_version_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
@@ -83,7 +83,7 @@ module "cumulus" {
 
   orca_lambda_copy_to_archive_arn = local.orca_lambda_copy_to_archive_arn
   orca_sfn_recovery_workflow_arn  = local.orca_sfn_recovery_workflow_arn
-  orca_api_uri = local.orca_api_uri
+  orca_api_uri                    = local.orca_api_uri
 
   # must match stage_name variable for thin-egress-app module
   tea_api_gateway_stage = local.tea_stage_name
