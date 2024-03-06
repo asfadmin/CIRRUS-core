@@ -64,20 +64,38 @@ resource "aws_cloudwatch_log_subscription_filter" "egress_api_gateway_log_subscr
 }
 
 # Egress Lambda Log Group
+# does it already exist
+data "aws_cloudwatch_log_group" "egress_lambda_log_group" {
+  name = "/aws/lambda/${module.thin_egress_app.egress_lambda_name}"
+}
+
 resource "aws_cloudwatch_log_group" "egress_lambda_log_group" {
-  count             = (var.log_destination_arn != null) ? 1 : 0
+  count             = (var.log_destination_arn != null && data.aws_cloudwatch_log_group.egress_lambda_log_group == null) ? 1 : 0
   name              = "/aws/lambda/${module.thin_egress_app.egress_lambda_name}"
   retention_in_days = var.egress_lambda_log_retention_days
   tags              = local.default_tags
 }
 
 # Egress Lambda Log Group Filter
-resource "aws_cloudwatch_log_subscription_filter" "egress_lambda_log_subscription_filter" {
-  count           = (var.log_destination_arn != null) ? 1 : 0
+# if log group just created
+resource "aws_cloudwatch_log_subscription_filter" "egress_lambda_log_subscription_filter_new" {
+  count           = (var.log_destination_arn != null && data.aws_cloudwatch_log_group.egress_lambda_log_group == null) ? 1 : 0
   depends_on      = [aws_cloudwatch_log_group.egress_lambda_log_group]
   name            = "${local.prefix}-EgressLambdaLogSubscriptionToSharedDestination"
   destination_arn = var.log_destination_arn
   distribution    = "ByLogStream"
   filter_pattern  = ""
   log_group_name  = aws_cloudwatch_log_group.egress_lambda_log_group[0].name
+}
+
+# Egress Lambda Log Group Filter
+# if log group already exists
+resource "aws_cloudwatch_log_subscription_filter" "egress_lambda_log_subscription_filter_update" {
+  count           = (var.log_destination_arn != null && data.aws_cloudwatch_log_group.egress_lambda_log_group != null) ? 1 : 0
+  depends_on      = [data.aws_cloudwatch_log_group.egress_lambda_log_group]
+  name            = "${local.prefix}-EgressLambdaLogSubscriptionToSharedDestination"
+  destination_arn = var.log_destination_arn
+  distribution    = "ByLogStream"
+  filter_pattern  = ""
+  log_group_name  = data.aws_cloudwatch_log_group.egress_lambda_log_group.name
 }
