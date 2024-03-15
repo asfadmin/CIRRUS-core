@@ -92,7 +92,7 @@ to multiple accounts. Each instance of a Cumulus deployment is named
 by providing a "Deploy Name" and a "Maturity". The Deploy Name is any
 string that helps you identify the purpose of the Cumulus stack. The
 Maturity is the environment for which it's configured. For example,
-you may have an `dev` maturity for your development team's integration
+you may have an `sbx` maturity for your development team's integration
 environment.
 
 When choosing values for MATURITY and DEPLOY_NAME:
@@ -101,7 +101,7 @@ When choosing values for MATURITY and DEPLOY_NAME:
   (hyphen) only
 
 The name of the Cumulus stack will be
-`DEPLOY_NAME-cumulus-MATURITY`. For example, `asf-cumulus-dev`. By
+`DEPLOY_NAME-cumulus-MATURITY`. For example, `asf-cumulus-sbx`. By
 changing the DEPLOY_NAME you can deploy multiple Cumulus stacks to one
 account.
 
@@ -114,9 +114,9 @@ account.
         $ source setup_jwt_cookie.sh <profile-name> <deploy-name> <maturity>
 
         e.g., to create a secret for XYZ DAAC's NGAP sandbox account with the initials
-        of a developer (to make the deployment unique) and a maturity of 'dev':
+        of a developer (to make the deployment unique) and a maturity of 'sbx':
 
-        $ source setup_jwt_cookie.sh xyz-sandbox-cumulus kb dev
+        $ source setup_jwt_cookie.sh xyz-sandbox-cumulus kb sbx
 
         (This assumes we've setup a named AWS credentials profile with the name `xyz-sandbox-cumulus`)
 

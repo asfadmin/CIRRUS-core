@@ -15,7 +15,7 @@
 #  AWS_ACCOUNT_ID_LAST4:  The Last 4 digits of AWS_ACCOUNT_ID
 #
 #  DEPLOY_NAME:           A unique name to distinguish this Cumulus instance from others
-#  MATURITY:              One of: DEV, INT, TEST, PROD
+#  MATURITY:              One of: SBX, SIT, UAT, PROD
 #  PYTHON_VER: 			  python3 or python38 which sets the build target in make file
 
 # ---------------------------
