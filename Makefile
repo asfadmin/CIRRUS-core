@@ -27,6 +27,7 @@ PYTHON_VER ?= python3
 
 CIRRUS_CORE_VERSION := $(or $(shell git tag --points-at HEAD | head -n1),$(shell git rev-parse --short HEAD))
 CIRRUS_DAAC_VERSION := $(or $(shell git -C $(DAAC_DIR) tag --points-at HEAD | head -n1),$(shell git -C $(DAAC_DIR) rev-parse --short HEAD))
+THIN_EGRESS_LOG_EXIST := "0"
 
 # ---------------------------
 SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
@@ -246,6 +247,36 @@ plan-cumulus: cumulus-init
 		eval $$TF_CMD
 	fi
 
+# ---------------------------
+.PHONY: import-thin-egress-log
+import-thin-egress-log: cumulus-init
+	$(banner)
+	if [ -f "${DAAC_DIR}/cumulus/secrets/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export SECRETS_OPT="-var-file=${DAAC_DIR}/cumulus/secrets/${MATURITY}.tfvars"
+		echo "Found maturity-specific secrets: $$SECRETS_OPT"
+		echo "***************************************************************"
+	fi
+	cd cumulus
+	if [ -f "${DAAC_DIR}/cumulus/variables/${MATURITY}.tfvars" ]
+	then
+		echo "***************************************************************"
+		export VARIABLES_OPT="-var-file=${DAAC_DIR}/cumulus/variables/${MATURITY}.tfvars"
+		echo "Found maturity-specific variables: $$VARIABLES_OPT"
+		echo "***************************************************************"
+	fi
+	export TF_CMD="terraform import \
+				-var-file=${DAAC_DIR}/cumulus/terraform.tfvars \
+				$$VARIABLES_OPT \
+				$$SECRETS_OPT \
+				-input=false \
+				-no-color \
+				aws_cloudwatch_log_group.egress_lambda_log_group[0] \
+				${DEPLOY_NAME}-cumulus-${MATURITY}-thin-egress-app-EgressLambda"
+	eval $$TF_CMD
+
+# ---------------------------
 .PHONY: destroy-cumulus
 destroy-cumulus: cumulus-init
 	$(banner)
