@@ -1,0 +1,37 @@
+# If you run into this issue when deploying Cumulus
+#
+# Error: creating CloudWatch Logs Log Group
+# (/aws/lambda/DEPLOY_NAME-cumulus-MATURITY-thin-egress-app-EgressLambda): operation
+# error CloudWatch Logs: CreateLogGroup, https response error StatusCode: 400,
+# RequestID: XXXX, ResourceAlreadyExistsException: The specified log group already
+# exists
+#
+#  with aws_cloudwatch_log_group.egress_lambda_log_group[0],
+#  on thin-egress.tf line 67, in resource "aws_cloudwatch_log_group" "egress_lambda_log_group":
+#  67: resource "aws_cloudwatch_log_group" "egress_lambda_log_group" {
+#
+# You can rename this file from tea-cloudwatch.tf.example to tea-cloudwatch.tf and then
+# fill in the 'id' for your cloudwatch group.
+#
+# Terraform 1.5.x requires the 'id' of the import statement to be a string, it can't
+# even be a variable that is a string.
+#
+# https://developer.hashicorp.com/terraform/language/v1.5.x/import
+#
+# Later versions of Terraform do allow a variable, but it can't a calculated value
+#
+# https://developer.hashicorp.com/terraform/language/v1.6.x/import
+#
+# The thin egress cloudwatch group follows this pattern and should have been reported
+# in the error message
+#
+#  /aws/lambda/DEPLOY_NAME-cumulus-MATURITY-thin-egress-app-EgressLambda
+
+import {
+  to = aws_cloudwatch_log_group.egress_lambda_log_group[0]
+  id = ""
+}
+
+output "imported_tea_log_group" {
+  value = aws_cloudwatch_log_group.egress_lambda_log_group
+}
