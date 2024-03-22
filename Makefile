@@ -273,7 +273,7 @@ import-thin-egress-log: cumulus-init
 				-input=false \
 				-no-color \
 				aws_cloudwatch_log_group.egress_lambda_log_group[0] \
-				${DEPLOY_NAME}-cumulus-${MATURITY}-thin-egress-app-EgressLambda"
+				/aws/lambda/${DEPLOY_NAME}-cumulus-${MATURITY}-thin-egress-app-EgressLambda"
 	eval $$TF_CMD
 
 # ---------------------------
