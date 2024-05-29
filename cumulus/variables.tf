@@ -152,6 +152,16 @@ variable "urs_client_password" {
 
 # Optional
 
+variable "urs_tea_client_id" {
+  type = string
+  default = null
+}
+
+variable "urs_tea_client_password" {
+  type = string
+  default = null
+}
+
 variable "api_gateway_stage" {
   type        = string
   default     = "dev"
