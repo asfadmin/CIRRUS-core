@@ -356,6 +356,12 @@ variable "ecs_cluster_instance_docker_volume_size" {
   default     = 50
 }
 
+variable "ecs_include_docker_cleanup_cronjob" {
+  description = "*Experimental* flag to configure a cron to run fstrim on all active container root filesystems"
+  type        = bool
+  default     = false
+}
+
 variable "bucket_map" {
   type    = map(object({ name = string, type = string }))
   default = {}

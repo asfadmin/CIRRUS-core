@@ -115,6 +115,8 @@ module "cumulus" {
     execution_limit = var.thottled_queue_execution_limit
   }]
 
+  ecs_include_docker_cleanup_cronjob = var.ecs_include_docker_cleanup_cronjob
+
   tags = local.default_tags
 }
 
