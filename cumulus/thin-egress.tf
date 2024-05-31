@@ -2,7 +2,7 @@ module "thin_egress_app" {
   source = "s3::https://s3.amazonaws.com/asf.public.code/thin-egress-app/tea-terraform-build.1.3.5.zip"
 
   auth_base_url                      = var.urs_url
-  bucket_map_file                    = local.bucket_map_key == null ? aws_s3_object.bucket_map_yaml.id : local.bucket_map_key
+  bucket_map_file                    = local.bucket_map_key == null ? aws_s3_object.bucket_map_yaml[0].id : local.bucket_map_key
   bucketname_prefix                  = ""
   config_bucket                      = local.system_bucket
   cookie_domain                      = var.thin_egress_cookie_domain
@@ -41,6 +41,8 @@ resource "aws_secretsmanager_secret_version" "thin_egress_urs_creds" {
 }
 
 resource "aws_s3_object" "bucket_map_yaml" {
+  # If bucket_map_key is set, we already have a bucket map on S3 and don't need to create one
+  count = local.bucket_map_key == null ? 1 : 0
   bucket = local.system_bucket
   key    = "${local.prefix}/thin-egress-app/${local.prefix}-bucket_map.yaml"
   content = templatefile("./thin-egress-app/bucket_map.yaml.tmpl", {
