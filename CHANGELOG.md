@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+* Added separate urs_tea_client_id and urs_tea_client_password that can be specified if these are different from the non-tea versions of the variables.
+* Added optional ecs_include_docker_cleanup_cronjob variable, defaulting to False.
+* Fixed the value of the output report_granules_sns_topic_arn to point to module.cumulus.report_granules_sns_topic_arn instead of report_executions_sns_topic_arn.
+* Updated aws_s3_object.bucket_map_yaml so we only deploy this TEA bucket map when we don't provide a bucket_map_key from the daac module.
+
 ## v18.2.0.0
 
 * Upgrade to [Cumulus v18.2.0](https://github.com/nasa/cumulus/releases/tag/v18.2.0)
