@@ -41,7 +41,7 @@ resource "aws_secretsmanager_secret_version" "thin_egress_urs_creds" {
 }
 
 resource "aws_s3_object" "bucket_map_yaml" {
-  # If bucket_map_key is set, we already have a bucket map on S3 and don't need to create one
+  # If bucket_map_key is set, the daac module already created one and we can skip creation here
   count = local.bucket_map_key == null ? 1 : 0
   bucket = local.system_bucket
   key    = "${local.prefix}/thin-egress-app/${local.prefix}-bucket_map.yaml"

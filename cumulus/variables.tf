@@ -152,16 +152,6 @@ variable "urs_client_password" {
 
 # Optional
 
-variable "urs_tea_client_id" {
-  type = string
-  default = null
-}
-
-variable "urs_tea_client_password" {
-  type = string
-  default = null
-}
-
 variable "api_gateway_stage" {
   type        = string
   default     = "dev"
@@ -428,6 +418,18 @@ variable "egress_lambda_log_retention_days" {
   type        = number
   default     = 30
   description = "Number of days to retain TEA logs"
+}
+
+variable "urs_tea_client_id" {
+  type = string
+  default = null
+  description = "The EarthData ID passed into the TEA module for URS authentication. If not provided, the value of urs_client_id will be used."
+}
+
+variable "urs_tea_client_password" {
+  type = string
+  default = null
+  description = "The EarthData password passed into the TEA module for URS authentication. If not provided, the value of urs_client_password will be used."
 }
 
 variable "cmr_acl_based_credentials" {
