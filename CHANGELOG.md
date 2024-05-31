@@ -5,6 +5,9 @@
 * Added optional ecs_include_docker_cleanup_cronjob variable, defaulting to False.
 * Fixed the value of the output report_granules_sns_topic_arn to point to module.cumulus.report_granules_sns_topic_arn instead of report_executions_sns_topic_arn.
 * Updated aws_s3_object.bucket_map_yaml so we only deploy this TEA bucket map when we don't provide a bucket_map_key from the daac module.
+* add a Makefile target to import tea lambda cloudwatch group if getting an "The
+specified log group already exists" error: `make import-thin-egress-log`
+* add .gitconfig file to Docker image to mark /CIRRUS-core and /CIRRUS-DAAC as safe
 
 ## v18.2.0.0
 
