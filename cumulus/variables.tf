@@ -356,6 +356,12 @@ variable "ecs_cluster_instance_docker_volume_size" {
   default     = 50
 }
 
+variable "ecs_include_docker_cleanup_cronjob" {
+  description = "*Experimental* flag to configure a cron to run fstrim on all active container root filesystems"
+  type        = bool
+  default     = false
+}
+
 variable "bucket_map" {
   type    = map(object({ name = string, type = string }))
   default = {}
@@ -412,6 +418,18 @@ variable "egress_lambda_log_retention_days" {
   type        = number
   default     = 30
   description = "Number of days to retain TEA logs"
+}
+
+variable "urs_tea_client_id" {
+  type = string
+  default = null
+  description = "The EarthData ID passed into the TEA module for URS authentication. If not provided, the value of urs_client_id will be used."
+}
+
+variable "urs_tea_client_password" {
+  type = string
+  default = null
+  description = "The EarthData password passed into the TEA module for URS authentication. If not provided, the value of urs_client_password will be used."
 }
 
 variable "cmr_acl_based_credentials" {

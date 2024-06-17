@@ -42,4 +42,7 @@ locals {
   default_tags = {
     Deployment = local.prefix
   }
+
+  urs_tea_client_id = var.urs_tea_client_id != null ? var.urs_tea_client_id : var.urs_client_id
+  urs_tea_client_password = var.urs_tea_client_password != null ? var.urs_tea_client_password : var.urs_client_password
 }
