@@ -1,4 +1,4 @@
-FROM amazonlinux:2 as core_base
+FROM amazonlinux:2023 as core_base
 # This image can be used to do Python 3 & NodeJS development, and
 # includes the AWS CLI and Terraform. It contains:
 
@@ -51,8 +51,20 @@ COPY .gitconfig /.gitconfig
 
 WORKDIR /CIRRUS-core
 
+# Python310 target
+FROM core_base AS python310
+RUN \
+        dnf groupinstall "Development Tools" -y && \
+        dnf install openssl-devel bzip2-devel libffi-devel -y && \
+        cd /usr/src && \
+        wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz && \
+        tar xzf Python-3.10.14.tgz && cd Python-3.10.14 && ./configure --enable-optimizations && \
+        make altinstall &&  \
+        update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.10 1 && \
+        python3 -m pip install boto3
+
 # Python38 target
-FROM core_base as python38
+FROM core_base AS python38
 RUN \
         amazon-linux-extras install python3.8 && \
         ln -s /usr/bin/python3.8 /usr/bin/python3 && \
@@ -60,8 +72,9 @@ RUN \
         python3 -m pip install boto3
 
 # Python3 target
-FROM core_base as python3
+FROM core_base AS python3
 # Python 3
 RUN \
         yum install -y python3-devel && \
+        yum install -y python3-pip && \
         python3 -m pip install boto3
