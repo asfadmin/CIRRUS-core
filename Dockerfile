@@ -52,7 +52,7 @@ COPY .gitconfig /.gitconfig
 WORKDIR /CIRRUS-core
 
 # Python310 target
-FROM core_base as python310
+FROM core_base AS python310
 RUN \
         amazon-linux-extras install python3.10 && \
         ln -s /usr/bin/python3.10 /usr/bin/python3 && \
@@ -60,7 +60,7 @@ RUN \
         python3 -m pip install boto3
 
 # Python3 target
-FROM core_base as python3
+FROM core_base AS python3
 # Python 3
 RUN \
         yum install -y python3-devel && \
