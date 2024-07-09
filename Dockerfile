@@ -56,8 +56,7 @@ FROM core_base AS python310
 RUN \
         amazon-linux-extras install python3.10 && \
         ln -s /usr/bin/python3.10 /usr/bin/python3 && \
-        ln -s /usr/bin/pip3.10 /usr/bin/pip3 && \
-        python3 -m pip install boto3
+        ln -s /usr/bin/pip3.10 /usr/bin/pip3
 
 # Python3 target
 FROM core_base AS python3
