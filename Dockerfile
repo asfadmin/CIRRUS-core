@@ -66,10 +66,15 @@ RUN \
 # Python38 target
 FROM core_base AS python38
 RUN \
-        amazon-linux-extras install python3.8 && \
-        ln -s /usr/bin/python3.8 /usr/bin/python3 && \
-        ln -s /usr/bin/pip3.8 /usr/bin/pip3 && \
+        dnf groupinstall "Development Tools" -y && \
+        dnf install openssl-devel bzip2-devel libffi-devel -y && \
+        cd /usr/src && \
+        wget https://www.python.org/ftp/python/3.8.16/Python-3.8.16.tgz && \
+        tar xzf Python-3.8.16.tgz && cd Python-3.8.16 && ./configure --enable-optimizations && \
+        make altinstall &&  \
+        update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.8 1 && \
         python3 -m pip install boto3
+
 
 # Python3 target
 FROM core_base AS python3
