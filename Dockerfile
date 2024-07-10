@@ -53,24 +53,26 @@ WORKDIR /CIRRUS-core
 
 # Python310 target
 FROM core_base AS python310
+ENV PYTHON_3_10_VERSION "3.10.14"
 RUN \
         dnf groupinstall "Development Tools" -y && \
         dnf install openssl-devel bzip2-devel libffi-devel -y && \
         cd /usr/src && \
-        wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz && \
-        tar xzf Python-3.10.14.tgz && cd Python-3.10.14 && ./configure --enable-optimizations && \
+        wget https://www.python.org/ftp/python/${PYTHON_3_10_VERSION}/Python-${PYTHON_3_10_VERSION}.tgz && \
+        tar xzf Python-${PYTHON_3_10_VERSION}.tgz && cd Python-${PYTHON_3_10_VERSION} && ./configure --enable-optimizations && \
         make altinstall &&  \
         update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.10 1 && \
         python3 -m pip install boto3
 
 # Python38 target
 FROM core_base AS python38
+ENV PYTHON_3_8_VERSION "3.8.16"
 RUN \
         dnf groupinstall "Development Tools" -y && \
         dnf install openssl-devel bzip2-devel libffi-devel -y && \
         cd /usr/src && \
-        wget https://www.python.org/ftp/python/3.8.16/Python-3.8.16.tgz && \
-        tar xzf Python-3.8.16.tgz && cd Python-3.8.16 && ./configure --enable-optimizations && \
+        wget https://www.python.org/ftp/python/${PYTHON_3_8_VERSION}/Python-${PYTHON_3_8_VERSION}.tgz && \
+        tar xzf Python-${PYTHON_3_8_VERSION}.tgz && cd Python-${PYTHON_3_8_VERSION} && ./configure --enable-optimizations && \
         make altinstall &&  \
         update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.8 1 && \
         python3 -m pip install boto3
