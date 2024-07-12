@@ -116,8 +116,6 @@ module "cumulus" {
   }]
 
   ecs_include_docker_cleanup_cronjob = var.ecs_include_docker_cleanup_cronjob
-
-  tags = local.default_tags
 }
 
 resource "aws_security_group" "no_ingress_all_egress" {
@@ -130,6 +128,4 @@ resource "aws_security_group" "no_ingress_all_egress" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = local.default_tags
 }
