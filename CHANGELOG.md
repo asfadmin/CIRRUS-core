@@ -2,6 +2,7 @@
 
 ## Unreleased
 * add .gitconfig file to Docker image to mark /CIRRUS-core and /CIRRUS-DAAC as safe
+* Tag resources using the aws provider level `default_tags` configuration
 
 ## v18.3.1.1
 * Update the Makefile so that `make image` can be run without having set any
