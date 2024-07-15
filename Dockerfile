@@ -47,7 +47,7 @@ ARG USER
 RUN \
         echo "user:x:${USER}:0:root:/:/bin/bash" >> /etc/passwd
 
-#COPY .gitconfig /.gitconfig
+COPY .gitconfig /.gitconfig
 
 WORKDIR /CIRRUS-core
 
