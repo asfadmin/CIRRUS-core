@@ -47,7 +47,7 @@ ARG USER
 RUN \
         echo "user:x:${USER}:0:root:/:/bin/bash" >> /etc/passwd
 
-COPY .gitconfig /.gitconfig
+#COPY .gitconfig /.gitconfig
 
 WORKDIR /CIRRUS-core
 
@@ -56,7 +56,7 @@ FROM core_base AS python310
 ENV PYTHON_3_10_VERSION "3.10.14"
 RUN \
         dnf groupinstall "Development Tools" -y && \
-        dnf install openssl-devel bzip2-devel libffi-devel -y && \
+        dnf install openssl-devel bzip2-devel libffi-devel sqlite-devel -y && \
         cd /usr/local && \
         wget https://www.python.org/ftp/python/${PYTHON_3_10_VERSION}/Python-${PYTHON_3_10_VERSION}.tgz && \
         tar xzf Python-${PYTHON_3_10_VERSION}.tgz && cd Python-${PYTHON_3_10_VERSION} &&  \
@@ -74,7 +74,7 @@ FROM core_base AS python38
 ENV PYTHON_3_8_VERSION "3.8.16"
 RUN \
         dnf groupinstall "Development Tools" -y && \
-        dnf install openssl-devel bzip2-devel libffi-devel -y && \
+        dnf install openssl-devel bzip2-devel libffi-devel sqlite-devel -y && \
         cd /usr/local && \
         wget https://www.python.org/ftp/python/${PYTHON_3_8_VERSION}/Python-${PYTHON_3_8_VERSION}.tgz && \
         tar xzf Python-${PYTHON_3_8_VERSION}.tgz && cd Python-${PYTHON_3_8_VERSION} && \
