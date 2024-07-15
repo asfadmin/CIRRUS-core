@@ -8,6 +8,8 @@
 * add a Makefile target to import tea lambda cloudwatch group if getting an "The
 specified log group already exists" error: `make import-thin-egress-log`
 * add .gitconfig file to Docker image to mark /CIRRUS-core and /CIRRUS-DAAC as safe
+* Update Amazon linux to 2023 in Dockerfile 
+* Update python to 3.10
 
 ## v18.2.0.0
 
