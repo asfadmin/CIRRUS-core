@@ -438,7 +438,7 @@ variable "cmr_acl_based_credentials" {
   description = "Option to enable/disable user based CMR ACLs to derive permission for s3 credential access tokens"
 }
 
-variable "thottled_queue_execution_limit" {
+variable "throttled_queue_execution_limit" {
   type        = number
   description = "Cumulus Throttled Queue execution limit"
   default     = 5
