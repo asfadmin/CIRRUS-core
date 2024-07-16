@@ -1,14 +1,34 @@
 # CHANGELOG
 
 ## Unreleased
+* add .gitconfig file to Docker image to mark /CIRRUS-core and /CIRRUS-DAAC as safe
+
+## v18.3.1.0
 * Added separate urs_tea_client_id and urs_tea_client_password that can be specified if these are different from the non-tea versions of the variables.
 * Added optional ecs_include_docker_cleanup_cronjob variable, defaulting to False.
 * Fixed the value of the output report_granules_sns_topic_arn to point to module.cumulus.report_granules_sns_topic_arn instead of report_executions_sns_topic_arn.
 * Updated aws_s3_object.bucket_map_yaml so we only deploy this TEA bucket map when we don't provide a bucket_map_key from the daac module.
 * add a Makefile target to import tea lambda cloudwatch group if getting an "The
 specified log group already exists" error: `make import-thin-egress-log`
-* add .gitconfig file to Docker image to mark /CIRRUS-core and /CIRRUS-DAAC as safe
-
+* Update cumulus module to v18.3.1
+* Fix typo `thottled_queue_execution_limit` to `throttled_queue_execution_limit` in cumulus/variables.tf 
+* Update data-persistence module to v18.3.1
+* Update Dockerfile:
+  * FromAsCasing: 'as' and 'FROM' keywords' casing do not match (line 1)
+  * LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format
+  * NODE_VERSION="20.x"  
+  * TERRAFORM_VERSION="1.9.2"
+  * AWS_CLI_VERSION="2.17.13"
+  * Upgrade to amazonlinux:2023 from amazonlinux:2
+  * Use `dnf` instead of `yum`
+  * Upgrade to Python 3.9.x from Python 3.8
+* Update TEA module from 1.3.5 -> 2.0.1
+* TEA - Breaking Changes (For full list of changes visit [the TEA release page](https://github.com/asfadmin/thin-egress-app/releases))
+  * The `/locate` endpoint now requires the full bucket name to be provided in the `bucket_name` query parameter. 
+    *Previously it expected only the trailing part of the bucket name with the `BUCKET_NAME_PREFIX` stripped off*
+* **NOTE - POST UPGRADE** this version of Cumulus requires changes to the dead-letter archive per the instructions found under [CUMULUS-3617](https://github.com/nasa/cumulus/releases/tag/v18.3.1)
+* Update `DOCKER_TAG := v18.3.1.0` in Makefile
+  
 ## v18.2.0.0
 
 * Upgrade to [Cumulus v18.2.0](https://github.com/nasa/cumulus/releases/tag/v18.2.0)
