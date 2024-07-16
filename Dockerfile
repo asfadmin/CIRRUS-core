@@ -1,4 +1,4 @@
-FROM amazonlinux:2 as core_base
+FROM amazonlinux:2 AS core_base
 # This image can be used to do Python 3 & NodeJS development, and
 # includes the AWS CLI and Terraform. It contains:
 
@@ -9,9 +9,9 @@ FROM amazonlinux:2 as core_base
 #   * AWS CLI
 #   * Terraform
 
-ENV NODE_VERSION "16.x"
-ENV TERRAFORM_VERSION "1.5.3"
-ENV AWS_CLI_VERSION "2.13.25"
+ENV NODE_VERSION="20.x"
+ENV TERRAFORM_VERSION="1.9.2"
+ENV AWS_CLI_VERSION="2.17.13"
 
 # Add NodeJS and Yarn repos & update package index
 RUN \
@@ -47,12 +47,12 @@ ARG USER
 RUN \
         echo "user:x:${USER}:0:root:/:/bin/bash" >> /etc/passwd
 
-COPY .gitconfig /.gitconfig
+#COPY .gitconfig /.gitconfig
 
 WORKDIR /CIRRUS-core
 
 # Python38 target
-FROM core_base as python38
+FROM core_base AS python38
 RUN \
         amazon-linux-extras install python3.8 && \
         ln -s /usr/bin/python3.8 /usr/bin/python3 && \
@@ -60,7 +60,7 @@ RUN \
         python3 -m pip install boto3
 
 # Python3 target
-FROM core_base as python3
+FROM core_base AS python3
 # Python 3
 RUN \
         yum install -y python3-devel && \
