@@ -1,4 +1,4 @@
-FROM amazonlinux:2 AS core_base
+FROM amazonlinux:2023 AS core_base
 # This image can be used to do Python 3 & NodeJS development, and
 # includes the AWS CLI and Terraform. It contains:
 
@@ -13,15 +13,12 @@ ENV NODE_VERSION="20.x"
 ENV TERRAFORM_VERSION="1.9.2"
 ENV AWS_CLI_VERSION="2.17.13"
 
-# Add NodeJS and Yarn repos & update package index
-RUN \
-        yum install https://rpm.nodesource.com/pub_${NODE_VERSION}/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y && \
-        yum install nodejs -y --setopt=nodesource-nodejs.module_hotfixes=1 && \
-        curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
-        yum update -y
+# Install NodeJS
+RUN curl -fsSL https://rpm.nodesource.com/setup_${NODE_VERSION} | bash -
+RUN dnf install -y nodejs
 
 # CLI utilities
-RUN yum install -y gcc gcc-c++ git make openssl unzip wget zip jq
+RUN dnf install -y gcc gcc-c++ git make openssl unzip wget zip jq
 
 # AWS & Terraform
 RUN \
@@ -33,35 +30,27 @@ RUN \
         unzip awscliv2.zip && \
         ./aws/install
 
-# Node JS
-RUN \
-        yum install -y nodejs yarn
-
 # SSM SessionManager plugin
 RUN \
         curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm" &&\
-        yum install -y session-manager-plugin.rpm
+        dnf install -y session-manager-plugin.rpm
 
 # Add user for keygen in Makefile
 ARG USER
 RUN \
         echo "user:x:${USER}:0:root:/:/bin/bash" >> /etc/passwd
 
-#COPY .gitconfig /.gitconfig
+# Uncommenting breaks: CIRRUS-ASF's CI/CD
+# Uncommenting fixes: `fatal: detected dubious ownership in repository at '/CIRRUS-core'
+# Uncommenting fixes: `fatal: detected dubious ownership in repository at '/CIRRUS-DAAC'
+# COPY .gitconfig /.gitconfig
 
 WORKDIR /CIRRUS-core
-
-# Python38 target
-FROM core_base AS python38
-RUN \
-        amazon-linux-extras install python3.8 && \
-        ln -s /usr/bin/python3.8 /usr/bin/python3 && \
-        ln -s /usr/bin/pip3.8 /usr/bin/pip3 && \
-        python3 -m pip install boto3
 
 # Python3 target
 FROM core_base AS python3
 # Python 3
 RUN \
-        yum install -y python3-devel && \
-        python3 -m pip install boto3
+        dnf install -y python3-devel && \
+        dnf install -y python3-pip && \
+        python3 -m pip install boto3 setuptools
