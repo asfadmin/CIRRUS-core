@@ -16,7 +16,7 @@
 #
 #  DEPLOY_NAME:           A unique name to distinguish this Cumulus instance from others
 #  MATURITY:              One of: SBX, SIT, UAT, PROD
-#  PYTHON_VER: 			  python3 or python38 which sets the build target in make file
+#  PYTHON_VER: 			  python3
 
 # ---------------------------
 DOCKER_TAG := v18.3.1.0
