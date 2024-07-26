@@ -2,6 +2,7 @@
 
 ## Unreleased
 * add .gitconfig file to Docker image to mark /CIRRUS-core and /CIRRUS-DAAC as safe
+* Add python3.8 and python3.10 targets in the Dockerfile
 
 ## v18.3.1.0
 * Added separate urs_tea_client_id and urs_tea_client_password that can be specified if these are different from the non-tea versions of the variables.
