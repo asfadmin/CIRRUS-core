@@ -78,9 +78,14 @@ container-shell:
 		-v ${DAAC_DIR}:/CIRRUS-DAAC \
 		-v ${HOME}/.aws:/.aws \
 		-v ${HOME}/.cache/pip:/.cache/pip \
+		-v /var/run/docker.sock:/var/run/docker.sock \
 		--name=cirrus-core \
 		cirrus-core:$(DOCKER_TAG) \
 		bash
+
+.PHONY: docker-in-docker-permissions
+docker-in-docker-permissions:
+	sudo chmod 666 /var/run/docker.sock
 
 # ---------------------------
 .PHONY: tf-init
