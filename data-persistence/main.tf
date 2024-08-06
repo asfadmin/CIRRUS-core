@@ -11,6 +11,4 @@ module "data_persistence" {
   permissions_boundary_arn   = local.permissions_boundary_arn
   rds_user_access_secret_arn = data.terraform_remote_state.rds.outputs.rds_user_access_secret_arn
   rds_security_group_id      = data.terraform_remote_state.rds.outputs.rds_security_group_id
-
-  tags = local.default_tags
 }

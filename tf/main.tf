@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "backend-tf-state-bucket" {
   lifecycle {
     prevent_destroy = true
   }
-  tags = local.default_tags
+  tags = local.dar_yes_tags
 }
 
 resource "aws_s3_bucket_versioning" "backend-tf-state-bucket-versioning" {
@@ -24,5 +24,4 @@ resource "aws_dynamodb_table" "backend-tf-locks-table" {
   lifecycle {
     prevent_destroy = true
   }
-  tags = local.default_tags
 }
