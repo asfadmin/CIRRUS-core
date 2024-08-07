@@ -2,6 +2,8 @@
 
 ## Unreleased
 * add .gitconfig file to Docker image to mark /CIRRUS-core and /CIRRUS-DAAC as safe
+* Update the Makefile so that `make image` can be run without having set any
+  environment variables.
 
 ## v18.3.1.0
 * Added separate urs_tea_client_id and urs_tea_client_password that can be specified if these are different from the non-tea versions of the variables.
@@ -11,7 +13,7 @@
 * add a Makefile target to import tea lambda cloudwatch group if getting an "The
 specified log group already exists" error: `make import-thin-egress-log`
 * Update cumulus module to v18.3.1
-* Fix typo `thottled_queue_execution_limit` to `throttled_queue_execution_limit` in cumulus/variables.tf 
+* Fix typo `thottled_queue_execution_limit` to `throttled_queue_execution_limit` in cumulus/variables.tf
 * Update data-persistence module to v18.3.1
 * Update Dockerfile:
   * FromAsCasing: 'as' and 'FROM' keywords' casing do not match (line 1)
@@ -24,11 +26,11 @@ specified log group already exists" error: `make import-thin-egress-log`
   * Upgrade to Python 3.9.x from Python 3.8
 * Update TEA module from 1.3.5 -> 2.0.1
 * TEA - Breaking Changes (For full list of changes visit [the TEA release page](https://github.com/asfadmin/thin-egress-app/releases))
-  * The `/locate` endpoint now requires the full bucket name to be provided in the `bucket_name` query parameter. 
+  * The `/locate` endpoint now requires the full bucket name to be provided in the `bucket_name` query parameter.
     *Previously it expected only the trailing part of the bucket name with the `BUCKET_NAME_PREFIX` stripped off*
 * **NOTE - POST UPGRADE** this version of Cumulus requires changes to the dead-letter archive per the instructions found under [CUMULUS-3617](https://github.com/nasa/cumulus/releases/tag/v18.3.1)
 * Update `DOCKER_TAG := v18.3.1.0` in Makefile
-  
+
 ## v18.2.0.0
 
 * Upgrade to [Cumulus v18.2.0](https://github.com/nasa/cumulus/releases/tag/v18.2.0)
