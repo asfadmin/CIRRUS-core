@@ -2,8 +2,11 @@
 
 ## Unreleased
 * add .gitconfig file to Docker image to mark /CIRRUS-core and /CIRRUS-DAAC as safe
+
+## v18.3.1.1
 * Update the Makefile so that `make image` can be run without having set any
   environment variables.
+* update core image to build from aws/lambda/python:3.9 as the python3 target
 
 ## v18.3.1.0
 * Added separate urs_tea_client_id and urs_tea_client_password that can be specified if these are different from the non-tea versions of the variables.
@@ -18,7 +21,7 @@ specified log group already exists" error: `make import-thin-egress-log`
 * Update Dockerfile:
   * FromAsCasing: 'as' and 'FROM' keywords' casing do not match (line 1)
   * LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format
-  * NODE_VERSION="20.x"  
+  * NODE_VERSION="20.x"
   * TERRAFORM_VERSION="1.9.2"
   * AWS_CLI_VERSION="2.17.13"
   * Upgrade to amazonlinux:2023 from amazonlinux:2
