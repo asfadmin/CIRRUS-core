@@ -4,6 +4,8 @@
 * add .gitconfig file to Docker image to mark /CIRRUS-core and /CIRRUS-DAAC as safe
 * Update the Makefile so that `make image` can be run without having set any
   environment variables.
+* Add 'Docker in Docker' functionality by giving the container access to the
+  host's docker engine. This requires running `make docker-in-docker-permissions`
 
 ## v18.3.1.0
 * Added separate urs_tea_client_id and urs_tea_client_password that can be specified if these are different from the non-tea versions of the variables.
