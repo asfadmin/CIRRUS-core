@@ -2,6 +2,8 @@
 
 ## Unreleased
 * add .gitconfig file to Docker image to mark /CIRRUS-core and /CIRRUS-DAAC as safe
+
+## v18.3.1.1
 * Update the Makefile so that `make image` can be run without having set any
   environment variables.
 * update core image to build from aws/lambda/python:3.9 as the python3 target
