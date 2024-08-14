@@ -23,13 +23,11 @@ module "thin_egress_app" {
   urs_auth_creds_secret_name         = aws_secretsmanager_secret.thin_egress_urs_creds.name
   use_cors                           = var.use_cors
   vpc_subnet_ids                     = data.aws_subnets.subnet_ids.ids
-  tags                               = local.default_tags
 }
 
 resource "aws_secretsmanager_secret" "thin_egress_urs_creds" {
   name_prefix = "${local.prefix}-tea-urs-creds-"
   description = "URS credentials for the ${local.prefix} Thin Egress App"
-  tags        = local.default_tags
 }
 
 resource "aws_secretsmanager_secret_version" "thin_egress_urs_creds" {
@@ -53,7 +51,6 @@ resource "aws_s3_object" "bucket_map_yaml" {
     protected_buckets = local.protected_bucket_names,
     public_buckets    = local.public_bucket_names
   }))
-  tags = local.default_tags
 }
 
 resource "aws_cloudwatch_log_subscription_filter" "egress_api_gateway_log_subscription_filter" {
@@ -70,7 +67,6 @@ resource "aws_cloudwatch_log_group" "egress_lambda_log_group" {
   count             = (var.log_destination_arn != null) ? 1 : 0
   name              = "/aws/lambda/${module.thin_egress_app.egress_lambda_name}"
   retention_in_days = var.egress_lambda_log_retention_days
-  tags              = local.default_tags
 }
 
 # Egress Lambda Log Group Filter
