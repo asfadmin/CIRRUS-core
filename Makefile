@@ -11,12 +11,13 @@
 #  AWS_ACCESS_KEY_ID:     Set for the account to which you are deploying
 #  AWS_SECRET_ACCESS_KEY: Set for the account to which you are deploying
 #  AWS_REGION:            The region to which you are deploying
-#  AWS_ACCOUNT_ID:	  The AWS account ID to which you are deploying
+#  AWS_ACCOUNT_ID:        The AWS account ID to which you are deploying
 #  AWS_ACCOUNT_ID_LAST4:  The Last 4 digits of AWS_ACCOUNT_ID
 #
-#  DEPLOY_NAME:           A unique name to distinguish this Cumulus instance from others
+#  DEPLOY_NAME:           A unique name to distinguish this Cumulus instance
+#                         from others
 #  MATURITY:              One of: SBX, SIT, UAT, PROD
-#  PYTHON_VER: 			  python3
+#  PYTHON_VER:            python3
 
 # ---------------------------
 DOCKER_TAG := v18.3.3.0
