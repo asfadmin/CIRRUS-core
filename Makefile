@@ -19,7 +19,7 @@
 #  PYTHON_VER: 			  python3
 
 # ---------------------------
-DOCKER_TAG := v18.3.1.1
+DOCKER_TAG := v18.3.3.0
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}

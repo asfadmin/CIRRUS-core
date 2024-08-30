@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## Unreleased
+
+## v18.3.3.0
 * Upgrade to [Cumulus v18.3.3](https://github.com/nasa/cumulus/releases/tag/v18.3.3)
 * add .gitconfig file to Docker image to mark /CIRRUS-core and /CIRRUS-DAAC as safe
 * Tag resources using the aws provider level `default_tags` configuration
