@@ -28,6 +28,7 @@ variable "elasticsearch_config" {
     instance_type  = string
     version        = string
     volume_size    = number
+    volume_type    = string
   })
   default = {
     domain_name    = "es"
@@ -35,5 +36,6 @@ variable "elasticsearch_config" {
     instance_type  = "t2.small.elasticsearch"
     version        = "5.3"
     volume_size    = 10
+    volume_type    = "gp2"
   }
 }
