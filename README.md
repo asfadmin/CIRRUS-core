@@ -24,17 +24,17 @@ Documentation](https://nasa.github.io/cumulus/docs/deployment/deployment-readme)
 for detailed information about configuring, deploying, and running
 Cumulus.
 
-## Generating Releases 
+## Generating Releases
 
 ### Naming Schema:
-The CIRRUS name schema is `vX.X.X.Y`. The X represents the [Cumulus version](https://github.com/nasa/cumulus/releases), 
-while the Y represents the CIRRUS version. 
+The CIRRUS name schema is `vX.X.X.Y`. The X represents the [Cumulus version](https://github.com/nasa/cumulus/releases),
+while the Y represents the CIRRUS version.
 
 ### Backporting Features
-A release branch should be created when backporting a feature, such as `release/v17.1.4.2`. 
-In this case, the release branch `release/v17.1.4.2` should be created from the tag `v17.1.4.1`. 
-You should then create a PR from your feature branch to the release branch. 
-Once the PR has been approved and merged, you can create a release based on the release branch. 
+A release branch should be created when backporting a feature, such as `release/v17.1.4.2`.
+In this case, the release branch `release/v17.1.4.2` should be created from the tag `v17.1.4.1`.
+You should then create a PR from your feature branch to the release branch.
+Once the PR has been approved and merged, you can create a release based on the release branch.
 
 ## Prerequisites
 
@@ -62,6 +62,21 @@ You can start an interactive Docker container session and use this to run tests 
         $ make image
         $ make container-shell
 
+
+### Docker-in-Docker Support
+
+By default the container shell will run with the docker socket
+(`/var/run/docker.sock`) mounted to the host to allow commands inside the
+container to talk to the host docker daemon. This might be needed if you want to
+build and push docker container images to Amazon ECR for instance.
+
+It is highly likely that your docker socket will have restrictive permissions by
+default that prevent it from being accessible within the container shell. You
+can fix these permissions by running
+
+        $ make docker-in-docker-permissions
+
+on your host machine before entering the container shell.
 
 ## Organization
 
@@ -155,7 +170,7 @@ secrets files will *not* (and *should not*) be committed to git. The
 
 3. Deploy Cumulus. If this is your first Cumulus deployment for this
    stack, deploy the entire Cumulus stack:
-   
+
 
       $ make initial-deploy
 
