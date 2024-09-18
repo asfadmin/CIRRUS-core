@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/python:3.9 as python3
+FROM public.ecr.aws/lambda/python:3.9 AS python3
 # This image can be used to do Python 3 & NodeJS development, and
 # includes the AWS CLI and Terraform. It contains:
 
@@ -11,9 +11,9 @@ FROM public.ecr.aws/lambda/python:3.9 as python3
 #   * Docker
 
 # Amazon Linux 2 does not support node 18.x or node 20.x glibc=2.27 and >=2.28 is required
-ENV NODE_VERSION "16.x"
-ENV TERRAFORM_VERSION "1.9.2"
-ENV AWS_CLI_VERSION "2.17.13"
+ENV NODE_VERSION="16.x"
+ENV TERRAFORM_VERSION="1.9.2"
+ENV AWS_CLI_VERSION="2.17.13"
 
 # Add NodeJS and Yarn repos & update package index
 RUN \
