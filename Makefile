@@ -20,7 +20,7 @@
 #  PYTHON_VER:            python3
 
 # ---------------------------
-DOCKER_TAG := v18.3.3.0
+DOCKER_TAG := v18.4.0.0
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
@@ -74,10 +74,10 @@ container-shell:
 		--env HISTFILE="/CIRRUS-core/.container_bash_history" \
 		--env TF_VAR_CIRRUS_CORE_VERSION=${CIRRUS_CORE_VERSION} \
 		--env TF_VAR_CIRRUS_DAAC_VERSION=${CIRRUS_DAAC_VERSION} \
-		-v ${PWD}:/CIRRUS-core \
-		-v ${DAAC_DIR}:/CIRRUS-DAAC \
-		-v ${HOME}/.aws:/.aws \
-		-v ${HOME}/.cache/pip:/.cache/pip \
+		-v "${PWD}":/CIRRUS-core \
+		-v "${DAAC_DIR}":/CIRRUS-DAAC \
+		-v "${HOME}/.aws":/.aws \
+		-v "${HOME}/.cache/pip":/.cache/pip \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		--name=cirrus-core \
 		cirrus-core:$(DOCKER_TAG) \

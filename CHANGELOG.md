@@ -1,6 +1,9 @@
 # CHANGELOG
 
 ## Unreleased
+
+## v18.4.0.0
+* Upgrade to [Cumulus v18.4.0](https://github.com/nasa/cumulus/releases/tag/v18.4.0)
 * Add 'Docker in Docker' functionality by giving the container access to the
   host's docker engine. This requires running `make docker-in-docker-permissions`
 
