@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+## v18.5.0.1
+* add `//` back in terraform zip links
+
 ## v18.5.0.0
 * Upgrade to [Cumulus v18.5.0](https://github.com/nasa/cumulus/releases/tag/v18.5.0)
 * **NOTE** This version of Cumulus requires changes to the RDS database
