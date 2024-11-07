@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## v18.5.1.0
+* Upgrade to [Cumulus v18.5.1](https://github.com/nasa/cumulus/releases/tag/v18.5.1)
+* **NOTE** This version of Cumulus requires changes to the RDS database
+* For Serverless v2 RDS migration please see the cumulus [instructions](https://nasa.github.io/cumulus/docs/next/upgrade-notes/serverless-v2-upgrade/)
+
 ## v18.5.0.0
 * Upgrade to [Cumulus v18.5.0](https://github.com/nasa/cumulus/releases/tag/v18.5.0)
 * **NOTE** This version of Cumulus requires changes to the RDS database
