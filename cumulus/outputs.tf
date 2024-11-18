@@ -49,6 +49,10 @@ output "pdr_status_check_task" {
   value = module.cumulus.pdr_status_check_task
 }
 
+output "provider_kms_key_id" {
+  value = module.cumulus.provider_kms_key_id
+}
+
 output "queue_granules_task" {
   value = module.cumulus.queue_granules_task
 }
@@ -79,6 +83,9 @@ output "sqs2sfThrottle_lambda_function_arn" {
 
 # ---------
 # Cumulus IAM Resources
+output "lambda_processing_role_name" {
+  value = module.cumulus.lambda_processing_role_name
+}
 output "lambda_processing_role_arn" {
   value = module.cumulus.lambda_processing_role_arn
 }
