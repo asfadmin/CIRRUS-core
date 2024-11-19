@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## Unreleased
+* add cumulus outputs to allow deployment of the [rds_lambda](https://github.com/ghrcdaac/ghrc_rds_lambda)
+which is used as a plugin for [PyLOT](https://github.com/ghrcdaac/cloud-operations-tool-py)
 
 ## v18.5.1.0
 * Upgrade to [Cumulus v18.5.1](https://github.com/nasa/cumulus/releases/tag/v18.5.1)
