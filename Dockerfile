@@ -8,7 +8,7 @@ ENV AWS_CLI_VERSION="2.17.13"
 RUN dnf install -y docker
 
 # CLI tools
-RUN dnf install -y zip make
+RUN dnf install -y zip make clear
 
 # AWS CLI
 RUN \

@@ -60,7 +60,6 @@ image:
 		--platform linux/amd64 \
 		--no-cache \
 		-t cirrus-core:$(DOCKER_TAG) \
-		--target $(PYTHON_VER) \
 		--build-arg USER=`id -u` .
 
 .PHONY: container-shell
@@ -79,6 +78,7 @@ container-shell:
 		-v "${HOME}/.aws":/.aws \
 		-v "${HOME}/.cache/pip":/.cache/pip \
 		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v "${HOME}/.docker":/.docker \
 		--name=cirrus-core \
 		cirrus-core:$(DOCKER_TAG) \
 		bash
