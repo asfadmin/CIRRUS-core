@@ -1,5 +1,5 @@
 module "thin_egress_app" {
-  source = "s3::https://s3.amazonaws.com/asf.public.code/thin-egress-app/tea-terraform-build.2.0.1.zip"
+  source = "s3::https://s3.amazonaws.com/asf.public.code/thin-egress-app/tea-terraform-build.2.0.2.zip"
 
   auth_base_url                      = var.urs_url
   bucket_map_file                    = local.bucket_map_key == null ? aws_s3_object.bucket_map_yaml[0].id : local.bucket_map_key

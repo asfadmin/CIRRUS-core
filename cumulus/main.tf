@@ -32,9 +32,6 @@ module "cumulus" {
   metrics_es_username = var.metrics_es_username
   metrics_es_password = var.metrics_es_password
 
-  es_index_shards        = var.es_index_shards
-  es_request_concurrency = var.es_request_concurrency
-
   cmr_client_id   = local.cmr_client_id
   cmr_environment = var.cmr_environment
   cmr_username    = var.cmr_username
@@ -70,11 +67,6 @@ module "cumulus" {
 
   system_bucket = local.system_bucket
   buckets       = local.buckets
-
-  elasticsearch_alarms            = data.terraform_remote_state.data_persistence.outputs.elasticsearch_alarms
-  elasticsearch_domain_arn        = data.terraform_remote_state.data_persistence.outputs.elasticsearch_domain_arn
-  elasticsearch_hostname          = data.terraform_remote_state.data_persistence.outputs.elasticsearch_hostname
-  elasticsearch_security_group_id = data.terraform_remote_state.data_persistence.outputs.elasticsearch_security_group_id
 
   dynamo_tables = data.terraform_remote_state.data_persistence.outputs.dynamo_tables
 
