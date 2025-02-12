@@ -67,7 +67,7 @@ image:
 container-shell:
 	docker run -it --rm \
 		--platform linux/amd64 \
-		--user `id -u` \
+		--user `id -u`:`id -g` \
 		--env DAAC_DIR="/CIRRUS-DAAC" \
 		--env AWS_CONFIG_DIR="/" \
 		--env PS1='\s-\v:\w\$$ ' \
