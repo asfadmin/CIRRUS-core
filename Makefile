@@ -83,6 +83,15 @@ container-shell:
 		cirrus-core:$(DOCKER_TAG) \
 		bash
 
+.PHONY: shell
+shell:
+		DAAC_DIR="${DAAC_DIR}" \
+		PS1='\s-\v:\w\$$ ' \
+		TF_VAR_CIRRUS_CORE_VERSION=${CIRRUS_CORE_VERSION} \
+		TF_VAR_CIRRUS_DAAC_VERSION=${CIRRUS_DAAC_VERSION} \
+		HISTFILE=".container_bash_history" \
+		bash
+
 .PHONY: docker-in-docker-permissions
 docker-in-docker-permissions:
 	sudo chmod 666 /var/run/docker.sock
