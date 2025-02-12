@@ -4,6 +4,8 @@
 
 ## v20.0.0.0
 * Upgrade to [Cumulus v20.0.0](https://github.com/nasa/cumulus/releases/tag/v20.0.0)
+* **NOTE** This version of Cumulus has a migration of reconcilation reports as mentioned
+in the release notes
 * upgrade TEA to [v2.0.2](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.2.0.2)
 * **NOTE** ORNL observed a TEA CloudFormation error on the the first run of
 `make cumulus` with this release.  **DO NOT** rerun `make cumulus` until you resolve

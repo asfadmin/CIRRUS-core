@@ -310,18 +310,6 @@ variable "deploy_distribution_s3_credentials_endpoint" {
   default     = true
 }
 
-variable "es_index_shards" {
-  description = "The number of shards for the Elasticsearch index"
-  type        = number
-  default     = 2
-}
-
-variable "es_request_concurrency" {
-  type        = number
-  default     = 10
-  description = "Maximum number of concurrent requests to send to Elasticsearch. Used in index-from-database operation"
-}
-
 variable "ecs_cluster_instance_image_id" {
   type        = string
   description = "AMI ID of ECS instances"
