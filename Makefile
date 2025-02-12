@@ -94,7 +94,7 @@ tf-init:
 	cd tf
 	rm -rf terraform.tfstate.d
 	terraform init -reconfigure -input=false -no-color
-	terraform workspace new ${MATURITY} 2>/dev/null || terraform workspace select ${MATURITY}
+	terraform workspace select -or-create ${MATURITY}
 
 %-init:
 	$(banner)
@@ -105,7 +105,7 @@ tf-init:
 		-backend-config "bucket=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4}" \
 		-backend-config "key=$*/terraform.tfstate" \
 		-backend-config "dynamodb_table=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks"
-	terraform workspace new ${DEPLOY_NAME} 2>/dev/null || terraform workspace select ${DEPLOY_NAME}
+	terraform workspace select -or-create ${DEPLOY_NAME}
 
 init-modules-list = tf data-persistence cumulus
 init-modules := $(init-modules-list:%-init=%)
