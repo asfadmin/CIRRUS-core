@@ -10,6 +10,8 @@ in the release notes
 * **NOTE** ORNL observed a TEA CloudFormation error on the the first run of
 `make cumulus` with this release.  **DO NOT** rerun `make cumulus` until you resolve
 the problem per [this document](./docs/Resolve_TEA_CloudFormation_Error.md)
+* Add `make shell` for deploying directly from the host machine rather than the
+CIRRUS-core docker image.
 
 ## v18.5.2.0
 * Upgrade to [Cumulus v18.5.2](https://github.com/nasa/cumulus/releases/tag/v18.5.2)
