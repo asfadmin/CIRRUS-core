@@ -3,6 +3,7 @@
 ## Unreleased
 * Add `make shell` for deploying directly from the host machine rather than the
 CIRRUS-core docker image.
+* Remove `figlet` and `banner` from the `Making ...` banner.
 
 ## v18.5.2.0
 * Upgrade to [Cumulus v18.5.2](https://github.com/nasa/cumulus/releases/tag/v18.5.2)
