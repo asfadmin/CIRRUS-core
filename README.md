@@ -38,7 +38,7 @@ Once the PR has been approved and merged, you can create a release based on the 
 
 ## Prerequisites
 
-* [GNU Make](https://www.gnu.org/software/make/)
+* [GNU Make](https://www.gnu.org/software/make/) v4.x
 * [Docker](https://www.docker.com/get-started)
 * One or more NGAP accounts (sandbox, SIT, ...)
 * AWS credentials for those account(s)
