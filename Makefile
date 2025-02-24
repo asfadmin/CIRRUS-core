@@ -43,13 +43,7 @@ SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 define banner =
 echo
 echo "========================================"
-if command -v figlet 2>/dev/null; then
-	figlet $@
-elif command -v banner 2>/dev/null; then
-	banner $@
-else
-	echo "Making: $@"
-fi
+echo "Making: $@"
 echo "========================================"
 endef
 
