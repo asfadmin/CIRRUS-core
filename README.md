@@ -38,9 +38,16 @@ Once the PR has been approved and merged, you can create a release based on the 
 
 ## Prerequisites
 
+* [GNU Make](https://www.gnu.org/software/make/) v4.x
 * [Docker](https://www.docker.com/get-started)
 * One or more NGAP accounts (sandbox, SIT, ...)
 * AWS credentials for those account(s)
+
+### If deploying from your host machine
+* [Terraform](https://developer.hashicorp.com/terraform/install)
+* Any other software used in the Makefile of your `CIRRUS-DAAC` fork, for instance:
+  * Python?
+  * Nodejs?
 
 ## Development Setup
 
@@ -61,6 +68,13 @@ You can start an interactive Docker container session and use this to run tests 
 
         $ make image
         $ make container-shell
+
+
+You can alternatively deploy directly from your host machine. This will require
+you to have all the necessary dependencies installed on your system e.g. make,
+terraform, etc.
+
+        $ make shell
 
 
 ### Docker-in-Docker Support

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## v18.5.1.1
+* Add `make shell` for deploying directly from the host machine rather than the
+CIRRUS-core docker image.
+* Remove `figlet` and `banner` from the `Making ...` banner.
+* Remove unused `null` and `archive` provider from `cumulus` and
+`data-persistence` modules.
+
 ## v18.5.1.0
 * Upgrade to [Cumulus v18.5.1](https://github.com/nasa/cumulus/releases/tag/v18.5.1)
 * **NOTE** This version of Cumulus requires changes to the RDS database

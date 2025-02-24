@@ -43,13 +43,7 @@ SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 define banner =
 echo
 echo "========================================"
-if command -v figlet 2>/dev/null; then
-	figlet $@
-elif command -v banner 2>/dev/null; then
-	banner $@
-else
-	echo "Making: $@"
-fi
+echo "Making: $@"
 echo "========================================"
 endef
 
@@ -67,7 +61,7 @@ image:
 container-shell:
 	docker run -it --rm \
 		--platform linux/amd64 \
-		--user `id -u` \
+		--user `id -u`:`id -g` \
 		--env DAAC_DIR="/CIRRUS-DAAC" \
 		--env AWS_CONFIG_DIR="/" \
 		--env PS1='\s-\v:\w\$$ ' \
@@ -83,6 +77,15 @@ container-shell:
 		cirrus-core:$(DOCKER_TAG) \
 		bash
 
+.PHONY: shell
+shell:
+		DAAC_DIR="${DAAC_DIR}" \
+		PS1='\s-\v:\w\$$ ' \
+		TF_VAR_CIRRUS_CORE_VERSION=${CIRRUS_CORE_VERSION} \
+		TF_VAR_CIRRUS_DAAC_VERSION=${CIRRUS_DAAC_VERSION} \
+		HISTFILE=".container_bash_history" \
+		bash
+
 .PHONY: docker-in-docker-permissions
 docker-in-docker-permissions:
 	sudo chmod 666 /var/run/docker.sock
@@ -94,7 +97,7 @@ tf-init:
 	cd tf
 	rm -rf terraform.tfstate.d
 	terraform init -reconfigure -input=false -no-color
-	terraform workspace new ${MATURITY} 2>/dev/null || terraform workspace select ${MATURITY}
+	terraform workspace select -or-create ${MATURITY}
 
 %-init:
 	$(banner)
@@ -105,7 +108,7 @@ tf-init:
 		-backend-config "bucket=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-state-${AWS_ACCOUNT_ID_LAST4}" \
 		-backend-config "key=$*/terraform.tfstate" \
 		-backend-config "dynamodb_table=${DEPLOY_NAME}-cumulus-${MATURITY}-tf-locks"
-	terraform workspace new ${DEPLOY_NAME} 2>/dev/null || terraform workspace select ${DEPLOY_NAME}
+	terraform workspace select -or-create ${DEPLOY_NAME}
 
 init-modules-list = tf data-persistence cumulus
 init-modules := $(init-modules-list:%-init=%)
