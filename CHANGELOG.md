@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Unreleased
+* Added throttled_queues variable to cumulus
 
 ## v18.5.1.1
 * Add `make shell` for deploying directly from the host machine rather than the
