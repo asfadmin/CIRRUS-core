@@ -102,10 +102,10 @@ module "cumulus" {
   cloudwatch_log_retention_periods = var.cloudwatch_log_retention_periods
   default_log_retention_days       = var.default_log_retention_days
 
-  throttled_queues = [{
+  throttled_queues = concat([{
     url             = aws_sqs_queue.background_job_queue.id,
     execution_limit = var.throttled_queue_execution_limit
-  }]
+  }], var.throttled_queues)
 
   ecs_include_docker_cleanup_cronjob = var.ecs_include_docker_cleanup_cronjob
 }
