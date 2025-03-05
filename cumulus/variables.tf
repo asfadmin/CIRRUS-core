@@ -444,6 +444,15 @@ variable "throttled_queue_execution_limit" {
   default     = 5
 }
 
+variable "throttled_queues" {
+  description = "Array of configuration for custom queues with execution limits"
+  type        = list(object({
+    url = string,
+    execution_limit = number
+  }))
+  default     = []
+}
+
 variable "lambda_memory_sizes" {
   description = "Memory sizes for lambda functions"
   type        = map(string)
