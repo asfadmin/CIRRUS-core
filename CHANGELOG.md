@@ -28,6 +28,9 @@ CIRRUS-core docker image.
 * add cumulus outputs to allow deployment of the [rds_lambda](https://github.com/ghrcdaac/ghrc_rds_lambda)
 which is used as a plugin for [PyLOT](https://github.com/ghrcdaac/cloud-operations-tool-py)
 
+## v18.5.1.2
+* Added throttled_queues variable to cumulus
+
 ## v18.5.1.1
 * Add `make shell` for deploying directly from the host machine rather than the
   CIRRUS-core docker image.
