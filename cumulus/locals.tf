@@ -30,19 +30,19 @@ locals {
 
   cmr_client_id = local.prefix
 
-    orca_remote_state_config = {
+  orca_remote_state_config = {
     bucket = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
     key    = "orca/terraform.tfstate"
     region = data.aws_region.current.name
   }
   orca_lambda_copy_to_archive_arn = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_lambda_copy_to_archive_arn : ""
-  orca_sfn_recovery_workflow_arn = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_sfn_recovery_workflow_arn : ""
-  orca_api_uri = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_api_deployment_invoke_url : ""
+  orca_sfn_recovery_workflow_arn  = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_sfn_recovery_workflow_arn : ""
+  orca_api_uri                    = var.use_orca == true ? data.terraform_remote_state.orca[0].outputs.orca_module.orca_api_deployment_invoke_url : ""
 
   default_tags = {
     Deployment = local.prefix
   }
 
-  urs_tea_client_id = var.urs_tea_client_id != null ? var.urs_tea_client_id : var.urs_client_id
+  urs_tea_client_id       = var.urs_tea_client_id != null ? var.urs_tea_client_id : var.urs_client_id
   urs_tea_client_password = var.urs_tea_client_password != null ? var.urs_tea_client_password : var.urs_client_password
 }
