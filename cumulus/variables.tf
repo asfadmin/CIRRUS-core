@@ -9,11 +9,11 @@ variable "MATURITY" {
 }
 
 variable "CIRRUS_CORE_VERSION" {
-  type    = string
+  type = string
 }
 
 variable "CIRRUS_DAAC_VERSION" {
-  type    = string
+  type = string
 }
 
 variable "cmr_environment" {
@@ -108,8 +108,8 @@ variable "orca_sfn_recovery_workflow_arn" {
 
 variable "use_orca" {
   description = "If set to true, pull in remote state values from 'orca' module to configure cumulus core module for ORCA"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "s3_replicator_config" {
@@ -409,14 +409,14 @@ variable "egress_lambda_log_retention_days" {
 }
 
 variable "urs_tea_client_id" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "The EarthData ID passed into the TEA module for URS authentication. If not provided, the value of urs_client_id will be used."
 }
 
 variable "urs_tea_client_password" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "The EarthData password passed into the TEA module for URS authentication. If not provided, the value of urs_client_password will be used."
 }
 
@@ -434,11 +434,11 @@ variable "throttled_queue_execution_limit" {
 
 variable "throttled_queues" {
   description = "Array of configuration for custom queues with execution limits"
-  type        = list(object({
-    url = string,
+  type = list(object({
+    url             = string,
     execution_limit = number
   }))
-  default     = []
+  default = []
 }
 
 variable "lambda_memory_sizes" {
