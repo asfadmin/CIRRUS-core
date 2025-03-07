@@ -5,6 +5,7 @@
 ## v18.5.1.2
 * Added throttled_queues variable to cumulus
 * Bump tflint actions cache version from v2 to v4
+* Remove installing openssl and docker
 
 ## v18.5.1.1
 * Add `make shell` for deploying directly from the host machine rather than the
