@@ -23,7 +23,7 @@ RUN \
         yum update -y
 
 # CLI utilities
-RUN yum install -y gcc gcc-c++ git make openssl unzip zip jq docker
+RUN yum install -y gcc gcc-c++ git make unzip zip jq
 
 # Terraform
 RUN \
