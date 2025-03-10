@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## Unreleased
+
+## v20.0.0.1
 * Remove `figlet` and `banner` from the `Making ...` banner.
 * Remove unused `null` and `archive` provider from `cumulus` and
 `data-persistence` modules.
