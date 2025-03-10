@@ -4,6 +4,7 @@
 * Remove `figlet` and `banner` from the `Making ...` banner.
 * Remove unused `null` and `archive` provider from `cumulus` and
 `data-persistence` modules.
+* Removed installing openssl and docker in Dockefile
 
 ## v20.0.0.0
 * Upgrade to [Cumulus v20.0.0](https://github.com/nasa/cumulus/releases/tag/v20.0.0)
