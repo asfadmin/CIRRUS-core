@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v20.0.1.0
+* Upgrade to [Cumulus v20.0.1](https://github.com/nasa/cumulus/releases/tag/v20.0.1)
+* **NOTE** This version of Cumulus fixes bugs as mentioned in the release notes
+
 ## v20.0.0.1
 * Remove `figlet` and `banner` from the `Making ...` banner.
 * Remove unused `null` and `archive` provider from `cumulus` and
