@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Unreleased
+* Added throttled_queues variable to cumulus
 
 ## v20.0.1.0
 * Upgrade to [Cumulus v20.0.1](https://github.com/nasa/cumulus/releases/tag/v20.0.1)
