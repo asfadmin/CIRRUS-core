@@ -1,11 +1,16 @@
 # CHANGELOG
 
-## Unreleased
-* Added throttled_queues variable to cumulus
-
 # v20.1.1.0
 * Upgrade to [Cumulus v20.1.1](https://github.com/nasa/cumulus/releases/tag/v20.1.1)
-  
+* Added throttled_queues variable to cumulus
+* **NOTE** This version of Cumulus completely removes Elastic Search including ec2 instances. See release notes for more info.
+* upgrade TEA to [v2.0.3](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.2.0.3)
+* **NOTE** ORNL observed a TEA CloudFormation error on the the first run of
+`make cumulus` with this release.  **DO NOT** rerun `make cumulus` until you resolve
+the problem per [this document](./docs/Resolve_TEA_CloudFormation_Errors.md)
+* Add `make shell` for deploying directly from the host machine rather than the
+CIRRUS-core docker image.
+
 ## v20.0.1.0
 * Upgrade to [Cumulus v20.0.1](https://github.com/nasa/cumulus/releases/tag/v20.0.1)
 * **NOTE** This version of Cumulus fixes bugs as mentioned in the release notes
@@ -23,7 +28,7 @@ in the release notes
 * upgrade TEA to [v2.0.2](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.2.0.2)
 * **NOTE** ORNL observed a TEA CloudFormation error on the the first run of
 `make cumulus` with this release.  **DO NOT** rerun `make cumulus` until you resolve
-the problem per [this document](./docs/Resolve_TEA_CloudFormation_Error.md)
+the problem per [this document](./docs/Resolve_TEA_CloudFormation_Errors.md)
 * Add `make shell` for deploying directly from the host machine rather than the
 CIRRUS-core docker image.
 
