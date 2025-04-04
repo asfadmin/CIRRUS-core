@@ -552,7 +552,7 @@ in the TEA migration instructions (<https://nasa.github.io/cumulus/docs/upgrade-
 ### Notes about v3.0.0 migration as relates to CIRRUS
 
 * The `make daac` step of this version of CIRRUS generates a new output (`bucket_map_key`).  Look at the corresponding
-[CIRRUS-DAAC](https://github.com/asfadmin/CIRRUS-DAAC/blob/master/daac/outputs.tf) to add that value to your `daac/outputs.tf` file and then run `make daac`
+[CIRRUS-DAAC](https://github.com/asfadmin/CIRRUS-DAAC/blob/main/daac/outputs.tf) to add that value to your `daac/outputs.tf` file and then run `make daac`
 * Where the TEA migration instructions mention `terraform plan` use the new `make plan-cumulus` target get the output mentioned
 * Run `make daac` and `make data-persistence` prior to `make plan-cumulus`
 * Normally you run all CIRRUS `make` commands from the root `CIRRUS-core` directory.  All the `terraform state mv *` commands

@@ -110,7 +110,7 @@ To deploy your own Cumulus stack, first fork the
 rename it for your deployment. For example, you might name it
 `ASF-Cumulus`. Next, customize the Terraform and variable settings in
 your new `CIRRUS-DAAC`-forked repository. See its
-[README](https://github.com/asfadmin/CIRRUS-DAAC/blob/master/README.md)
+[README](https://github.com/asfadmin/CIRRUS-DAAC/blob/main/README.md)
 for more details.
 
 ## Deploying Cumulus
@@ -169,7 +169,7 @@ account.
         (This assumes we've setup a named AWS credentials profile with the name `xyz-sandbox-cumulus`)
 
 4. See the [CIRRUS-DAAC
-  README's](https://github.com/asfadmin/CIRRUS-DAAC/blob/master/README.md)
+  README's](https://github.com/asfadmin/CIRRUS-DAAC/blob/main/README.md)
   instructions for creating local secrets files. These will be files
   located in the DAAC directory, and as the note describes below, are
   **NOT** to be checked in to git!
@@ -216,6 +216,6 @@ If you want to deploy everything besides the `rds` module you can run the comman
 migration instructions (if any).  The Cumulus instructions are generally included
 in the [release notes](https://github.com/nasa/cumulus/releases).  CIRRUS
 instructions would be included in the CHANGELOG for
-[CIRRUS-core](https://github.com/asfadmin/CIRRUS-core/blob/master/CHANGELOG.md)
+[CIRRUS-core](https://github.com/asfadmin/CIRRUS-core/blob/main/CHANGELOG.md)
 and
-[CIRRUS-DAAC](https://github.com/asfadmin/CIRRUS-DAAC/blob/master/CHANGELOG.md).
+[CIRRUS-DAAC](https://github.com/asfadmin/CIRRUS-DAAC/blob/main/CHANGELOG.md).
