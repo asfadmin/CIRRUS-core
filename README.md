@@ -97,8 +97,7 @@ on your host machine before entering the container shell.
 The repository is organized into three Terraform modules:
 
 * `tf`: Creates resources for managing Terraform state
-* `data-persistence`: Creates DynamoDB tables and Elasticsearch
-  resources necessary for running Cumulus
+* `data-persistence`: Creates DynamoDB tables
 * `cumulus`: Creates all runtime Cumulus resources that can then be used
   to run ingest workflows.
 
