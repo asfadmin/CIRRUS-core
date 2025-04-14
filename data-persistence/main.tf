@@ -1,11 +1,8 @@
 module "data_persistence" {
-  source = "https://github.com/nasa/cumulus/releases/download/v20.0.1/terraform-aws-cumulus.zip//tf-modules/data-persistence"
+  source = "https://github.com/nasa/cumulus/releases/download/v20.1.1/terraform-aws-cumulus.zip//tf-modules/data-persistence"
 
   prefix                = local.prefix
   subnet_ids            = data.aws_subnets.subnet_ids.ids
-  include_elasticsearch = var.include_elasticsearch
-
-  elasticsearch_config = var.elasticsearch_config
 
   vpc_id                     = data.aws_vpc.application_vpcs.id
   permissions_boundary_arn   = local.permissions_boundary_arn
