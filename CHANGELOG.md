@@ -2,6 +2,9 @@
 
 # Unreleased
 
+# v20.1.2.1
+* Add python3.11 build target to core image to build from aws/lambda/python:3.11
+
 # v20.1.2.0
 * Upgrade to [Cumulus v20.1.2](https://github.com/nasa/cumulus/releases/tag/v20.1.2)
 * Update default GitHub branch name to 'main'
