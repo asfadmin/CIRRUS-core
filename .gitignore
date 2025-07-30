@@ -22,3 +22,4 @@ scripts/**/*.log
 .container_bash_history
 .venv
 *.lock.hcl
+.DS_Store
