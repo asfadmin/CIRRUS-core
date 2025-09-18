@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id --profile "$AWS_PROFILE")
 AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key --profile "$AWS_PROFILE")
-AWS_REGION=$(aws configure get region --profile "$AWS_PROFILE")
+AWS_REGION=us-west-2
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
 JWT=$(aws secretsmanager describe-secret --secret-id "$SECRET_NAME" 2>/dev/null | wc -c)
 
@@ -44,7 +44,7 @@ else
     SECRET_NAME=${DEPLOY_NAME}-cumulus-${MATURITY}-jwt_secret_for_tea
 
     GENERATE_TEA_CREDS
-
+    echo "Creating  secret named '${SECRET_NAME}'"
     aws secretsmanager create-secret --name ${SECRET_NAME} \
         ${AWSENV} \
         --description "RS256 keys for TEA app JWT cookies" \
@@ -52,5 +52,3 @@ else
     rm ./${STACKNAME}_jwtkeys.json
     cd $DIR
 fi
-
-
