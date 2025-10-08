@@ -12,7 +12,7 @@ FROM public.ecr.aws/lambda/python:3.9 AS python3
 
 # Amazon Linux 2 does not support node 18.x or node 20.x glibc=2.27 and >=2.28 is required
 ENV NODE_VERSION="16.x"
-ENV TERRAFORM_VERSION="1.9.2"
+ENV TERRAFORM_VERSION="1.12.2"
 ENV AWS_CLI_VERSION="2.27.43"
 
 # Add NodeJS and Yarn repos & update package index
@@ -77,7 +77,7 @@ FROM public.ecr.aws/lambda/python:3.11 AS python3.11
 
 # Amazon Linux 2 does not support node 18.x or node 20.x glibc=2.27 and >=2.28 is required
 ENV NODE_VERSION="16.x"
-ENV TERRAFORM_VERSION="1.9.2"
+ENV TERRAFORM_VERSION="1.12.2"
 ENV AWS_CLI_VERSION="2.27.43"
 
 # Add NodeJS and Yarn repos & update package index
