@@ -1,25 +1,28 @@
 # CHANGELOG
 
-# Unreleased
+## Unreleased
 
-# v20.2.1.0
+## v20.3.0.0
+* Upgrade to [Cumulus v20.3.0](https://github.com/nasa/cumulus/releases/tag/v20.3.0)
+
+## v20.2.1.0
 * Upgrade to [Cumulus v20.2.1](https://github.com/nasa/cumulus/releases/tag/v20.2.1)
 
-# v20.2.0.0
+## v20.2.0.0
 * Upgrade to [Cumulus v20.2.0](https://github.com/nasa/cumulus/releases/tag/v20.2.0)
 * **NOTE** This version of Cumulus requires changes to the RDS database
 * For upgrading the db cluster to PostgreSQL v17 please see the cumulus [instructions](https://nasa.github.io/cumulus/docs/next/upgrade-notes/upgrade-rds-cluster-tf-postgres-17)
 * **NOTE** ~~ORNL observed that no "enable_upgrade" variable remains in the cumulus-rds-tf module. Thus, initial run of 'make rds' will fail while trying to delete the v13 parameter group, but will deploy the v17 parameter group. The remaining instructions can be followed from there.~~
 This was patched and upgrade documentation was updated on 08/07/2025. The above links still apply.
 
-# v20.1.2.1
+## v20.1.2.1
 * Add python3.11 build target to core image to build from aws/lambda/python:3.11
 
-# v20.1.2.0
+## v20.1.2.0
 * Upgrade to [Cumulus v20.1.2](https://github.com/nasa/cumulus/releases/tag/v20.1.2)
 * Update default GitHub branch name to 'main'
 
-# v20.1.1.0
+## v20.1.1.0
 * Upgrade to [Cumulus v20.1.1](https://github.com/nasa/cumulus/releases/tag/v20.1.1)
 * Added throttled_queues variable to cumulus
 * **NOTE** This version of Cumulus completely removes Elastic Search including ec2 instances. See release notes for more info.
