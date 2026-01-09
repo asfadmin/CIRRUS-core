@@ -63,7 +63,7 @@ WORKDIR /CIRRUS-core
 # Bypass the bootstrap.sh script that runs in lambda
 ENTRYPOINT []
 
-FROM public.ecr.aws/lambda/python:3.11 AS python3.11
+FROM public.ecr.aws/lambda/python:3.12 AS python3.12
 # This image can be used to do Python 3 & NodeJS development, and
 # includes the AWS CLI and Terraform. It contains:
 

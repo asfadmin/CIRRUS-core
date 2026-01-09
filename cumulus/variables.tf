@@ -488,3 +488,27 @@ variable "html_template_dir" {
     Leave this field blank to use default templates that are included with the lambda code zip file.
   EOF
 }
+
+variable "archive_records_config" {
+  type = object({
+    deploy_rule = optional(bool, true), # deploy the archive records cron eventBridgeRule
+    update_limit = optional(number, 100000), # number of granules or executions to archive in one run
+    batch_size = optional(number, 10000), # number of granules or executions to archive call to the /archive endpoint
+    expiration_days = optional(number, 365), # age (in days) after which granules or executions should be archived
+    schedule_expression = optional(string, "cron(0 4 * * ? *)"), # CloudWatch cron schedule for the record archival lambda
+  })
+  description = "config object for archive-records tooling"
+  default = {
+    deploy_rule = false,
+    update_limit = 100000,
+    batch_size = 10000,
+    expiration_days = 365,
+    schedule_expression = "cron(0 4 * * ? *)",
+  }
+}
+
+variable "sync_granule_s3_jitter_max_ms" {
+  description = "Maximum random jitter in milliseconds to apply before S3 operations in SyncGranule task (0-59000). Set to 0 to disable jitter."
+  type        = number
+  default     = 0
+}
