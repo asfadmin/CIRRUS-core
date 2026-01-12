@@ -499,7 +499,7 @@ variable "archive_records_config" {
   })
   description = "config object for archive-records tooling"
   default = {
-    deploy_rule = false,
+    deploy_rule = true,
     update_limit = 100000,
     batch_size = 10000,
     expiration_days = 365,
