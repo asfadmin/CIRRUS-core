@@ -512,3 +512,9 @@ variable "sync_granule_s3_jitter_max_ms" {
   type        = number
   default     = 0
 }
+
+variable "allow_provider_mismatch_on_rule_filter" {
+  description = "optional variable to be used in message_consumer lambdas for disabling rule/message provider mismatches"
+  type = bool
+  default = false
+}
