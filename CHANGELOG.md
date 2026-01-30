@@ -2,8 +2,11 @@
 
 ## Unreleased
 
+* Upgrade to [Cumulus v21.2.0](https://github.com/nasa/cumulus/releases/tag/v21.2.0)
+* add variable "archive_records_config" to cumulus/variables.tf
+
 ## v21.0.1.0
-* Updrade to [Cumulus v21.0.1](https://github.com/nasa/cumulus/releases/tag/v21.0.1)
+* Upgrade to [Cumulus v21.0.1](https://github.com/nasa/cumulus/releases/tag/v21.0.1)
 * **NOTE** This version of Cumulus requires a manual update to the PostgreSQL database in the production environment. Please follow the instructions in [Update granules to include producer_granule_id](https://nasa.github.io/cumulus/docs/next/upgrade-notes/update-granules-to-include-producer_granule_id) 
 
 ## v20.3.0.0
