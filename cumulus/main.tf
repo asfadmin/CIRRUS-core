@@ -26,16 +26,16 @@ module "cumulus" {
 
   urs_url             = var.urs_url
   urs_client_id       = var.urs_client_id
-  urs_client_password = var.urs_client_password
+  urs_client_password = local.urs_client_password
 
   metrics_es_host     = var.metrics_es_host
   metrics_es_username = var.metrics_es_username
-  metrics_es_password = var.metrics_es_password
+  metrics_es_password = local.metrics_es_password
 
   cmr_client_id   = local.cmr_client_id
   cmr_environment = var.cmr_environment
   cmr_username    = var.cmr_username
-  cmr_password    = var.cmr_password
+  cmr_password    = local.cmr_password
   cmr_provider    = var.cmr_provider
 
   cmr_oauth_provider = var.cmr_oauth_provider
@@ -45,7 +45,7 @@ module "cumulus" {
 
   launchpad_api         = var.launchpad_api
   launchpad_certificate = var.launchpad_certificate
-  launchpad_passphrase  = var.launchpad_passphrase
+  launchpad_passphrase  = local.launchpad_passphrase
 
   lzards_launchpad_certificate = var.lzards_launchpad_certificate
   lzards_launchpad_passphrase  = var.lzards_launchpad_passphrase
@@ -61,7 +61,7 @@ module "cumulus" {
   saml_idp_login                  = var.saml_idp_login
   saml_launchpad_metadata_url     = var.saml_launchpad_metadata_url
 
-  token_secret = var.token_secret
+  token_secret = local.token_secret
 
   permissions_boundary_arn = local.permissions_boundary_arn
 
@@ -71,7 +71,7 @@ module "cumulus" {
   dynamo_tables = data.terraform_remote_state.data_persistence.outputs.dynamo_tables
 
   archive_api_users = var.api_users
-  archive_api_url   = var.archive_api_url
+  archive_api_url   = local.archive_api_url
 
   orca_lambda_copy_to_archive_arn = local.orca_lambda_copy_to_archive_arn
   orca_sfn_recovery_workflow_arn  = local.orca_sfn_recovery_workflow_arn
