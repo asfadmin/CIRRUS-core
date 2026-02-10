@@ -32,6 +32,8 @@ variable "cmr_provider" {
 
 variable "cmr_username" {
   type = string
+  default = null
+  sensitive = true
 }
 
 variable "cmr_oauth_provider" {

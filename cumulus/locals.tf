@@ -48,6 +48,7 @@ locals {
   urs_client_password         = sensitive(lookup(local.configuration_secret_values, "urs_client_password", var.urs_client_password))
   metrics_es_password         = sensitive(lookup(local.configuration_secret_values, "metrics_es_password", var.metrics_es_password))
   cmr_password                = sensitive(lookup(local.configuration_secret_values, "cmr_password", var.cmr_password))
+  cmr_username                = sensitive(lookup(local.configuration_secret_values, "cmr_username", var.cmr_username))
   launchpad_passphrase        = sensitive(lookup(local.configuration_secret_values, "launchpad_passphrase", var.launchpad_passphrase))
   lzards_launchpad_passphrase = sensitive(lookup(local.configuration_secret_values, "lzards_launchpad_passphrase", var.lzards_launchpad_passphrase))
   token_secret                = sensitive(lookup(local.configuration_secret_values, "token_secret", var.token_secret))
@@ -68,6 +69,13 @@ check "cmr_password_required" {
   assert {
     condition     = local.cmr_password != null
     error_message = "cmr_password must be provided either via the configuration_secret or the cmr_password variable."
+  }
+}
+
+check "cmr_username_required" {
+  assert {
+    condition     = local.cmr_username != null
+    error_message = "cmr_username must be provided either via the configuration_secret or the cmr_username variable."
   }
 }
 

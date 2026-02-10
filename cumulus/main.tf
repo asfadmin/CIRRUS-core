@@ -34,7 +34,7 @@ module "cumulus" {
 
   cmr_client_id   = local.cmr_client_id
   cmr_environment = var.cmr_environment
-  cmr_username    = var.cmr_username
+  cmr_username    = local.cmr_username
   cmr_password    = local.cmr_password
   cmr_provider    = var.cmr_provider
 

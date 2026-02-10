@@ -2,8 +2,7 @@
 
 ## Unreleased
 
-* Update `cumulus` module to allow for optional use of AWS Secrets Manager for 
-`archive_api_url, urs_client_password, metrics_es_password, cmr_password, launchpad_passphrase, token_secret` via `configuration_secret` variable
+* Update `cumulus` module to allow for optional use of AWS Secrets Manager for `archive_api_url, urs_client_password, metrics_es_password, cmr_password, cmr_username, lzards_launchpad_passphrase, launchpad_passphrase, token_secret` via `configuration_secret` variable
 * Update GH actions `tflint` to v0.61.0, update GH actions `checkout` to v4
 
 
