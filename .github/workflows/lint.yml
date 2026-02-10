@@ -15,7 +15,7 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       name: Checkout source code
 
     - uses: actions/cache@v4
@@ -24,19 +24,22 @@ jobs:
         path: ~/.tflint.d/plugins
         key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
 
-    - uses: terraform-linters/setup-tflint@v1
+    - uses: terraform-linters/setup-tflint@v4
       name: Setup TFLint
       with:
-        tflint_version: v0.21.0
+        tflint_version: v0.53.0
 
     - name: Show version
       run: tflint --version
 
+    - name: Init TFLint
+      run: tflint --init
+
     - name: TFLint - cumulus module
-      run:  tflint cumulus
+      run:  tflint --chdir=cumulus
 
     - name: TFLint - data-persistence module
-      run:  tflint data-persistence
+      run:  tflint --chdir=data-persistence
 
     - name: TFLint - tf module
-      run:  tflint tf
+      run:  tflint --chdir=tf
