@@ -154,6 +154,8 @@ variable "token_secret" {
 
 variable "urs_client_id" {
   type = string
+  default = null
+  sensitive = true
 }
 
 variable "urs_client_password" {

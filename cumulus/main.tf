@@ -25,7 +25,7 @@ module "cumulus" {
   rds_user_access_secret_arn = data.terraform_remote_state.data_persistence.outputs.rds_user_access_secret_arn
 
   urs_url             = var.urs_url
-  urs_client_id       = var.urs_client_id
+  urs_client_id       = local.urs_client_id
   urs_client_password = local.urs_client_password
 
   metrics_es_host     = var.metrics_es_host

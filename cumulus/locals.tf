@@ -50,9 +50,17 @@ locals {
   cmr_password         = sensitive(lookup(local.configuration_secret_values, "cmr_password", var.cmr_password))
   launchpad_passphrase = sensitive(lookup(local.configuration_secret_values, "launchpad_passphrase", var.launchpad_passphrase))
   token_secret         = sensitive(lookup(local.configuration_secret_values, "token_secret", var.token_secret))
-
-  urs_tea_client_id       = var.urs_tea_client_id != null ? var.urs_tea_client_id : var.urs_client_id
+  urs_client_id        = sensitive(lookup(local.configuration_secret_values, "urs_client_id", var.urs_client_id))
+  
+  urs_tea_client_id       = var.urs_tea_client_id != null ? var.urs_tea_client_id : local.urs_client_id
   urs_tea_client_password = var.urs_tea_client_password != null ? var.urs_tea_client_password : local.urs_client_password
+}
+
+check "urs_client_id_required" {
+  assert {
+    condition     = local.urs_client_id != null
+    error_message = "urs_client_id must be provided either via the configuration_secret or the urs_client_id variable."
+  }
 }
 
 check "cmr_password_required" {
