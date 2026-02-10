@@ -48,7 +48,7 @@ module "cumulus" {
   launchpad_passphrase  = local.launchpad_passphrase
 
   lzards_launchpad_certificate = var.lzards_launchpad_certificate
-  lzards_launchpad_passphrase  = var.lzards_launchpad_passphrase
+  lzards_launchpad_passphrase  = local.lzards_launchpad_passphrase
   lzards_provider              = var.lzards_provider
   lzards_api                   = var.lzards_api
   lzards_s3_link_timeout       = var.lzards_s3_link_timeout

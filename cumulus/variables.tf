@@ -72,6 +72,7 @@ variable "lzards_launchpad_passphrase" {
   description = "Passphrase for use with lzards_launchpad_certificate."
   type        = string
   default     = ""
+  sensitive   = true
 }
 
 variable "lzards_provider" {
