@@ -27,7 +27,7 @@ jobs:
     - uses: terraform-linters/setup-tflint@v4
       name: Setup TFLint
       with:
-        tflint_version: v0.53.0
+        tflint_version: v0.61.0
 
     - name: Show version
       run: tflint --version
@@ -36,10 +36,10 @@ jobs:
       run: tflint --init
 
     - name: TFLint - cumulus module
-      run:  tflint --chdir=cumulus
+      run:  tflint --config=${{ github.workspace }}/.tflint.hcl --chdir=cumulus
 
     - name: TFLint - data-persistence module
-      run:  tflint --chdir=data-persistence
+      run:  tflint --config=${{ github.workspace }}/.tflint.hcl --chdir=data-persistence
 
     - name: TFLint - tf module
-      run:  tflint --chdir=tf
+      run:  tflint --config=${{ github.workspace }}/.tflint.hcl --chdir=tf
