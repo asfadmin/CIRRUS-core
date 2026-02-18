@@ -21,7 +21,9 @@ variable "cmr_environment" {
 }
 
 variable "cmr_password" {
-  type = string
+  type      = string
+  default   = null
+  sensitive = true
 }
 
 variable "cmr_provider" {
@@ -30,6 +32,8 @@ variable "cmr_provider" {
 
 variable "cmr_username" {
   type = string
+  default = null
+  sensitive = true
 }
 
 variable "cmr_oauth_provider" {
@@ -37,6 +41,11 @@ variable "cmr_oauth_provider" {
   default = "earthdata"
 }
 
+variable "configuration_secret" {
+  description = "Name of the AWS Secrets Manager secret containing configuration values (e.g. archive_api_url)."
+  type        = string
+  default     = null
+}
 
 
 variable "launchpad_api" {
@@ -50,8 +59,9 @@ variable "launchpad_certificate" {
 }
 
 variable "launchpad_passphrase" {
-  type    = string
-  default = ""
+  type      = string
+  default   = ""
+  sensitive = true
 }
 
 variable "lzards_launchpad_certificate" {
@@ -64,6 +74,7 @@ variable "lzards_launchpad_passphrase" {
   description = "Passphrase for use with lzards_launchpad_certificate."
   type        = string
   default     = ""
+  sensitive   = true
 }
 
 variable "lzards_provider" {
@@ -139,15 +150,21 @@ variable "saml_launchpad_metadata_url" {
 }
 
 variable "token_secret" {
-  type = string
+  type      = string
+  default   = null
+  sensitive = true
 }
 
 variable "urs_client_id" {
   type = string
+  default = null
+  sensitive = true
 }
 
 variable "urs_client_password" {
-  type = string
+  type      = string
+  default   = null
+  sensitive = true
 }
 
 # Optional
@@ -258,8 +275,9 @@ variable "archive_api_port" {
 }
 
 variable "archive_api_url" {
-  type    = string
-  default = null
+  type      = string
+  default   = null
+  sensitive = true
 }
 
 variable "private_archive_api_gateway" {
@@ -273,8 +291,9 @@ variable "metrics_es_host" {
 }
 
 variable "metrics_es_password" {
-  type    = string
-  default = null
+  type      = string
+  default   = null
+  sensitive = true
 }
 
 variable "metrics_es_username" {

@@ -96,10 +96,12 @@ output "no_ingress_all_egress" {
 # ---------
 # Cumulus URIs
 output "archive_api_uri" {
-  value = module.cumulus.archive_api_uri
+  value     = module.cumulus.archive_api_uri
+  sensitive = true
 }
 output "archive_api_redirect_uri" {
-  value = module.cumulus.archive_api_redirect_uri
+  value     = module.cumulus.archive_api_redirect_uri
+  sensitive = true
 }
 output "distribution_url" {
   value = module.thin_egress_app.api_endpoint

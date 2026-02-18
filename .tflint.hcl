@@ -1,3 +1,14 @@
+plugin "terraform" {
+  enabled = true
+  preset  = "recommended"
+}
+
+plugin "aws" {
+  enabled = true
+  version = "0.35.0"
+  source  = "github.com/terraform-linters/tflint-ruleset-aws"
+}
+
 ## disabled rules
 rule "terraform_documented_outputs" {
   enabled = false
@@ -47,7 +58,10 @@ rule "terraform_workspace_remote" {
 }
 
 
-## AWS non-deep rules
+rule "aws_secretsmanager_secret_version_invalid_secret_string" {
+  # Disabled: TFLint crashes evaluating dynamic/null values in secret_string
+  enabled = false
+}
 rule "aws_db_instance_invalid_type" {
   enabled = true
 }
