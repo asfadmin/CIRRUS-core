@@ -45,3 +45,8 @@ data "terraform_remote_state" "orca" {
   workspace = var.DEPLOY_NAME
   config    = local.orca_remote_state_config
 }
+
+data "aws_secretsmanager_secret_version" "configuration_secret" {
+  count     = var.configuration_secret != null ? 1 : 0
+  secret_id = var.configuration_secret
+}

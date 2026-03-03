@@ -33,8 +33,8 @@ resource "aws_secretsmanager_secret" "thin_egress_urs_creds" {
 resource "aws_secretsmanager_secret_version" "thin_egress_urs_creds" {
   secret_id = aws_secretsmanager_secret.thin_egress_urs_creds.id
   secret_string = jsonencode({
-    UrsId   = local.urs_tea_client_id
-    UrsAuth = base64encode("${local.urs_tea_client_id}:${local.urs_tea_client_password}")
+    UrsId   = nonsensitive(local.urs_tea_client_id)
+    UrsAuth = base64encode("${nonsensitive(local.urs_tea_client_id)}:${nonsensitive(local.urs_tea_client_password)}")
   })
 }
 
