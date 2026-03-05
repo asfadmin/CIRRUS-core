@@ -32,11 +32,6 @@ CIRRUS_DAAC_VERSION := $(or $(shell git -C $(DAAC_DIR) tag --points-at HEAD | he
 endif
 THIN_EGRESS_LOG_EXIST := "0"
 
-DOCKER_GID := $(shell \
-  if [ -S /var/run/docker.sock ]; then \
-    (stat -c '%g' /var/run/docker.sock 2>/dev/null || stat -f '%g' /var/run/docker.sock 2>/dev/null); \
-  fi)
-
 # ---------------------------
 SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
@@ -64,11 +59,11 @@ image:
 
 .PHONY: container-shell
 container-shell:
-	DOCKER_GID=$$( (stat -c '%g' /var/run/docker.sock 2>/dev/null || stat -f '%g' /var/run/docker.sock 2>/dev/null) ); \
-	echo "DOCKER_GID=$$DOCKER_GID"; \
+	if [ "$$(uname -s)" = "Darwin" ]; then DOCKER_GID=0; else DOCKER_GID=""; fi; \
 	docker run -it --rm \
 		--platform linux/amd64 \
-        --user $$(id -u):0 \
+		--user `id -u`:`id -g` \
+		$${DOCKER_GID:+--group-add $$DOCKER_GID} \
 		--env DAAC_DIR="/CIRRUS-DAAC" \
 		--env AWS_CONFIG_DIR="/" \
 		--env DOCKER_CONFIG=/tmp/.docker \
@@ -96,6 +91,7 @@ shell:
 
 .PHONY: docker-in-docker-permissions
 docker-in-docker-permissions:
+    # Linux CI hosts compatibility: give group permissions to the docker socket. This allows the container to run docker commands without sudo, which is necessary for running `make image` from within the container. For MacOS hosts, this is a no-op since the docker socket is not used.
 	sudo chmod 666 /var/run/docker.sock
 
 # ---------------------------
