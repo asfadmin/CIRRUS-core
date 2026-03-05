@@ -32,6 +32,11 @@ CIRRUS_DAAC_VERSION := $(or $(shell git -C $(DAAC_DIR) tag --points-at HEAD | he
 endif
 THIN_EGRESS_LOG_EXIST := "0"
 
+DOCKER_GID := $(shell \
+  if [ -S /var/run/docker.sock ]; then \
+    (stat -c '%g' /var/run/docker.sock 2>/dev/null || stat -f '%g' /var/run/docker.sock 2>/dev/null); \
+  fi)
+
 # ---------------------------
 SELF_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
@@ -59,11 +64,14 @@ image:
 
 .PHONY: container-shell
 container-shell:
+	DOCKER_GID=$$( (stat -c '%g' /var/run/docker.sock 2>/dev/null || stat -f '%g' /var/run/docker.sock 2>/dev/null) ); \
+	echo "DOCKER_GID=$$DOCKER_GID"; \
 	docker run -it --rm \
 		--platform linux/amd64 \
-		--user `id -u`:`id -g` \
+        --user $$(id -u):0 \
 		--env DAAC_DIR="/CIRRUS-DAAC" \
 		--env AWS_CONFIG_DIR="/" \
+		--env DOCKER_CONFIG=/tmp/.docker \
 		--env PS1='\s-\v:\w\$$ ' \
 		--env HISTFILE="/CIRRUS-core/.container_bash_history" \
 		--env TF_VAR_CIRRUS_CORE_VERSION=${CIRRUS_CORE_VERSION} \
@@ -76,7 +84,7 @@ container-shell:
 		--name=cirrus-core \
 		cirrus-core:$(DOCKER_TAG) \
 		bash
-
+		
 .PHONY: shell
 shell:
 		DAAC_DIR="${DAAC_DIR}" \
