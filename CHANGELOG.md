@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Add dynamic_throttled_queues to allow for throttled queues with configurable names to be defined according to the pattern: https://sqs.${data.aws_region.current.name}.amazonaws.com/${data.aws_caller_identity.current.account_id}/${local.prefix}-${q.queue_name}.   This allows for queue configurations to be defined programatically for similar deployments across deployment/account/regions/etc.
+
 * Upgrade to [Cumulus v21.2.0](https://github.com/nasa/cumulus/releases/tag/v21.2.0)
 * add variable "archive_records_config" to cumulus/variables.tf
 
