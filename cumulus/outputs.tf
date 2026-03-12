@@ -62,6 +62,9 @@ output "queue_pdrs_task" {
 output "queue_workflow_task" {
   value = module.cumulus.queue_workflow_task
 }
+output "send_pan_task" {
+  value = module.cumulus.send_pan_task
+}
 output "sf_sqs_report_task" {
   value = module.cumulus.sf_sqs_report_task
 }
