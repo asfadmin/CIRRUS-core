@@ -537,3 +537,11 @@ variable "allow_provider_mismatch_on_rule_filter" {
   type = bool
   default = false
 }
+variable "dynamic_throttled_queues" {
+  type = list(object({
+    queue_name      = string
+    execution_limit = number
+  }))
+  default     = []
+  description = "List of SQS queue throttle configs. The queue_name is the suffix after the deployment prefix (e.g. 'ETQ-ASDC-StandardPdrJobs'). The full URL is constructed in locals.tf using local.prefix.  Result will be merged with `throttled queues`"
+}

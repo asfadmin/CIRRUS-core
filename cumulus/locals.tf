@@ -56,6 +56,13 @@ locals {
   
   urs_tea_client_id       = var.urs_tea_client_id != null ? var.urs_tea_client_id : local.urs_client_id
   urs_tea_client_password = var.urs_tea_client_password != null ? var.urs_tea_client_password : local.urs_client_password
+  
+  throttled_queues = [
+    for q in var.dynamic_throttled_queues : {
+      url             = "https://sqs.${data.aws_region.current.name}.amazonaws.com/${data.aws_caller_identity.current.account_id}/${local.prefix}-${q.queue_name}"
+      execution_limit = q.execution_limit
+    }
+  ]
 }
 
 check "urs_client_id_required" {
@@ -92,3 +99,4 @@ check "token_secret_required" {
     error_message = "token_secret must be provided either via the configuration_secret or the token_secret variable."
   }
 }
+
