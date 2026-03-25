@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v21.3.2.0
+* Upgrade to [Cumulus v21.3.2](https://github.com/nasa/cumulus/releases/tag/v21.3.2)
+* **NOTE** this version of Cumulus includes core version of CnmResponse task lambda that may conflict with non-core versions. See [v21.3.2 Migration Notes](https://github.com/nasa/cumulus/releases/tag/v21.3.2)
+
 ## v21.3.1.0
 * Upgrade to [Cumulus v21.3.1](https://github.com/nasa/cumulus/releases/tag/v21.3.1)
 * Update dockerfile to use Amazon Linux 2023 and Node v22
