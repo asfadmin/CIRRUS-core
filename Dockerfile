@@ -65,7 +65,7 @@ WORKDIR /CIRRUS-core
 # Bypass the bootstrap.sh script that runs in lambda
 ENTRYPOINT []
 
-FROM amazonlinux:2023 AS python3
+FROM public.ecr.aws/lambda/python:3.12 AS python3.12
 # This image can be used to do Python 3 & NodeJS development, and
 # includes the AWS CLI and Terraform. It contains:
 
@@ -82,11 +82,12 @@ ENV AWS_CLI_VERSION="2.27.43"
 
 # Add NodeJS and Yarn repos & update package index
 RUN \
-        curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
-        yum update -y
+    curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
+    dnf update -y && \
+    dnf clean all
 
 # CLI utilities
-RUN yum install -y gcc gcc-c++ git make unzip zip jq
+RUN dnf install -y gcc gcc-c++ git make unzip zip jq
 
 # Install Docker
 RUN dnf install -y docker git make unzip zip jq gcc gcc-c++
@@ -106,12 +107,13 @@ RUN \
 
 # Node JS
 RUN \
-        yum install -y nodejs22 yarn pip
+        dnf install -y nodejs22 yarn pip
 
 # SSM SessionManager plugin
 RUN \
         curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm" && \
-        yum install -y session-manager-plugin.rpm
+        rpm -i session-manager-plugin.rpm && \
+        rm -f session-manager-plugin.rpm
 
 # Add user for keygen in Makefile
 ARG USER
