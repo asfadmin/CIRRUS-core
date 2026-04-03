@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## v21.3.2.0
+* Upgrade to [Cumulus v21.3.2](https://github.com/nasa/cumulus/releases/tag/v21.3.2)
+* **NOTE** this version of Cumulus includes core version of CnmResponse task lambda that may conflict with non-core versions. See [v21.3.2 Migration Notes](https://github.com/nasa/cumulus/releases/tag/v21.3.2)
+
+## v21.3.1.0
+* Upgrade to [Cumulus v21.3.1](https://github.com/nasa/cumulus/releases/tag/v21.3.1)
+* Update dockerfile to use Amazon Linux 2023 and Node v22
+* **NOTE** This version of Cumulus requires manual database changes, see [v21.3 Migration Notes](https://github.com/nasa/cumulus/releases/tag/v21.3.0)
+
+## v21.2.0.0
+* Upgrade to [Cumulus v21.2.0](https://github.com/nasa/cumulus/releases/tag/v21.2.0)
+* add variable "archive_records_config" to cumulus/variables.tf
+
 * Update `cumulus` module to allow for optional use of AWS Secrets Manager for `archive_api_url, urs_client_password, metrics_es_password, cmr_password, cmr_username, lzards_launchpad_passphrase, launchpad_passphrase, token_secret` via `configuration_secret` variable
 * Update GH actions `tflint` to v0.61.0, update GH actions `checkout` to v4
 * Add `send_pan_task` to `cumulus` module output
@@ -9,7 +22,7 @@
 * Update Makefile to allow docker-in-docker on MacOS hosts
 
 ## v21.0.1.0
-* Updrade to [Cumulus v21.0.1](https://github.com/nasa/cumulus/releases/tag/v21.0.1)
+* Upgrade to [Cumulus v21.0.1](https://github.com/nasa/cumulus/releases/tag/v21.0.1)
 * **NOTE** This version of Cumulus requires a manual update to the PostgreSQL database in the production environment. Please follow the instructions in [Update granules to include producer_granule_id](https://nasa.github.io/cumulus/docs/next/upgrade-notes/update-granules-to-include-producer_granule_id) 
 
 ## v20.3.0.0
