@@ -105,7 +105,7 @@ module "cumulus" {
   throttled_queues = concat([{
     url             = aws_sqs_queue.background_job_queue.id,
     execution_limit = var.throttled_queue_execution_limit
-  }], var.throttled_queues)
+  }], var.throttled_queues, local.throttled_queues)
 
   ecs_include_docker_cleanup_cronjob = var.ecs_include_docker_cleanup_cronjob
 }

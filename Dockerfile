@@ -92,6 +92,15 @@ RUN dnf install -y gcc gcc-c++ git make unzip zip jq
 # Install Docker
 RUN dnf install -y docker git make unzip zip jq gcc gcc-c++
 
+# Add Docker
+
+ARG DOCKER_VERSION=25.0.5
+RUN yum install gzip -y && yum install tar -y
+RUN curl -fsSL "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" \
+  | tar -xz -C /usr/local/bin --strip-components=1 docker/docker \
+ && docker --version
+ENV DOCKER_CONFIG=/tmp/.docker
+RUN mkdir -p "$DOCKER_CONFIG" && chmod 1777 "$DOCKER_CONFIG" 
 # Terraform
 RUN \
         curl "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -o "terraform.zip" && \
