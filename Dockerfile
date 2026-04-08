@@ -104,7 +104,7 @@ RUN dnf install -y docker git make unzip zip jq gcc gcc-c++
 # Add Docker
 
 ARG DOCKER_VERSION=25.0.5
-RUN yum install gzip -y && yum install tar -y
+RUN dnf install gzip -y && dnf install tar -y
 RUN curl -fsSL "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" \
   | tar -xz -C /usr/local/bin --strip-components=1 docker/docker \
  && docker --version
@@ -125,7 +125,9 @@ RUN \
 
 # Node JS
 RUN \
-        dnf install -y nodejs22 yarn pip
+        dnf remove -y nodejs nodejs18 || true \
+        && dnf install -y nodejs22 pip \
+        && npm install -g yarn
 
 # SSM SessionManager plugin
 RUN \
