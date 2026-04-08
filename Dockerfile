@@ -37,23 +37,26 @@ RUN dnf remove -y nodejs nodejs18 || true \
 RUN npm install -g yarn
 
 # Terraform
-RUN curl "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -o "terraform.zip" \
-    && unzip terraform.zip \
-    && chmod +x terraform \
-    && mv terraform /usr/local/bin \
-    && rm -f terraform.zip
+RUN \
+        curl "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -o "terraform.zip" && \
+        unzip terraform.zip && \
+        chmod +x terraform && \
+        mv terraform /usr/local/bin && \
+        rm -f terraform.zip
 
 # AWS CLI
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip" -o "awscliv2.zip" \
-    && unzip awscliv2.zip \
-    && ./aws/install \
-    && rm -rf aws awscliv2.zip
+RUN \
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip" -o "awscliv2.zip" && \
+        unzip awscliv2.zip && \
+        ./aws/install && \
+        rm -rf aws awscliv2.zip
 
 # SSM SessionManager plugin
-RUN curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm" \
-    && dnf install -y ./session-manager-plugin.rpm \
-    && rm -f session-manager-plugin.rpm \
-    && dnf clean all
+RUN \
+        curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm" && \
+        dnf install -y ./session-manager-plugin.rpm && \
+        rm -f session-manager-plugin.rpm && \
+        dnf clean all
 
 # Add user for keygen in Makefile
 ARG USER
