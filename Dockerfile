@@ -128,9 +128,8 @@ RUN \
 # SSM SessionManager plugin
 RUN \
         curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm" && \
-        dnf install -y ./session-manager-plugin.rpm && \
-        rm -f session-manager-plugin.rpm && \
-        dnf clean all
+        rpm -i session-manager-plugin.rpm && \
+        rm -f session-manager-plugin.rpm
 
 # Add user for keygen in Makefile
 ARG USER
