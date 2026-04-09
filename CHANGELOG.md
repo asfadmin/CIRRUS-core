@@ -1,9 +1,19 @@
 # CHANGELOG
 
 ## Unreleased
-
+* Update Dockerfile python3 stage to use only node v22, remove all yum installs in favor of dnf
 * Add dynamic_throttled_queues to allow for throttled queues with configurable names to be defined according to the pattern: https://sqs.${data.aws_region.current.name}.amazonaws.com/${data.aws_caller_identity.current.account_id}/${local.prefix}-${q.queue_name}.   This allows for queue configurations to be defined programatically for similar deployments across deployment/account/regions/etc.
 
+## v21.3.2.0
+* Upgrade to [Cumulus v21.3.2](https://github.com/nasa/cumulus/releases/tag/v21.3.2)
+* **NOTE** this version of Cumulus includes core version of CnmResponse task lambda that may conflict with non-core versions. See [v21.3.2 Migration Notes](https://github.com/nasa/cumulus/releases/tag/v21.3.2)
+
+## v21.3.1.0
+* Upgrade to [Cumulus v21.3.1](https://github.com/nasa/cumulus/releases/tag/v21.3.1)
+* Update dockerfile to use Amazon Linux 2023 and Node v22
+* **NOTE** This version of Cumulus requires manual database changes, see [v21.3 Migration Notes](https://github.com/nasa/cumulus/releases/tag/v21.3.0)
+
+## v21.2.0.0
 * Upgrade to [Cumulus v21.2.0](https://github.com/nasa/cumulus/releases/tag/v21.2.0)
 * add variable "archive_records_config" to cumulus/variables.tf
 
