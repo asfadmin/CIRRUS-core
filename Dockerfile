@@ -91,9 +91,6 @@ ENV AWS_CLI_VERSION="2.27.43"
 # CLI utilities
 RUN dnf install -y gcc gcc-c++ git make unzip zip jq
 
-# Install Docker
-RUN dnf install -y docker git make unzip zip jq gcc gcc-c++
-
 # Add Docker
 
 ARG DOCKER_VERSION=25.0.5
