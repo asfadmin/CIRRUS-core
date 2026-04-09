@@ -29,6 +29,9 @@ RUN dnf install -y \
         docker \
     && dnf clean all
 
+ENV DOCKER_CONFIG=/tmp/.docker
+RUN mkdir -p "$DOCKER_CONFIG" && chmod 1777 "$DOCKER_CONFIG"
+
 # Remove any preexisting generic/older Node packages, then install Node 22/yarn globally
 RUN dnf remove -y nodejs nodejs18 || true \
     && dnf install -y nodejs22\
@@ -39,7 +42,7 @@ RUN npm install -g yarn
 # Terraform
 RUN \
         curl "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -o "terraform.zip" && \
-        unzip terraform.zip && \
+        unzip -q terraform.zip && \
         chmod +x terraform && \
         mv terraform /usr/local/bin && \
         rm -f terraform.zip
@@ -47,7 +50,7 @@ RUN \
 # AWS CLI
 RUN \
         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip" -o "awscliv2.zip" && \
-        unzip awscliv2.zip && \
+        unzip -q awscliv2.zip && \
         ./aws/install && \
         rm -rf aws awscliv2.zip
 
@@ -88,22 +91,15 @@ FROM public.ecr.aws/lambda/python:3.12 AS python3.12
 ENV TERRAFORM_VERSION="1.12.2"
 ENV AWS_CLI_VERSION="2.27.43"
 
-# CLI utilities
-RUN dnf install -y gcc gcc-c++ git make unzip zip jq
-
-# Add Docker
-
-ARG DOCKER_VERSION=25.0.5
-RUN dnf install gzip -y && dnf install tar -y
-RUN curl -fsSL "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" \
-  | tar -xz -C /usr/local/bin --strip-components=1 docker/docker \
- && docker --version
+# CLI utilities/docker
+RUN dnf install -y gcc gcc-c++ git make unzip zip jq docker
 ENV DOCKER_CONFIG=/tmp/.docker
 RUN mkdir -p "$DOCKER_CONFIG" && chmod 1777 "$DOCKER_CONFIG" 
+
 # Terraform
 RUN \
         curl "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -o "terraform.zip" && \
-        unzip terraform.zip && \
+        unzip -q terraform.zip && \
         chmod +x terraform && \
         mv terraform /usr/local/bin && \
         rm -f terraform.zip
@@ -111,7 +107,7 @@ RUN \
 # AWS CLI
 RUN \
         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-$AWS_CLI_VERSION.zip" -o "awscliv2.zip" && \
-        unzip awscliv2.zip && \
+        unzip -q awscliv2.zip && \
         ./aws/install && \
         rm -rf aws awscliv2.zip
 
