@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Unreleased
+* Update Dockerfile python3 stage to use only node v22, remove all yum installs in favor of dnf
 * Add dynamic_throttled_queues to allow for throttled queues with configurable names to be defined according to the pattern: https://sqs.${data.aws_region.current.name}.amazonaws.com/${data.aws_caller_identity.current.account_id}/${local.prefix}-${q.queue_name}.   This allows for queue configurations to be defined programatically for similar deployments across deployment/account/regions/etc.
 
 ## v21.3.2.0
