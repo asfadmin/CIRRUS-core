@@ -1,8 +1,15 @@
 # CHANGELOG
 
 ## Unreleased
+
+## v21.3.3.0
+* Upgrade to [Cumulus v21.3.3](https://github.com/nasa/cumulus/releases/tag/v21.3.3)
 * Update Dockerfile python3 stage to use only node v22, remove all yum installs in favor of dnf
-* Add dynamic_throttled_queues to allow for throttled queues with configurable names to be defined according to the pattern: https://sqs.${data.aws_region.current.name}.amazonaws.com/${data.aws_caller_identity.current.account_id}/${local.prefix}-${q.queue_name}.   This allows for queue configurations to be defined programatically for similar deployments across deployment/account/regions/etc.
+* Upgrade TEA to [v3.0.0](https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.3.0.0)
+* Add `dynamic_throttled_queues` to allow for throttled queues with configurable names to be defined according to the pattern: `https://sqs.${data.aws_region.current.name}.amazonaws.com/${data.aws_caller_identity.current.account_id}/${local.prefix}-${q.queue_name}`. This allows for queue configurations to be defined programatically for similar deployments across deployment/account/regions/etc.
+* Add `archive_records_config`
+* Add `sync_granule_s3_jitter_max_ms`
+* Add `allow_provider_mismatch_on_rule_filter`
 
 ## v21.3.2.0
 * Upgrade to [Cumulus v21.3.2](https://github.com/nasa/cumulus/releases/tag/v21.3.2)

@@ -10,6 +10,8 @@ module "cumulus" {
 
   deploy_to_ngap = true
 
+  allow_provider_mismatch_on_rule_filter = var.allow_provider_mismatch_on_rule_filter
+
   ecs_cluster_instance_image_id = var.ecs_cluster_instance_image_id != "" ? var.ecs_cluster_instance_image_id : data.aws_ssm_parameter.ecs_image_id.value
 
   ecs_cluster_instance_subnet_ids         = data.aws_subnets.subnet_ids.ids
@@ -18,6 +20,8 @@ module "cumulus" {
   ecs_cluster_max_size                    = var.ecs_cluster_max_size
   ecs_cluster_instance_type               = var.ecs_cluster_instance_type
   ecs_cluster_instance_docker_volume_size = var.ecs_cluster_instance_docker_volume_size
+
+  ecs_include_docker_cleanup_cronjob = var.ecs_include_docker_cleanup_cronjob
 
   key_name = var.key_name
 
@@ -73,6 +77,8 @@ module "cumulus" {
   archive_api_users = var.api_users
   archive_api_url   = local.archive_api_url
 
+  sync_granule_s3_jitter_max_ms = var.sync_granule_s3_jitter_max_ms
+
   orca_lambda_copy_to_archive_arn = local.orca_lambda_copy_to_archive_arn
   orca_sfn_recovery_workflow_arn  = local.orca_sfn_recovery_workflow_arn
   orca_api_uri                    = local.orca_api_uri
@@ -107,7 +113,7 @@ module "cumulus" {
     execution_limit = var.throttled_queue_execution_limit
   }], var.throttled_queues, local.throttled_queues)
 
-  ecs_include_docker_cleanup_cronjob = var.ecs_include_docker_cleanup_cronjob
+  archive_records_config = var.archive_records_config
 }
 
 resource "aws_security_group" "no_ingress_all_egress" {
