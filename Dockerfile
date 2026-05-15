@@ -72,10 +72,11 @@ RUN python3 -m pip install --no-cache-dir boto3 setuptools
 #   fatal: detected dubious ownership in repository at '/CIRRUS-DAAC'
 # COPY .gitconfig /.gitconfig
 
-# Cache necessary providers so we dont have to pull them on each build
-COPY required-providers.tf required-providers.tf
+# Cache necessary providers to default local mirror directory so we dont have to pull them on each build
+COPY required-providers.tf /tmp/required-providers.tf
 RUN mkdir -p /usr/local/share/terraform/plugins
-RUN terraform providers mirror /usr/local/share/terraform/plugins 
+# Populate the local mirror dir via init rather than `providers mirror` command so that the providers are unzipped and ready to use and can be soft linked in all terraform directories rather than copied
+RUN TF_PLUGIN_CACHE_DIR=/usr/local/share/terraform/plugins/ terraform -chdir=/tmp init -backend=false
 
 WORKDIR /CIRRUS-core
 
@@ -140,10 +141,11 @@ RUN python3 -m pip install --no-cache-dir boto3 setuptools
 # Uncommenting fixes: `fatal: detected dubious ownership in repository at '/CIRRUS-DAAC'
 # COPY .gitconfig /.gitconfig
 
-# Cache necessary providers so we dont have to pull them on each build
-COPY required-providers.tf required-providers.tf
+# Cache necessary providers to default local mirror directory so we dont have to pull them on each build
+COPY required-providers.tf /tmp/required-providers.tf
 RUN mkdir -p /usr/local/share/terraform/plugins
-RUN terraform providers mirror /usr/local/share/terraform/plugins 
+# Populate the local mirror dir via init rather than `providers mirror` command so that the providers are unzipped and ready to use and can be soft linked in all terraform directories rather than copied
+RUN TF_PLUGIN_CACHE_DIR=/usr/local/share/terraform/plugins/ terraform -chdir=/tmp init -backend=false
 
 WORKDIR /CIRRUS-core
 
