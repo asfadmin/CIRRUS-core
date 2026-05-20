@@ -1,5 +1,5 @@
 module "data_persistence" {
-  source = "https://github.com/nasa/cumulus/releases/download/v21.3.3/terraform-aws-cumulus.zip//tf-modules/data-persistence"
+  source = "https://github.com/nasa/cumulus/releases/download/v22.0.0/terraform-aws-cumulus.zip//tf-modules/data-persistence"
 
   prefix                = local.prefix
   subnet_ids            = data.aws_subnets.subnet_ids.ids
@@ -8,4 +8,5 @@ module "data_persistence" {
   permissions_boundary_arn   = local.permissions_boundary_arn
   rds_user_access_secret_arn = data.terraform_remote_state.rds.outputs.rds_user_access_secret_arn
   rds_security_group_id      = data.terraform_remote_state.rds.outputs.rds_security_group_id
+  db_partition_config        = var.db_partition_config
 }
