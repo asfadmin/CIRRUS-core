@@ -26,9 +26,13 @@ export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
 PYTHON_VER ?= python3
 
-CIRRUS_CORE_VERSION := $(or $(shell git tag --points-at HEAD | head -n1),$(shell git rev-parse --short HEAD))
+ifndef CIRRUS_CORE_VERSION
+	CIRRUS_CORE_VERSION := $(or $(shell git tag --points-at HEAD | head -n1),$(shell git rev-parse --short HEAD))
+endif
 ifdef DAAC_DIR
-CIRRUS_DAAC_VERSION := $(or $(shell git -C $(DAAC_DIR) tag --points-at HEAD | head -n1),$(shell git -C $(DAAC_DIR) rev-parse --short HEAD))
+	ifndef CIRRUS_DAAC_VERSION
+		CIRRUS_DAAC_VERSION := $(or $(shell git -C $(DAAC_DIR) tag --points-at HEAD | head -n1),$(shell git -C $(DAAC_DIR) rev-parse --short HEAD))
+	endif
 endif
 THIN_EGRESS_LOG_EXIST := "0"
 
