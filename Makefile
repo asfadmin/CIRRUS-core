@@ -83,7 +83,7 @@ container-shell:
 		--name=cirrus-core \
 		cirrus-core:$(DOCKER_TAG) \
 		bash
-		
+
 .PHONY: shell
 shell:
 		DAAC_DIR="${DAAC_DIR}" \
@@ -342,6 +342,7 @@ all: \
 	tf \
 	daac \
 	data-persistence \
+	iceberg \
 	cumulus \
 	workflows
 
@@ -351,5 +352,6 @@ initial-deploy: \
 	daac \
 	rds \
 	data-persistence \
+	iceberg \
 	cumulus \
 	workflows
