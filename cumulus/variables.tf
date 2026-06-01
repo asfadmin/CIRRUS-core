@@ -545,3 +545,9 @@ variable "dynamic_throttled_queues" {
   default     = []
   description = "List of SQS queue throttle configs. The queue_name is the suffix after the deployment prefix (e.g. 'ETQ-ASDC-StandardPdrJobs'). The full URL is constructed in locals.tf using local.prefix.  Result will be merged with `throttled queues`"
 }
+
+variable "tea_distribution_url_per_cmr_provider" {
+  description = "Map of CMR provider short_name to TEA external endpoint URL. Used in consolidated deployments to route distribution URLs per Collection.cmrProvider. Falls back to tea_distribution_url for any provider not listed."
+  type        = map(string)
+  default     = {}
+}

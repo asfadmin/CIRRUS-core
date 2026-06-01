@@ -90,7 +90,8 @@ module "cumulus" {
   tea_rest_api_root_resource_id = module.thin_egress_app.rest_api.root_resource_id
   tea_internal_api_endpoint     = module.thin_egress_app.internal_api_endpoint
   tea_external_api_endpoint     = module.thin_egress_app.api_endpoint
-
+  tea_distribution_url_per_cmr_provider = var.tea_distribution_url_per_cmr_provider
+  
   sts_credentials_lambda_function_arn   = data.aws_lambda_function.sts_credentials.arn
   sts_policy_helper_lambda_function_arn = data.aws_lambda_function.sts_policy_helper.arn
   cmr_acl_based_credentials             = var.cmr_acl_based_credentials
