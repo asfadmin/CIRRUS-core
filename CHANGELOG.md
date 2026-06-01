@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+## v22.1.1.0
+* Upgrade to [Cumulus v22.1.1](https://github.com/nasa/cumulus/releases/tag/v22.1.1)
+
 ## v21.3.3.0
 * Upgrade to [Cumulus v21.3.3](https://github.com/nasa/cumulus/releases/tag/v21.3.3)
 * Update Dockerfile python3 stage to use only node v22, remove all yum installs in favor of dnf
