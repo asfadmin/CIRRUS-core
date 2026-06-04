@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+## v22.2.0.0
+* Upgrade to [Cumulus v22.2.0](https://github.com/nasa/cumulus/releases/tag/v22.2.0)
+
 ## v22.1.1.0
 * Upgrade to [Cumulus v22.1.1](https://github.com/nasa/cumulus/releases/tag/v22.1.1)
 
