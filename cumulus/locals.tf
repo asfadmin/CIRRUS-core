@@ -26,6 +26,15 @@ locals {
     region = data.aws_region.current.name
   }
 
+  iceberg_remote_state_config = {
+    bucket = "${local.prefix}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
+    key    = "iceberg/terraform.tfstate"
+    region = data.aws_region.current.name
+  }
+
+  iceberg_s3_bucket = data.terraform_remote_state.iceberg.outputs.iceberg_s3_bucket
+  iceberg_namespace = data.terraform_remote_state.iceberg.outputs.iceberg_namespace
+
   system_bucket = "${local.prefix}-internal"
 
   cmr_client_id = local.prefix
@@ -53,10 +62,10 @@ locals {
   lzards_launchpad_passphrase = sensitive(lookup(local.configuration_secret_values, "lzards_launchpad_passphrase", var.lzards_launchpad_passphrase))
   token_secret                = sensitive(lookup(local.configuration_secret_values, "token_secret", var.token_secret))
   urs_client_id               = sensitive(lookup(local.configuration_secret_values, "urs_client_id", var.urs_client_id))
-  
+
   urs_tea_client_id       = var.urs_tea_client_id != null ? var.urs_tea_client_id : local.urs_client_id
   urs_tea_client_password = var.urs_tea_client_password != null ? var.urs_tea_client_password : local.urs_client_password
-  
+
   throttled_queues = [
     for q in var.dynamic_throttled_queues : {
       url             = "https://sqs.${data.aws_region.current.name}.amazonaws.com/${data.aws_caller_identity.current.account_id}/${local.prefix}-${q.queue_name}"
