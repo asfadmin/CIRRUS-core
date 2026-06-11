@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Unreleased
+* Add iceberg target to Makefile to build Iceberg replication components
 * Add validation of deploy_name in env.sh
 * Expose `report_sns_topic_subscriber_arns` variable to cumulus.tf module
 
