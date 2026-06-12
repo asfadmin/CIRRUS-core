@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Unreleased
+* Add validation of deploy_name in env.sh
 
 ## v22.2.1.0
 * Upgrade to [Cumulus v22.2.1](https://github.com/nasa/cumulus/releases/tag/v22.2.1)
