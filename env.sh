@@ -3,6 +3,16 @@
 if (( $# != 3 )); then
     echo "Usage: source env.sh aws_profile_name deploy_name maturity"
 else
+    if (( ${#2} > 10 )); then
+        echo "Error: deploy_name must be 10 characters or fewer."
+        return 1 2>/dev/null || exit 1
+    fi
+
+    if [[ ! "$2" =~ ^[a-z0-9-]+$ ]]; then
+        echo "Error: deploy_name may contain only lowercase letters, numbers, and hyphens."
+        return 1 2>/dev/null || exit 1
+    fi
+
     export AWS_PROFILE=$1
 
     AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id --profile "$AWS_PROFILE")
