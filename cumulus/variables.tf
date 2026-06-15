@@ -47,6 +47,11 @@ variable "configuration_secret" {
   default     = null
 }
 
+variable "async_operation_image" {
+  description = "docker image name to use for Cumulus async operations tasks"
+  type        = string
+  default     = "cumuluss/async_operations:58"
+}
 
 variable "launchpad_api" {
   type    = string
