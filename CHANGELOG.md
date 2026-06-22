@@ -2,6 +2,7 @@
 
 ## Unreleased
 * Add validation of deploy_name in env.sh
+* Expose `report_sns_topic_subscriber_arns` variable to cumulus.tf module
 
 ## v22.2.1.0
 * Upgrade to [Cumulus v22.2.1](https://github.com/nasa/cumulus/releases/tag/v22.2.1)
