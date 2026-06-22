@@ -27,12 +27,6 @@ data "terraform_remote_state" "data_persistence" {
   config    = local.data_persistence_remote_state_config
 }
 
-data "terraform_remote_state" "iceberg" {
-  backend   = "s3"
-  workspace = var.DEPLOY_NAME
-  config    = local.iceberg_remote_state_config
-}
-
 data "aws_lambda_function" "sts_credentials" {
   function_name = "gsfc-ngap-sh-s3-sts-get-keys"
 }

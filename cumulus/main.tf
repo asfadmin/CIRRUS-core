@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v22.2.2/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v22.2.5/terraform-aws-cumulus.zip//tf-modules/cumulus"
 
   cumulus_message_adapter_lambda_layer_version_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
@@ -125,7 +125,7 @@ module "cumulus" {
   api_service_autoscaling_min_capacity      = var.api_service_autoscaling_min_capacity
   api_service_autoscaling_max_capacity      = var.api_service_autoscaling_max_capacity
   api_service_autoscaling_target_cpu        = var.api_service_autoscaling_target_cpu
-  iceberg_s3_bucket                         = local.iceberg_s3_bucket
+  iceberg_s3_bucket                         = var.iceberg_s3_bucket
   iceberg_namespace                         = local.iceberg_namespace
   iceberg_health_check_grace_period_seconds = var.iceberg_health_check_grace_period_seconds
   duckdb_max_pool_size                      = var.duckdb_max_pool_size

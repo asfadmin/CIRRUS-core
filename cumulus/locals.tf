@@ -1,5 +1,6 @@
 locals {
   prefix = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
+  iceberg_namespace = var.iceberg_namespace != null ? var.iceberg_namespace : replace("${local.prefix}_iceberg", "-", "_")
 
   buckets = data.terraform_remote_state.daac.outputs.bucket_map
 
@@ -25,15 +26,6 @@ locals {
     key    = "data-persistence/terraform.tfstate"
     region = data.aws_region.current.name
   }
-
-  iceberg_remote_state_config = {
-    bucket = "${local.prefix}-tf-state-${substr(data.aws_caller_identity.current.account_id, -4, 4)}"
-    key    = "iceberg/terraform.tfstate"
-    region = data.aws_region.current.name
-  }
-
-  iceberg_s3_bucket = data.terraform_remote_state.iceberg.outputs.iceberg_s3_bucket
-  iceberg_namespace = data.terraform_remote_state.iceberg.outputs.iceberg_namespace
 
   system_bucket = "${local.prefix}-internal"
 

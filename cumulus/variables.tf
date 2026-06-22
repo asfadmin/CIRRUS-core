@@ -629,3 +629,14 @@ variable "cumulus_iceberg_api_image_repository_url" {
   type        = string
   default     = null
 }
+
+variable "iceberg_s3_bucket" {
+  description = "Name of the S3 bucket the Iceberg API task needs read access to"
+  type        = string
+}
+
+variable "iceberg_namespace" {
+  description = "AWS Glue schema (database) name containing the Iceberg tables. This should be set for developer stacks that are enabling the Iceberg API, but left unset otherwise (it will be computed if needed)"
+  type        = string
+  default     = null
+}
