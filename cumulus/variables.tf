@@ -53,7 +53,6 @@ variable "async_operation_image" {
   default     = "cumuluss/async-operation:58"
 }
 
-
 variable "launchpad_api" {
   type    = string
   default = "launchpadApi"
