@@ -115,6 +115,7 @@ module "cumulus" {
   }], var.throttled_queues, local.throttled_queues)
 
   archive_records_config = var.archive_records_config
+  report_sns_topic_subscriber_arns = var.report_sns_topic_subscriber_arns
 }
 
 resource "aws_security_group" "no_ingress_all_egress" {

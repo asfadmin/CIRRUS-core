@@ -556,3 +556,9 @@ variable "tea_distribution_url_per_cmr_provider" {
   type        = map(string)
   default     = {}
 }
+
+variable "report_sns_topic_subscriber_arns" {
+  type        = list(any)
+  default     = null
+  description = "Account ARNs to supply to report SNS topics policy with subscribe action"
+}
