@@ -20,7 +20,7 @@
 #  PYTHON_VER:            python3
 
 # ---------------------------
-DOCKER_TAG := v22.2.2.0
+DOCKER_TAG := v22.2.5.0
 export TF_IN_AUTOMATION="true"
 export TF_VAR_MATURITY=${MATURITY}
 export TF_VAR_DEPLOY_NAME=${DEPLOY_NAME}
@@ -83,7 +83,7 @@ container-shell:
 		--name=cirrus-core \
 		cirrus-core:$(DOCKER_TAG) \
 		bash
-		
+
 .PHONY: shell
 shell:
 		DAAC_DIR="${DAAC_DIR}" \
@@ -342,6 +342,7 @@ all: \
 	tf \
 	daac \
 	data-persistence \
+	iceberg \
 	cumulus \
 	workflows
 
@@ -351,5 +352,6 @@ initial-deploy: \
 	daac \
 	rds \
 	data-persistence \
+	iceberg \
 	cumulus \
 	workflows

@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v22.2.2/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v22.2.5/terraform-aws-cumulus.zip//tf-modules/cumulus"
 
   cumulus_message_adapter_lambda_layer_version_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
@@ -20,8 +20,6 @@ module "cumulus" {
   ecs_cluster_max_size                    = var.ecs_cluster_max_size
   ecs_cluster_instance_type               = var.ecs_cluster_instance_type
   ecs_cluster_instance_docker_volume_size = var.ecs_cluster_instance_docker_volume_size
-
-  ecs_include_docker_cleanup_cronjob = var.ecs_include_docker_cleanup_cronjob
 
   key_name = var.key_name
 
@@ -91,7 +89,7 @@ module "cumulus" {
   tea_internal_api_endpoint     = module.thin_egress_app.internal_api_endpoint
   tea_external_api_endpoint     = module.thin_egress_app.api_endpoint
   tea_distribution_url_per_cmr_provider = var.tea_distribution_url_per_cmr_provider
-  
+
   sts_credentials_lambda_function_arn   = data.aws_lambda_function.sts_credentials.arn
   sts_policy_helper_lambda_function_arn = data.aws_lambda_function.sts_policy_helper.arn
   cmr_acl_based_credentials             = var.cmr_acl_based_credentials
@@ -116,6 +114,22 @@ module "cumulus" {
 
   archive_records_config = var.archive_records_config
   report_sns_topic_subscriber_arns = var.report_sns_topic_subscriber_arns
+  ecs_include_docker_cleanup_cronjob = var.ecs_include_docker_cleanup_cronjob
+
+  # Iceberg API configuration
+  deploy_iceberg_api                        = var.deploy_iceberg_api
+  iceberg_api_cpu                           = var.iceberg_api_cpu
+  iceberg_api_memory                        = var.iceberg_api_memory
+  cumulus_iceberg_api_image_version         = var.cumulus_iceberg_api_image_version
+  cumulus_iceberg_api_image_repository_url  = var.cumulus_iceberg_api_image_repository_url
+  api_service_autoscaling_min_capacity      = var.api_service_autoscaling_min_capacity
+  api_service_autoscaling_max_capacity      = var.api_service_autoscaling_max_capacity
+  api_service_autoscaling_target_cpu        = var.api_service_autoscaling_target_cpu
+  iceberg_s3_bucket                         = var.iceberg_s3_bucket
+  iceberg_namespace                         = local.iceberg_namespace
+  iceberg_health_check_grace_period_seconds = var.iceberg_health_check_grace_period_seconds
+  duckdb_max_pool_size                      = var.duckdb_max_pool_size
+  duckdb_pool_rebuild_interval_seconds      = var.duckdb_pool_rebuild_interval_seconds
 }
 
 resource "aws_security_group" "no_ingress_all_egress" {

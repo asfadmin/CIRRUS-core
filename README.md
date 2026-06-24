@@ -209,6 +209,7 @@ If you want to deploy everything besides the `rds` module you can run the comman
         $ make daac
         $ make rds
         $ make data-persistence
+        $ make iceberg
         $ make cumulus
         $ make workflows
 

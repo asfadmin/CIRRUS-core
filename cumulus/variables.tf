@@ -542,6 +542,7 @@ variable "allow_provider_mismatch_on_rule_filter" {
   type = bool
   default = false
 }
+
 variable "dynamic_throttled_queues" {
   type = list(object({
     queue_name      = string
@@ -561,4 +562,81 @@ variable "report_sns_topic_subscriber_arns" {
   type        = list(any)
   default     = null
   description = "Account ARNs to supply to report SNS topics policy with subscribe action"
+}
+
+variable "deploy_iceberg_api" {
+  type        = bool
+  default     = false
+  description = "Whether to deploy the Iceberg API (hosted in ECS with limited endpoints)"
+}
+
+variable "iceberg_api_cpu" {
+  type        = number
+  default     = 512
+  description = "The amount of CPU units to reserve for the Iceberg API Fargate Task"
+}
+
+variable "iceberg_api_memory" {
+  type        = number
+  default     = 1024
+  description = "The amount of memory in MB to reserve for the Iceberg API Fargate Task"
+}
+
+variable "duckdb_max_pool_size" {
+  type        = number
+  default     = 3
+  description = "Maximum number of DuckDB connections in the connection pool"
+}
+
+variable "duckdb_pool_rebuild_interval_seconds" {
+  type        = number
+  default     = 18000
+  description = "Seconds between preemptive DuckDB idle-pool rebuilds"
+}
+
+variable "api_service_autoscaling_min_capacity" {
+  type        = number
+  default     = 1
+  description = "Minimum number of API service tasks to run"
+}
+
+variable "api_service_autoscaling_max_capacity" {
+  type        = number
+  default     = 2
+  description = "Maximum number of API service tasks to run"
+}
+
+variable "api_service_autoscaling_target_cpu" {
+  type        = number
+  default     = 70
+  description = "Target CPU utilization percentage for API service autoscaling"
+}
+
+variable "iceberg_health_check_grace_period_seconds" {
+  description = "Seconds to ignore failing load balancer health checks on newly instantiated ECS tasks"
+  type        = number
+  default     = 180
+}
+
+variable "cumulus_iceberg_api_image_version" {
+  description = "The version of the Cumulus Iceberg API image to use"
+  type        = string
+  default     = "latest"
+}
+
+variable "cumulus_iceberg_api_image_repository_url" {
+  description = "The repository URL of the Cumulus Iceberg API image to use"
+  type        = string
+  default     = null
+}
+
+variable "iceberg_s3_bucket" {
+  description = "Name of the S3 bucket the Iceberg API task needs read access to"
+  type        = string
+}
+
+variable "iceberg_namespace" {
+  description = "AWS Glue schema (database) name containing the Iceberg tables. This should be set for developer stacks that are enabling the Iceberg API, but left unset otherwise (it will be computed if needed)"
+  type        = string
+  default     = null
 }

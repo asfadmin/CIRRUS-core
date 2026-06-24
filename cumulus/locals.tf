@@ -1,5 +1,6 @@
 locals {
   prefix = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
+  iceberg_namespace = var.iceberg_namespace != null ? var.iceberg_namespace : replace("${local.prefix}_iceberg", "-", "_")
 
   buckets = data.terraform_remote_state.daac.outputs.bucket_map
 
@@ -53,10 +54,10 @@ locals {
   lzards_launchpad_passphrase = sensitive(lookup(local.configuration_secret_values, "lzards_launchpad_passphrase", var.lzards_launchpad_passphrase))
   token_secret                = sensitive(lookup(local.configuration_secret_values, "token_secret", var.token_secret))
   urs_client_id               = sensitive(lookup(local.configuration_secret_values, "urs_client_id", var.urs_client_id))
-  
+
   urs_tea_client_id       = var.urs_tea_client_id != null ? var.urs_tea_client_id : local.urs_client_id
   urs_tea_client_password = var.urs_tea_client_password != null ? var.urs_tea_client_password : local.urs_client_password
-  
+
   throttled_queues = [
     for q in var.dynamic_throttled_queues : {
       url             = "https://sqs.${data.aws_region.current.name}.amazonaws.com/${data.aws_caller_identity.current.account_id}/${local.prefix}-${q.queue_name}"
