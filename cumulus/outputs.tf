@@ -80,6 +80,11 @@ output "update_granules_cmr_metadata_file_links_task" {
 output "post_to_cmr_task" {
   value = module.cumulus.post_to_cmr_task
 }
+
+output "add_unique_granule_id_task" {
+  value = module.cumulus.add_unique_granule_id_task
+}
+
 output "sqs2sfThrottle_lambda_function_arn" {
   value = module.cumulus.sqs2sfThrottle_lambda_function_arn
 }
