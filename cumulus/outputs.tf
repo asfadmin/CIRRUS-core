@@ -85,6 +85,10 @@ output "add_unique_granule_id_task" {
   value = module.cumulus.add_unique_granule_id_task
 }
 
+output "cnm_response_task" {
+  value = module.cumulus.cnm_response_task
+}
+
 output "sqs2sfThrottle_lambda_function_arn" {
   value = module.cumulus.sqs2sfThrottle_lambda_function_arn
 }
