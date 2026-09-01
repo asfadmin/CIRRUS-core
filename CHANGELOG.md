@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Unreleased
+* Update TEA to version 3.2.0 (https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.3.2.0)
 * Add iceberg target to Makefile to build Iceberg replication components
 * Add validation of deploy_name in env.sh
 * Expose `report_sns_topic_subscriber_arns` variable to cumulus.tf module
