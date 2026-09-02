@@ -1,6 +1,11 @@
 # CHANGELOG
 
-## Unreleased
+## ConCumulus v0.0.88
+
+* Update Cumulus Core to version 22.4.0
+
+## ConCumulus v.0.0.6x
+
 * Add iceberg target to Makefile to build Iceberg replication components
 * Add validation of deploy_name in env.sh
 * Expose `report_sns_topic_subscriber_arns` variable to cumulus.tf module
