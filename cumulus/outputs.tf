@@ -174,6 +174,6 @@ output "cirrus_daac_version" {
 }
 
 # Passthrough Cumulus output to provide access to newly-exposed outputs in the cumulus module
-output "cumulus" {
+output "cumulus_passthrough" {
   value = module.cumulus
 }
