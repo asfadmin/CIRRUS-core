@@ -6,6 +6,7 @@ module "thin_egress_app" {
   bucketname_prefix                  = ""
   config_bucket                      = local.system_bucket
   cookie_domain                      = var.thin_egress_cookie_domain
+  cors_origins                       = var.thin_egress_cors_origins
   domain_cert_arn                    = var.thin_egress_domain_cert_arn
   domain_name                        = var.distribution_url == null ? null : replace(replace(var.distribution_url, "/^https?:///", ""), "//$/", "")
   download_role_in_region_arn        = var.thin_egress_download_role_in_region_arn

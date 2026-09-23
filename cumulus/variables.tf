@@ -391,6 +391,12 @@ variable "thin_egress_cookie_domain" {
   description = "Valid domain for cookie"
 }
 
+variable "thin_egress_cors_origins" {
+  type        = list(string)
+  default     = []
+  description = "Exact origins allowed for CORS, in addition to thin_egress_cookie_domain"
+}
+
 variable "thin_egress_domain_cert_arn" {
   type        = string
   default     = null
