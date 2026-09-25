@@ -644,8 +644,5 @@ variable "iceberg_namespace" {
 variable "sqs_message_consumer_watcher_message_limit" {
   type        = number
   default     = 500
-  description = "Number of messages the SQS message consumer Lambda will attempt to read from SQS in a single execution.
-    Note that increasing this value may result in a direct increase/decrease in triggered workflows. Users should
-    only adjust this value with the understanding of how it will impact the number of queued workflows in their
-    system."
+  description = "Number of messages the SQS message consumer Lambda will attempt to read from SQS in a single execution."
 }
