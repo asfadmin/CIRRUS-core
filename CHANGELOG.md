@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Concumulus v0.0.99
+
+* Update Cumulus Core to version 22.4.2
+
 ## ConCumulus v0.0.88
 
 * Update Cumulus Core to version 22.4.0
