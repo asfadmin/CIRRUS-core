@@ -112,6 +112,8 @@ module "cumulus" {
     execution_limit = var.throttled_queue_execution_limit
   }], var.throttled_queues, local.throttled_queues)
 
+  sqs_message_consumer_watcher_message_limit = var.sqs_message_consumer_watcher_message_limit
+
   archive_records_config = var.archive_records_config
   report_sns_topic_subscriber_arns = var.report_sns_topic_subscriber_arns
   ecs_include_docker_cleanup_cronjob = var.ecs_include_docker_cleanup_cronjob
