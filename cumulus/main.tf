@@ -9,7 +9,7 @@ module "cumulus" {
   lambda_subnet_ids = data.aws_subnets.subnet_ids.ids
 
   deploy_to_ngap = true
-  async_operation_image = data.terraform_remote_state.daac.outputs.async_operation_image
+  async_operation_image = var.async_operation_image
   allow_provider_mismatch_on_rule_filter = var.allow_provider_mismatch_on_rule_filter
 
   ecs_cluster_instance_image_id = var.ecs_cluster_instance_image_id != "" ? var.ecs_cluster_instance_image_id : data.aws_ssm_parameter.ecs_image_id.value
