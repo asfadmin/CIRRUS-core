@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## v21.3.3.1
+* Add dynamic_throttled_queues
+* Add docker to shell container, update outputs to add send_pan_task
+* Add thin egress allowed CORS origins variable `thin_egress_allowed_cors_origins`
+
 ## v21.3.3.0
 * Upgrade to [Cumulus v21.3.3](https://github.com/nasa/cumulus/releases/tag/v21.3.3)
 * Update Dockerfile python3 stage to use only node v22, remove all yum installs in favor of dnf
