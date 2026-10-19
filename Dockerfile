@@ -12,6 +12,7 @@ FROM amazonlinux:2023 AS python3
 
 ENV TERRAFORM_VERSION="1.12.2"
 ENV AWS_CLI_VERSION="2.27.43"
+ENV TFLINT_VERSION="v0.53.0"
 ARG USER
 
 WORKDIR /CIRRUS-core
@@ -46,6 +47,15 @@ RUN \
         chmod +x terraform && \
         mv terraform /usr/local/bin && \
         rm -f terraform.zip
+
+
+# TFLint
+RUN \
+        curl -sL "https://github.com/terraform-linters/tflint/releases/download/${TFLINT_VERSION}/tflint_linux_amd64.zip" -o "tflint.zip" && \
+        unzip -q tflint.zip && \
+        chmod +x tflint && \
+        mv tflint /usr/local/bin && \
+        rm -f tflint.zip
 
 # AWS CLI
 RUN \
@@ -90,6 +100,7 @@ FROM public.ecr.aws/lambda/python:3.12 AS python3.12
 #   * Docker
 ENV TERRAFORM_VERSION="1.12.2"
 ENV AWS_CLI_VERSION="2.27.43"
+ENV TFLINT_VERSION="v0.53.0"  
 
 # CLI utilities/docker
 RUN dnf install -y gcc gcc-c++ git make unzip zip jq docker
@@ -103,6 +114,14 @@ RUN \
         chmod +x terraform && \
         mv terraform /usr/local/bin && \
         rm -f terraform.zip
+
+# TFLint  
+RUN \
+        curl -sL "https://github.com/terraform-linters/tflint/releases/download/${TFLINT_VERSION}/tflint_linux_amd64.zip" -o "tflint.zip" && \
+        unzip -q tflint.zip && \
+        chmod +x tflint && \
+        mv tflint /usr/local/bin && \
+        rm -f tflint.zip
 
 # AWS CLI
 RUN \
