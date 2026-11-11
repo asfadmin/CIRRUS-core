@@ -1,5 +1,5 @@
 module "cumulus" {
-  source = "https://github.com/nasa/cumulus/releases/download/v22.3.5/terraform-aws-cumulus.zip//tf-modules/cumulus"
+  source = "https://github.com/nasa/cumulus/releases/download/v22.4.3/terraform-aws-cumulus.zip//tf-modules/cumulus"
 
   cumulus_message_adapter_lambda_layer_version_arn = data.terraform_remote_state.daac.outputs.cma_layer_arn
 
@@ -9,7 +9,7 @@ module "cumulus" {
   lambda_subnet_ids = data.aws_subnets.subnet_ids.ids
 
   deploy_to_ngap = true
-  async_operation_image = var.async_operation_image
+  async_operation_image = data.terraform_remote_state.daac.outputs.async_operation_image
   allow_provider_mismatch_on_rule_filter = var.allow_provider_mismatch_on_rule_filter
 
   ecs_cluster_instance_image_id = var.ecs_cluster_instance_image_id != "" ? var.ecs_cluster_instance_image_id : data.aws_ssm_parameter.ecs_image_id.value
@@ -111,6 +111,9 @@ module "cumulus" {
     url             = aws_sqs_queue.background_job_queue.id,
     execution_limit = var.throttled_queue_execution_limit
   }], var.throttled_queues, local.throttled_queues)
+
+  sqs_message_consumer_watcher_message_limit = var.sqs_message_consumer_watcher_message_limit
+  sqs_message_consumer_watcher_time_limit = var.sqs_message_consumer_watcher_time_limit
 
   archive_records_config = var.archive_records_config
   report_sns_topic_subscriber_arns = var.report_sns_topic_subscriber_arns

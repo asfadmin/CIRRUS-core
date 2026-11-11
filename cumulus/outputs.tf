@@ -172,3 +172,9 @@ output "cirrus_core_version" {
 output "cirrus_daac_version" {
   value = var.CIRRUS_DAAC_VERSION
 }
+
+# Passthrough Cumulus output to provide access to newly-exposed outputs in the cumulus module
+output "cumulus_passthrough" {
+  value = module.cumulus
+  sensitive = true
+}

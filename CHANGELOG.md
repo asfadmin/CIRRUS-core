@@ -1,7 +1,19 @@
 # CHANGELOG
 
 ## Unreleased
+
 * Update TEA to version 3.2.0 (https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.3.2.0)
+
+## Concumulus v0.0.99
+
+* Update Cumulus Core to version 22.4.2
+
+## ConCumulus v0.0.88
+
+* Update Cumulus Core to version 22.4.0
+
+## ConCumulus v.0.0.6x
+
 * Add iceberg target to Makefile to build Iceberg replication components
 * Add validation of deploy_name in env.sh
 * Expose `report_sns_topic_subscriber_arns` variable to cumulus.tf module

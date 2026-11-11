@@ -47,12 +47,6 @@ variable "configuration_secret" {
   default     = null
 }
 
-variable "async_operation_image" {
-  description = "docker image name to use for Cumulus async operations tasks"
-  type        = string
-  default     = "cumuluss/async-operation:58"
-}
-
 variable "launchpad_api" {
   type    = string
   default = "launchpadApi"
@@ -639,4 +633,20 @@ variable "iceberg_namespace" {
   description = "AWS Glue schema (database) name containing the Iceberg tables. This should be set for developer stacks that are enabling the Iceberg API, but left unset otherwise (it will be computed if needed)"
   type        = string
   default     = null
+}
+
+variable "sqs_message_consumer_watcher_message_limit" {
+  type        = number
+  default     = 500
+  description = "Number of messages the SQS message consumer Lambda will attempt to read from SQS in a single execution."
+}
+
+variable "sqs_message_consumer_watcher_time_limit" {
+  type        = number
+  default     = 60
+  description = <<EOF
+    Number of seconds the SQS message consumer Lambda will remain active and polling for new messages. Note that this value
+    should be less than the overall Lambda invocation timeout or else the Lambda may be terminated while still actively
+    polling SQS. This value should be adjusted in conjunction with sqs_message_consumer_watcher_message_limit.
+  EOF
 }
