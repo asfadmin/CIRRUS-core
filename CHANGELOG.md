@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## Concumulus v0.0.111
+## Unreleased
+
+### CUMULUS-5446 
+
+* Update TEA to version 3.2.0 (https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.3.2.0)
 
 ### CUMULUS-5866
 
