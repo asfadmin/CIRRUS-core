@@ -2,7 +2,13 @@
 
 ## Unreleased
 
+### CUMULUS-5446 
+
 * Update TEA to version 3.2.0 (https://github.com/asfadmin/thin-egress-app/releases/tag/tea-release.3.2.0)
+
+### CUMULUS-5866
+
+* Update Cumulus Core to version 22.4.4
 
 ## Concumulus v0.0.99
 
